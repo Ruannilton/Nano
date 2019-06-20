@@ -18,11 +18,14 @@ unsigned int indices[] = {
 };
 
 Mesh* plane;
-
+Texture* texture;
  void Start() {
 	 plane=BuildMesh(indices, vertices, POSITION_FLAG | COLOR_FLAG | UV_FLAG,SIZEVEC(indices),SIZEVEC(vertices));
+	 texture = LoadTexture("Assets/Images/Rat.png", GL_REPEAT, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST);
+	 printf("Height: %d\nWidht: %d \n", texture->height, texture->widht);
+	 
 }
 
  void Update() {
-	 
+	
 }

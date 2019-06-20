@@ -291,6 +291,9 @@
     <ClInclude Include="Src\Engine\Core\Mouse.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Texture.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c">
@@ -358,5 +361,10 @@
     <None Include="Src\default.fs" />
     <None Include="Src\default.vs" />
     <None Include="Src\Program\glew32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Images\Rat.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
 </Project>

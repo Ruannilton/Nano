@@ -7,6 +7,7 @@
 
 #include "Graphic/RenderEngine.h"
 #include "Graphic/Mesh.h"
+#include "Graphic/Texture.h"
 
 Nano* NanoApplication;
 
