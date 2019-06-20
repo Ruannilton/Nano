@@ -1,18 +1,28 @@
 #include "NanoEngine.h"
-#include <math.h>
-float a = 0;
+
+#define _00 0.0f,0.0f
+#define _01 0.0f,1.0f
+#define _10 1.0f,0.0f
+#define _11 1.0f,1.0f
+
+float vertices[] = {
+	-0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  _00,  //0
+	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,  _10,  //1
+	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  _11,  //2
+	-0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f,  _01   //3
+};
+
+unsigned int indices[] = {
+	0, 1, 3,
+	1, 2, 3
+};
+
+Mesh* plane;
 
  void Start() {
-	DEBUG("Start");
+	 plane=BuildMesh(indices, vertices, POSITION_FLAG | COLOR_FLAG | UV_FLAG,SIZEVEC(indices),SIZEVEC(vertices));
 }
 
  void Update() {
-	a+=0.0004f;
-	chColor(cos(a), sin(a), 1-cos(a), 1, BackGroundColor);
-	if (KeyPress(GLFW_KEY_A)) {
-		DEBUG("KEY A PRESS");
-	}
-	if (MouseButtonPress(GLFW_MOUSE_BUTTON_1)) {
-		DEBUG("MOUSE LEFT PRESS");
-	}
+	 
 }

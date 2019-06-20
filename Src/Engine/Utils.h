@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #define NEW(TYPE) (TYPE*)malloc(sizeof(TYPE))
 #define DEBUG(STR) printf(STR##"\n");
-
+#define SIZEVEC(VECTOR) sizeof(VECTOR) / sizeof(VECTOR[0])
 #define REPEAT(I) for(int i=0;i<I;i++) 
 
 typedef const char* string;
