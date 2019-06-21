@@ -294,6 +294,9 @@
     <ClInclude Include="Src\Engine\Graphic\Texture.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\RenderTree.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c">
