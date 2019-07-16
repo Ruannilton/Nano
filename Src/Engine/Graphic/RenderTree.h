@@ -2,135 +2,45 @@
 #define NANO_RENDER_TREE
 
 #include "../GL.h"
-
-inline int maior(int a, int b) {
-	if (a > b)
-		return a;
-	else
-		return b;
-}
-
-#define HEIGHT_TREE(TYPE)inline int height_tree_##TYPE(TYPE* root){\
-if((root == NULL) || (root->left == NULL && root->right == NULL)) return 0;\
-return 1 + maior(height_tree_##TYPE(root->left), height_tree_##TYPE(root->left));\
-}
-#define height_tree(T) height_tree_##T
-
-#define FIND_IN_TREE(TYPE)inline TYPE* find_in_tree_##TYPE(TYPE* root, unsigned int val) {if (root->value == val) return root;if (root->left != NULL)  return find_in_tree_##TYPE(root->left, val); if (root->right != NULL) return find_in_tree_##TYPE(root->right, val); return NULL;}
-#define find_in_tree(T) find_in_tree_##T
-
-#define COUNT_NO(TYPE)inline int count_no_##TYPE(TYPE* root) {if (root == NULL) return 0;else return 1 + count_no_##TYPE(root->left) + count_no_##TYPE(root->right);}
-#define count_no(T) count_no_##T
-
-
-#define ADD_IN_TREE(TYPE)inline int add_in_tree_##TYPE (TYPE* root,TYPE* node) {\
-if (node->value < root->value) {\
-	if (root->left == NULL) {\
-		root->left = node;return 1;\
-	}\
-	else {\
-		if(height_tree(TYPE)(root->left)-height_tree(TYPE)(root->right) == 1){\
-		TYPE* aux = root;\
-		root = aux->left;\
-		root->right = aux;\
-		root->left = node;\
-			return 1;\
-		}\
-		return add_in_tree_##TYPE(root->left, node);\
-	}\
-}else {\
-	if (root->right == NULL) {\
-		root->right = node;return 1;\
-	}else {\
-		if(height_tree(TYPE)(root->right)-height_tree(TYPE)(root->left) == 1){\
-		TYPE* aux = root;\
-		root = aux->right;\
-		root->left = aux;\
-		root->right = node;\
-		return 1;\
-		}\
-		return add_in_tree_##TYPE(root->right, node);\
-	}\
-}}
-#define add_in_tree(T) add_in_tree_##T
-
-
-#define CLEAR_TREE(TYPE,CHILD)inline void clear_tree_##TYPE (TYPE* root){\
-	if (root == NULL) return;\
-	if (root->child != NULL)  clear_tree_##CHILD(root->child);\
-	if (root->left == NULL && root->right == NULL) {\
-		free(root);\
-		return;\
-	}\
-	clear_tree_##TYPE(root->left);\
-	clear_tree_##TYPE(root->right);\
-	free(root);\
-	return;\
-} 
-#define clear_tree(T) clear_tree_##T
-
-#define REMOVE_IN_TREE(TYPE,CHILDTYPE)inline int remove_in_tree_##TYPE(TYPE* root,unsigned int val){\
-	if (root == NULL) return 0;\
-	if (root->value == val) {\
-		if (root->left == NULL && root->right == NULL) {\
-			clear_tree(CHILDTYPE)(root->child);\
-			root = NULL;\
-			free(root);\
-			return 1;\
-		}\
-		if (root->left != NULL && root->right == NULL) {\
-			TYPE* aux = root;\
-			root = root->left;\
-			clear_tree(CHILDTYPE)(root->child);\
-			free(aux);\
-			return 1;\
-		}\
-		else if (root->left == NULL && root->right != NULL) {\
-			TYPE* aux = root;\
-			root = root->right;\
-			clear_tree(CHILDTYPE)(root->child);\
-			free(aux);\
-			return 1;\
-		}\
-		else {\
-			TYPE* aux = root;\
-			root->left->right = root->right->left;\
-			root->right->left = root->left->right;\
-			root = root->right;\
-			clear_tree(CHILDTYPE)(root->child);\
-			free(aux);\
-		}}\
-}
-#define remove_in_tree(T) remove_in_tree_##T
-
+typedef struct {
+	unsigned int Shader;
+	unsigned int Texture;
+	unsigned int Id;
+	unsigned int IndexCount;
+	GLuint Vao = -1;
+	mat4 Model = GLM_MAT4_IDENTITY_INIT;
+}RenderComponent;
 
 typedef struct ModelList {
-	ModelList* left;
-	ModelList* right;
+	ModelList* prox;
+	ModelList* end;
 	mat4* value;
 	unsigned int id;
 };
 
 typedef struct TextureList {
-	TextureList* left;
-	TextureList* right;
+	TextureList* prox;
+	TextureList* end;
 	GLuint value = -1;
-	ModelList* child;
+	ModelList* modelList;
+	unsigned int id;
 };
 
 typedef struct VaoList {
-	VaoList* left;
-	VaoList* right;
+	VaoList* prox;
+	VaoList* end;
 	GLuint value = -1;
-	TextureList* child;
+	TextureList* textureList;
+	unsigned int id;
 	unsigned int indexCount;
 };
 
 typedef struct ShaderList {
-	ShaderList* left;
-	ShaderList* right;
+	ShaderList* prox;
+	ShaderList* end;
 	GLuint value = -1;
-	VaoList* child;
+	VaoList* vaoList;
+	unsigned int id;
 };
 
 typedef struct {
@@ -141,102 +51,99 @@ typedef struct {
 	int ModelCount = 0;
 }RenderTree;
 
+RenderTree* render;
 
-RenderTree renderTree = { NULL,0,0,0,0 };
-
-inline void clear_tree_ModelList(ModelList* root) {
-	
-	if (root == NULL) return;
-	if (root->left == NULL && root->right == NULL) {
-		free(root);
-		return;
+void AddModel(TextureList* tl, mat4* model) {
+	ModelList* last = tl->modelList->end->prox;
+	last = NEW(ModelList);
+	last->id = tl->id;
+	last->prox = NULL;
+	last->value = model;
+	tl->modelList->end = last;
+}
+void AddTexture(VaoList* vl, unsigned int* value, mat4* model) {
+	TextureList* tl = vl->textureList;
+	while (*value != tl->value && tl->prox != NULL)
+	{
+		tl = tl->prox;
 	}
-	clear_tree_ModelList(root->left);
-	clear_tree_ModelList(root->right);
-	free(root);
-	return;
-} 
-inline int remove_in_tree_ModelList(ModelList* root, mat4* val) {
-	
-	if (root == NULL) return 0;
-	if (root->value == val) {
-		if (root->left == NULL && root->right == NULL) {
-			root = NULL;
-			free(root);
-			return 1;
-		}\
-		if (root->left != NULL && root->right == NULL) {
-			ModelList* aux = root;
-			root = root->left;
-			free(aux);
-			return 1;
-		}
-		else if (root->left == NULL && root->right != NULL) {
-			ModelList* aux = root;
-			root = root->right;
-			free(aux);
-			return 1;
-		}
-		else {
-			ModelList* aux = root;
-			root->left->right = root->right->left;
-			root->right->left = root->left->right;
-			root = root->right;
-			free(aux);
-		}}
-}
-inline inline ModelList* find_in_tree_ModelList(ModelList* root, mat4* val) {
-	if (root->value == val) return root;
-	if (root->left != NULL) return find_in_tree_ModelList(root->left, val);
-	if (root->right != NULL) return find_in_tree_ModelList(root->right, val);
-	return NULL;
-}
 
-HEIGHT_TREE(ModelList);
-ADD_IN_TREE(ModelList);
-COUNT_NO(ModelList);
-
-
-FIND_IN_TREE(TextureList);
-HEIGHT_TREE(TextureList);
-ADD_IN_TREE(TextureList);
-COUNT_NO(TextureList);
-CLEAR_TREE(TextureList, ModelList);
-REMOVE_IN_TREE(TextureList, ModelList);
-
-FIND_IN_TREE(VaoList);
-HEIGHT_TREE(VaoList);
-ADD_IN_TREE(VaoList);
-COUNT_NO(VaoList);
-CLEAR_TREE(VaoList, TextureList);
-REMOVE_IN_TREE(VaoList, TextureList);
-
-FIND_IN_TREE(ShaderList);
-HEIGHT_TREE(ShaderList);
-ADD_IN_TREE(ShaderList);
-COUNT_NO(ShaderList);
-CLEAR_TREE(ShaderList, VaoList);
-REMOVE_IN_TREE(ShaderList, VaoList);
-
-void AddShader(ShaderList* shader) {
-	if (renderTree.shaderList == NULL) {
-		renderTree.shaderList = shader;
-		renderTree.ShaderCount++;
-		return;
+	if (*value == tl->value) {
+		tl->id = vl->id;
+		AddModel(tl, model);
 	}
-	if (find_in_tree(ShaderList)(renderTree.shaderList, shader->value)) return;
-	add_in_tree(ShaderList)(renderTree.shaderList, shader);
-	renderTree.ShaderCount++;
-}
-void AddVAO(ShaderList* shader, VaoList* vao) {
-	AddShader(shader);
-	if (shader->child == NULL) {
-		shader->child = vao;
-		renderTree.VaoCount++;
-		return;
+	else
+	{
+		tl->prox = NEW(TextureList);
+		tl->prox->id = vl->id;
+		AddModel(tl->prox, model);
 	}
-	if (find_in_tree(VaoList)(shader->child, vao->value))return;
-	add_in_tree(VaoList)(shader->child, vao);
-	renderTree.VaoCount++;
 }
+void AddVao(ShaderList* sl, unsigned int* value, unsigned int* texValue, unsigned int indexCount, mat4* model) {
+	VaoList* vl = sl->vaoList;
+	while (*value != vl->value && vl->prox != NULL) {
+		vl = vl->prox;
+	}
+
+	if (*value == vl->value) { //se este vao ja existir
+		vl->id = sl->id;
+		AddTexture(vl, texValue, model);
+	}
+	else
+	{
+		vl->prox = NEW(VaoList);
+		vl->prox->id = sl->id;
+		AddTexture(vl->prox, texValue, model);
+	}
+}
+void AddComponent(RenderComponent* comp) {
+
+	if (render->shaderList == NULL) {
+		ModelList* ml = NEW(ModelList);
+		ml->prox = 0;
+		ml->value = &comp->Model;
+		ml->id = comp->Id;
+
+		TextureList* tl = NEW(TextureList);
+		tl->prox = 0;
+		tl->value = comp->Texture;
+		tl->modelList = ml;
+		tl->id = comp->Id;
+
+		VaoList* vl = NEW(VaoList);
+		vl->prox = 0;
+		vl->value = comp->Vao;
+		vl->textureList = tl;
+		vl->id = comp->Id;
+		vl->indexCount = comp->IndexCount;
+
+		ShaderList* sl = NEW(ShaderList);
+		sl->prox = 0;
+		sl->value = comp->Shader;
+		sl->vaoList = vl;
+		sl->id = comp->Id;
+
+		render->shaderList = sl;
+	}
+
+	//caso n seja vazia
+	ShaderList* sl = render->shaderList;
+	while (comp->Shader != sl->value && sl->prox != NULL) {
+		sl = sl->prox;
+	}
+
+	if (comp->Shader == sl->value) {
+		sl->id = comp->Id;
+		AddVao(sl, &comp->Vao, &comp->Texture, comp->IndexCount, &comp->Model);
+	}
+	else
+	{
+		sl->prox = NEW(ShaderList);
+		sl->prox->id = comp->Id;
+		AddVao(sl->prox, &comp->Vao, &comp->Texture, comp->IndexCount, &comp->Model);
+	}
+}
+
+
+
 #endif // !NANO_RENDER_TREE

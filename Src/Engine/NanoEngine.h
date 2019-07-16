@@ -14,7 +14,7 @@ Nano* NanoApplication;
 
  void Start();
  void Update();
-
+ 
 int main() {
 	NanoApplication = CreateNano();
 	
@@ -26,7 +26,7 @@ int main() {
 
 	window_height = NanoApplication->windowHeight;
 	window_widht = NanoApplication->windowWidht;
-
+	initRenderSystem();
 	Start();
 	
 	while (!glfwWindowShouldClose(NanoApplication->window))
