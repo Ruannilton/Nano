@@ -376,4 +376,7 @@
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\models\Irex_obj.obj" />
+  </ItemGroup>
 </Project>

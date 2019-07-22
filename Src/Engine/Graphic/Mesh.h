@@ -30,7 +30,41 @@ void mesh_calculateVertexSize(Mesh* mesh) {
 }
 
 void mesh_LoadMesh(string path, Mesh* mesh) {
+	FILE* file;
+	fopen_s(&file, path, "r");
+	char desc;
 
+
+	unsigned int verts = 0;
+	unsigned int tris = 0;
+	unsigned int norm = 0;
+	
+
+	while (!feof(file))
+	{
+		if (fscanf_s(file, "%c", &desc)) {
+			
+			if (desc == 'v') {
+				
+					float x, y, z;
+					verts++;
+					fscanf_s(file, "%f %f %f", &x, &y, &z);
+			}
+			if (desc == 'f') {
+				int v1, vt1, vn1;
+				int v2, vt2, vn2;
+				int v3, vt3, vn3;
+				int v4, vt4, vn4;
+
+				tris++;
+				fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d", &v1, &vt1, &vn1, &v2, &vt2, &vn2, &v3, &vt3, &vn3, &v4, &vt4, &vn4);
+			}
+		}
+	}
+	printf("Loaded %d verts\n", verts);
+	printf("Loaded %d tris\n", tris);
+
+	fclose(file);
 }
 
 Mesh* mesh_BuildMesh(unsigned int* index,float* vertex,unsigned int flags,int indexCount,int vertexCount) {

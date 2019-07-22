@@ -24,7 +24,7 @@ RenderComponent rc;
 	 
 	 GLuint vao= mesh_genVAO(plane);
 	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
-
+	 mesh_LoadMesh("Assets/models/Irex_obj.obj",NULL);
 	 rc.Vao = vao;
 	 rc.Shader = DefaultShader;
 	 rc.Texture = texture->id;
