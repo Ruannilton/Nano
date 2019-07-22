@@ -7,6 +7,9 @@
 #include <STB/stb_image.h>
 #include <stdio.h>
 
+#define DEFAULT_WRAP GL_REPEAT
+#define DEFAULT_MIN_FILTER GL_NEAREST_MIPMAP_NEAREST
+#define DEFAULT_MAG_FILTER GL_NEAREST
 
 typedef struct {
 	unsigned int id;
@@ -15,7 +18,7 @@ typedef struct {
 	int channels;
 }Texture;
 
-Texture* LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
+Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
 	Texture* tex = (Texture*)malloc(sizeof(Texture));
 
 	glGenTextures(1, &tex->id);
@@ -43,4 +46,7 @@ Texture* LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum
 	return tex;
 }
 
+Texture* texture_LoadTextureDefault(const char* path) {
+	return texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER);
+}
 #endif // !_nano_texture_

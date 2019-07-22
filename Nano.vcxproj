@@ -171,9 +171,10 @@
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
     <ClInclude Include="Src\Engine\GL.h" />
+    <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
-    <ClInclude Include="Src\Engine\Graphic\RenderEngine.h" />
+    <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
     <ClInclude Include="Src\Engine\Graphic\RenderTree.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
@@ -200,11 +201,12 @@
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec3.c" />
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec4.c" />
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c" />
+    <ClCompile Include="Src\Engine\Components\RenderComponent.h" />
     <ClCompile Include="Src\Engine\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Src\default.fs" />
-    <None Include="Src\default.vs" />
+    <None Include="Src\Shaders\default.fs" />
+    <None Include="Src\Shaders\default.vs" />
     <None Include="Src\Program\glew32.dll" />
   </ItemGroup>
   <ItemGroup>

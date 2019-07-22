@@ -4,9 +4,10 @@
 #include "../GL.h"
 #include "../Utils.h"
 #include <string.h>
+
 typedef GLuint Shader;
 
-unsigned int CompileShader(string src, GLenum type) {
+unsigned int shader_CompileShader(string src, GLenum type) {
 	GLuint id = glCreateShader(type);
 	glShaderSource(id, 1, &src, NULL );
 	glCompileShader(id);
@@ -26,14 +27,14 @@ unsigned int CompileShader(string src, GLenum type) {
 	return id;
 }
 
-Shader CreateShader(string vs, string fs) {
+Shader shader_CreateShader(string vs, string fs) {
 	
 	unsigned int prog = glCreateProgram();
 	unsigned int vsID = 0;
 	unsigned int fsID = 0;
 
-	vsID = CompileShader(vs,GL_VERTEX_SHADER);
-	fsID = CompileShader(fs,GL_FRAGMENT_SHADER);
+	vsID = shader_CompileShader(vs,GL_VERTEX_SHADER);
+	fsID = shader_CompileShader(fs,GL_FRAGMENT_SHADER);
 	
 	glAttachShader(prog, vsID);
 	glAttachShader(prog, fsID);

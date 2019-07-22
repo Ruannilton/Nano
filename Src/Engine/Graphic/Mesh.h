@@ -21,7 +21,7 @@ typedef struct {
 	unsigned int indexCount;
 }Mesh;
 
-void calculateVertexSize(Mesh* mesh) {
+void mesh_calculateVertexSize(Mesh* mesh) {
 	mesh->vertexSize = 0;
 	if (mesh->flag & POSITION_FLAG) mesh->vertexSize += 3;
 	if (mesh->flag & COLOR_FLAG) mesh->vertexSize += 3;
@@ -29,22 +29,22 @@ void calculateVertexSize(Mesh* mesh) {
 	if (mesh->flag & UV_FLAG) mesh->vertexSize += 2;
 }
 
-void LoadMesh(string path, Mesh* mesh) {
+void mesh_LoadMesh(string path, Mesh* mesh) {
 
 }
 
-Mesh* BuildMesh(unsigned int* index,float* vertex,int flags,int indexCount,int vertexCount) {
+Mesh* mesh_BuildMesh(unsigned int* index,float* vertex,unsigned int flags,int indexCount,int vertexCount) {
 	Mesh* mesh = NEW(Mesh);
 	mesh->index = index;
 	mesh->vertex = vertex;
 	mesh->flag = flags;
 	mesh->indexCount = indexCount;
 	mesh->vertexCount = vertexCount;
-	calculateVertexSize(mesh);
+	mesh_calculateVertexSize(mesh);
 	return mesh;
 }
 
-GLuint genVAO(Mesh* mesh) {
+GLuint mesh_genVAO(Mesh* mesh) {
 	GLuint vbo;
 	GLuint ebo;
 	GLuint vao;
@@ -76,7 +76,7 @@ GLuint genVAO(Mesh* mesh) {
 	}
 	if (mesh->flag & NORMAL_FLAG) {
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, mesh->vertexSize * sizeof(float), (void*)(count * sizeof(float)));
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, mesh->vertexSize * sizeof(float), (void*)(count * sizeof(float)));
 		count += 3;
 	}
 	if (mesh->flag & UV_FLAG) {
@@ -90,6 +90,13 @@ GLuint genVAO(Mesh* mesh) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return vao;
+}
+
+__inline void mesh_EnableFlags(Mesh* m, unsigned int flags) {
+	m->flag |= flags;
+}
+__inline void mesh_DisableFlags(Mesh* m, unsigned int flags) {
+	m->flag ^= flags;
 }
 
 #endif // !NANO_MESH

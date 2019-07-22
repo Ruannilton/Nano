@@ -24,11 +24,11 @@ Nano* CreateNano() {
 	nano->windowHeight = 640;
 	nano->run = 1;
 	
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	nano->window= glfwCreateWindow(800, 649, "Nano", NULL, NULL);
+	nano->window= glfwCreateWindow(800, 640, "Nano", NULL, NULL);
 	
 	glfwMakeContextCurrent(nano->window);
 	if (glewInit() != GLEW_OK) DEBUG("Error Init Glew");

@@ -276,9 +276,6 @@
     <ClInclude Include="Src\Engine\Graphic\Shader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\RenderEngine.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Engine\Core\Keyboard.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -295,6 +292,12 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Src\Engine\Graphic\RenderTree.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\NanoRender.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Camera.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
@@ -359,11 +362,14 @@
     <ClCompile Include="Src\Engine\Main.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Engine\Components\RenderComponent.h">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Src\default.fs" />
-    <None Include="Src\default.vs" />
     <None Include="Src\Program\glew32.dll" />
+    <None Include="Src\Shaders\default.fs" />
+    <None Include="Src\Shaders\default.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">
