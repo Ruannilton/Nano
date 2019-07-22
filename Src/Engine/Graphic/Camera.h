@@ -5,7 +5,7 @@
 #include <string.h>
 
 typedef struct {
-	vec3 position,front, up;
+	vec3 position,rotation,front, up;
 	mat4 projection;
 }Camera;
 
@@ -13,6 +13,9 @@ void camera_CreateCamera(Camera* cam, vec3 position) {
 	cam->position[0] = position[0];
 	cam->position[1] = position[1];
 	cam->position[2] = position[2];
+	cam->rotation[0] = 80;
+	cam->rotation[1] = 15;
+	cam->rotation[2] = 0;
 	cam->up[0] = 0;
 	cam->up[1] = 1;
 	cam->up[2] = 0;
@@ -31,12 +34,15 @@ __inline void camera_SetCameraOrtho(float x0, float y0, float x1, float y1, floa
 
 void camera_ViewProjection(Camera* cam,mat4* view) {
 	 static vec3 pos;
-	 glm_cross(cam->front, cam->up, pos);
-	 glm_normalize(pos);
-	 pos[0] *= -cam->position[0];
-	 pos[2] = cam->position[2];
 
-	 glm_look(pos, cam->front, cam->up, *view);
+	 cam->front[0] = cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1]));
+	 cam->front[1] = sin(glm_rad(cam->rotation[0]));
+	 cam->front[2] = cos(glm_rad(cam->rotation[0])) * sin(glm_rad(cam->rotation[1]));
+	 glm_normalize(cam->front);
+	 
+	 
+
+	 glm_look(cam->position, cam->front, cam->up, *view);
 	
 }
 #endif // !NANO_CAMERA

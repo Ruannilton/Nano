@@ -22,7 +22,7 @@ Camera currentCamera;
 
 void initRenderSystem() {
 	glViewport(0, 0, window_widht, window_height);
-	vec3 pos = { 0,0,3 };
+	vec3 pos = { 0,0,0 };
 	camera_CreateCamera(&currentCamera, pos);
 	camera_SetCameraPerspective(glm_rad(70.0f), ((float)window_widht) / window_height, 0.1f, 1000.0f, &currentCamera);
 }

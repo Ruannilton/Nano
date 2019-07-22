@@ -36,8 +36,7 @@ RenderComponent rc;
 }
  
  void Update() {
-	 glm_rotate_y(rc.Model,  0.1f, rc.Model);
-
+	
 	 if (KeyHold(GLFW_KEY_A)) {
 		 currentCamera.position[0] -= 0.1f;
 	 }
@@ -50,4 +49,8 @@ RenderComponent rc;
 	 if (KeyHold(GLFW_KEY_S)) {
 		 currentCamera.position[2] += 0.1f;
 	 }
+	 currentCamera.rotation[0] += mouse_offsetY;
+	 currentCamera.rotation[1] += mouse_offsetX;
+	 if (currentCamera.rotation[0] < -70) currentCamera.rotation[0] = -70;
+	 if (currentCamera.rotation[0] >  70) currentCamera.rotation[0] =  70;
  }

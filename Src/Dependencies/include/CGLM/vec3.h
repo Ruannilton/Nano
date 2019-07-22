@@ -272,6 +272,14 @@ glm_vec3_mul(vec3 a, vec3 b, vec3 dest) {
   dest[2] = a[2] * b[2];
 }
 
+CGLM_INLINE
+void
+glm_vec3_mul_s(vec3 a, float b, vec3 dest) {
+	dest[0] = a[0] * b;
+	dest[1] = a[1] * b;
+	dest[2] = a[2] * b;
+}
+
 /*!
  * @brief multiply/scale vec3 vector with scalar: result = v * s
  *
