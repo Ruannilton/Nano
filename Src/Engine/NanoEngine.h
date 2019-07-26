@@ -18,6 +18,8 @@ void Update();
 int main() {
 	NanoApplication = CreateNano();
 	
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 	glfwSetInputMode(NanoApplication->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glfwSetKeyCallback(NanoApplication->window, keyCallback);
@@ -33,6 +35,10 @@ int main() {
 	initRenderSystem();
 
 	stbi_set_flip_vertically_on_load(1);
+
+	currentCamera.position[2] += 1;
+	currentCamera.rotation[0] = 0;
+	currentCamera.rotation[1] = 270;
 
 	Start();
 	printf("Press ESC to close\n");

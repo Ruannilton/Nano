@@ -300,6 +300,9 @@
     <ClInclude Include="Src\Engine\Graphic\Camera.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Storage\LinearMemory.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c">
@@ -378,5 +381,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Assets\models\cube.obj" />
   </ItemGroup>
 </Project>
