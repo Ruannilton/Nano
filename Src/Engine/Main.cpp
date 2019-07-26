@@ -7,11 +7,9 @@ RenderComponent rc;
 
  void Start() {
 
-	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");	 
+	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
 	 plane = mesh_LoadMesh("Assets/models/cube.obj");
 	
-	 //mesh_PrintMesh(plane);
-
 	 rc.Vao = mesh_genVAO(plane);
 	 rc.Shader = DefaultShader;
 	 rc.Texture = texture->id;

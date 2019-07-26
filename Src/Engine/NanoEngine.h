@@ -36,7 +36,7 @@ int main() {
 
 	stbi_set_flip_vertically_on_load(1);
 
-	currentCamera.position[2] += 1;
+	currentCamera.position[2] += 5;
 	currentCamera.rotation[0] = 0;
 	currentCamera.rotation[1] = 270;
 

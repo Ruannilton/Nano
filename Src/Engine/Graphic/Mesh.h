@@ -153,7 +153,6 @@ Mesh* mesh_LoadMesh(string path) {
 		n3 = normList[in][2];
 
 		if (uv_count && norm_count) {
-			//printf("Face: %f,%f,%f %f,%f %f,%f,%f\n", v1, v2, v3, t1, t2, n1, n2, n3);
 			mesh_verts[verti]   = v1;
 			mesh_verts[verti+1] = v2;
 			mesh_verts[verti+2] = v3;
@@ -167,7 +166,6 @@ Mesh* mesh_LoadMesh(string path) {
 			
 		}
 		else if (uv_count) {
-			//printf("Face: %f,%f,%f %f,%f %f,%f,%f\n", v1, v2, v3, t1, t2, n1, n2, n3);
 			mesh_verts[verti] = v1;
 			mesh_verts[verti + 1] = v2;
 			mesh_verts[verti + 2] = v3;
@@ -177,7 +175,6 @@ Mesh* mesh_LoadMesh(string path) {
 
 		}
 		else if (norm_count) {
-			//printf("Face: %f,%f,%f %f,%f %f,%f,%f\n", v1, v2, v3, t1, t2, n1, n2, n3);
 			mesh_verts[verti] = v1;
 			mesh_verts[verti + 1] = v2;
 			mesh_verts[verti + 2] = v3;
@@ -276,6 +273,7 @@ void mesh_PrintMesh(Mesh* mesh) {
 		printf("Vertex: %f,%f,%f  %f,%f,%f  %f,%f\n", mesh->vertex[i], mesh->vertex[i + 1], mesh->vertex[i + 2], mesh->vertex[i + 3], mesh->vertex[i + 4], mesh->vertex[i + 5], mesh->vertex[i + 6], mesh->vertex[i + 7]);
 	}
 }
+
 __inline void mesh_EnableFlags(Mesh* m, unsigned int flags) {
 	m->flag |= flags;
 }
