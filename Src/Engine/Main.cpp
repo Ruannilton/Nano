@@ -8,14 +8,8 @@ RenderComponent rc;
  void Start() {
 
 	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
-	 plane = mesh_LoadMesh("Assets/models/cube.obj");
-	
-	 rc.Vao = mesh_genVAO(plane);
-	 rc.Shader = DefaultShader;
-	 rc.Texture = texture->id;
-	 rc.IndexCount = plane->indexCount;
-	
-	 memcpy(&rc.Model, MAT4_IDENTITY, sizeof(MAT4_IDENTITY));
+	 plane = mesh_LoadMesh("Assets/models/cube.obj");	
+	 _RenderComponent(&rc,DefaultShader,texture->id, mesh_genVAO(plane),plane->indexCount);
 	 AddRenderComponent(&rc);
 }
  
@@ -36,6 +30,4 @@ RenderComponent rc;
 	 currentCamera.rotation[0] += mouse_offsetY;
 	 currentCamera.rotation[1] += mouse_offsetX;
 	
-	// if (currentCamera.rotation[0] < -70) currentCamera.rotation[0] = -70;
-	// if (currentCamera.rotation[0] >  70) currentCamera.rotation[0] =  70;
  }

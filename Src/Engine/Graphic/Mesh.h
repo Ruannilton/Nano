@@ -55,6 +55,7 @@ Mesh* mesh_LoadMesh(string path) {
 	
 	float* mesh_verts;
 	unsigned int* mesh_index;
+	int index_perline = 0;
 
 	#pragma region READ FILE
 	while (!feof(file))
@@ -96,7 +97,7 @@ Mesh* mesh_LoadMesh(string path) {
 					norm3 = -1;
 				}
 				else {
-					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);
+					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);				
 				}
 
 				faceList[index_count][0] = vert1;
