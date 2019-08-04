@@ -390,10 +390,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Assets\models\cube.obj" />
-    <Object Include="Assets\models\Cerberus.obj" />
+     <Object Include="Assets\models\Cerberus.obj" />
     <Object Include="Assets\models\cube.obj" />
   </ItemGroup>
 </Project>
