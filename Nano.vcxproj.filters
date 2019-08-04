@@ -303,6 +303,9 @@
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\ShaderData.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c">
@@ -371,11 +374,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Program\glew32.dll" />
-    <None Include="Src\Shaders\default.fs" />
-    <None Include="Src\Shaders\default.vs" />
+    <None Include="Program\glew32.dll" />
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="Assets\Shaders\default.fs" />
+    <None Include="Assets\Shaders\default.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\Cerberus_A.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>
@@ -383,6 +392,8 @@
     <Text Include="Assets\models\Irex_obj.obj" />
   </ItemGroup>
   <ItemGroup>
+    <Object Include="Assets\models\cube.obj" />
+    <Object Include="Assets\models\Cerberus.obj" />
     <Object Include="Assets\models\cube.obj" />
   </ItemGroup>
 </Project>

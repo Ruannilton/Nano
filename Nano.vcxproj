@@ -43,16 +43,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>.\Src$(Plataform)</OutDir>
+    <OutDir>.\Program$(Plataform)</OutDir>
     <IntDir>.\Inter$(Plataform)</IntDir>
     <IncludePath>$(ProjectDir)Src\Dependencies\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Src\Dependencies\bin\GLFW;$(ProjectDir)Src\Dependencies\bin\GLEW;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>.\Src\Program$(Plataform)</OutDir>
+    <OutDir>.\Program$(Plataform)</OutDir>
     <IntDir>.\Inter$(Plataform)</IntDir>
     <IncludePath>$(ProjectDir)Src\Dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Src\Dependencies\bin\GLFW;$(ProjectDir)Src\Dependencies\bin\GLEW;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)Src\Dependencies\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -177,6 +177,7 @@
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
     <ClInclude Include="Src\Engine\Graphic\RenderTree.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
+    <ClInclude Include="Src\Engine\Graphic\ShaderData.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
@@ -206,11 +207,20 @@
     <ClCompile Include="Src\Engine\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Src\Shaders\default.fs" />
-    <None Include="Src\Shaders\default.vs" />
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="Program\glew32.dll" />
+    <None Include="Assets\Shaders\default.fs" />
+    <None Include="Assets\Shaders\default.vs" />
     <None Include="Src\Program\glew32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Images\Cerberus_A.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Image>
     <Image Include="Assets\Images\Rat.png">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
@@ -223,6 +233,14 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <Object Include="Assets\models\cube.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Assets\models\Cerberus.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="Assets\models\cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

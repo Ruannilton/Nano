@@ -7,9 +7,10 @@ RenderComponent rc;
 
  void Start() {
 
+	 mesh_loader_pre_alloc = kbyte(50);
+	 plane = mesh_LoadMesh("Assets/models/Cerberus.obj");
 	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
-	 plane = mesh_LoadMesh("Assets/models/cube.obj");	
-	 _RenderComponent(&rc,DefaultShader,texture->id, mesh_genVAO(plane),plane->indexCount);
+	 _RenderComponent(&rc,DefaultShader.ID,texture->id, mesh_genVAO(plane),plane->indexCount);
 	 AddRenderComponent(&rc);
 }
  

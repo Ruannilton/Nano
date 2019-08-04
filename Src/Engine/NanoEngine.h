@@ -27,7 +27,7 @@ int main() {
 	glfwSetMouseButtonCallback(NanoApplication->window, MouseButtonCallback);
 	glfwSetFramebufferSizeCallback(NanoApplication->window, framebufferSizeCallback);
 
-	DefaultShader = shader_CreateShader(ReadFile("Src/Shaders/default.vs"), ReadFile("Src/Shaders/default.fs"));
+	DefaultShader = shader_CreateShader(ReadFile("Assets/Shaders/default.vs"), ReadFile("Assets/Shaders/default.fs"));
 
 	window_height = NanoApplication->windowHeight;
 	window_widht = NanoApplication->windowWidht;
