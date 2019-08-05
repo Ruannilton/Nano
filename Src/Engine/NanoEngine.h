@@ -9,6 +9,8 @@
 #include "Graphic/Mesh.h"
 #include "Graphic/Texture.h"
 
+#include "Storage/MemoryManager.h"
+
 mat4 MAT4_IDENTITY = GLM_MAT4_IDENTITY_INIT;
 Nano* NanoApplication;
 

@@ -100,15 +100,15 @@ Mesh* mesh_LoadMesh(string path) {
 					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);				
 				}
 
-				faceList[index_count][0] = vert1;
-				faceList[index_count + 1][0] = vert2;
-				faceList[index_count + 2][0] = vert3;
-				faceList[index_count][1] = tex1;
-				faceList[index_count + 1][1] = tex2;
-				faceList[index_count + 2][1] = tex3;
-				faceList[index_count][2] = norm1;
-				faceList[index_count + 1][2] = norm2;
-				faceList[index_count + 2][2] = norm3;
+				faceList [index_count][0] = vert1;
+				faceList [index_count + 1][0] = vert2;
+				faceList [index_count + 2][0] = vert3;
+				faceList [index_count][1] = tex1;
+				faceList [index_count + 1][1] = tex2;
+				faceList [index_count + 2][1] = tex3;
+				faceList [index_count][2] = norm1;
+				faceList [index_count + 1][2] = norm2;
+				faceList [index_count + 2][2] = norm3;
 				index_count += 3;
 			}
 		}
