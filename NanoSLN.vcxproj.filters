@@ -303,7 +303,10 @@
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\ShaderData.h">
+    <ClInclude Include="Src\Engine\Structures\RenderSystem.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Rendering\Material.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
@@ -390,7 +393,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj" />
-     <Object Include="Assets\models\Cerberus.obj" />
+    <Object Include="Assets\models\Cerberus.obj" />
     <Object Include="Assets\models\cube.obj" />
   </ItemGroup>
 </Project>

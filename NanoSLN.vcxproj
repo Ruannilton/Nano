@@ -173,14 +173,15 @@
     <ClInclude Include="Src\Engine\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
+    <ClInclude Include="Src\Engine\Graphic\Rendering\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
     <ClInclude Include="Src\Engine\Graphic\RenderTree.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
-    <ClInclude Include="Src\Engine\Graphic\ShaderData.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
+    <ClInclude Include="Src\Engine\Structures\RenderSystem.h" />
     <ClInclude Include="Src\Engine\Utils.h" />
   </ItemGroup>
   <ItemGroup>

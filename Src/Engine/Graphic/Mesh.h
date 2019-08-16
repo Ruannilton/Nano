@@ -5,9 +5,6 @@
 #include "../Core/NanoIO.h"
 #include "../GL.h"
 
-#define kbyte(VALUE) 1024*VALUE
-#define mbyte(VALUE) 1024*kbyte(VALUE)
-
 #define STATIC_FLAG 1
 #define POSITION_FLAG 2
 #define COLOR_FLAG 4
