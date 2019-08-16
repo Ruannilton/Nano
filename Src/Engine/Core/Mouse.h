@@ -4,7 +4,7 @@
 #include "../GL.h"
 #include "../Utils.h"
 
-float mouse_Xpos, mouse_Ypos,mouse_offsetX,mouse_offsetY,mouse_Sensitivity = 0.05f;
+double mouse_Xpos, mouse_Ypos,mouse_offsetX,mouse_offsetY,mouse_Sensitivity = 0.05f;
 int mouseButtons[GLFW_MOUSE_BUTTON_LAST + 1];
 int mouseButtonsHold[GLFW_MOUSE_BUTTON_LAST + 1];
 int first = 0;

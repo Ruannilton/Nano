@@ -32,6 +32,13 @@ RenderComponent rc;
 	 memcpy(&rc.Model, MAT4_IDENTITY, sizeof(MAT4_IDENTITY));
 	 
 
+
+	 uint id;
+	 mesh_loader_pre_alloc = kbyte(50);
+	 plane = manager_LoadMesh("Assets/models/Cerberus.obj",&id);
+	 texture = manager_LoadTexture("Assets/Images/Rat.png",&id);
+	 _RenderComponent(&rc,DefaultShader.ID,texture->id, mesh_genVAO(plane),plane->indexCount);
+
 	 AddRenderComponent(&rc);
 }
  
@@ -49,8 +56,8 @@ RenderComponent rc;
 	 if (KeyHold(GLFW_KEY_S)) {
 		 currentCamera.position[2] += 0.1f;
 	 }
-	 currentCamera.rotation[0] += mouse_offsetY;
-	 currentCamera.rotation[1] += mouse_offsetX;
-	 if (currentCamera.rotation[0] < -70) currentCamera.rotation[0] = -70;
-	 if (currentCamera.rotation[0] >  70) currentCamera.rotation[0] =  70;
+
+	 currentCamera.rotation[0] += (float)mouse_offsetY;
+	 currentCamera.rotation[1] += (float)mouse_offsetX;
+	
  }

@@ -35,9 +35,9 @@ __inline void camera_SetCameraOrtho(float x0, float y0, float x1, float y1, floa
 void camera_ViewProjection(Camera* cam,mat4* view) {
 	 static vec3 pos;
 
-	 cam->front[0] = cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1]));
-	 cam->front[1] = sin(glm_rad(cam->rotation[0]));
-	 cam->front[2] = cos(glm_rad(cam->rotation[0])) * sin(glm_rad(cam->rotation[1]));
+	 cam->front[0] = (float)(cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1])));
+	 cam->front[1] = (float)(sin(glm_rad(cam->rotation[0])));
+	 cam->front[2] = (float)(cos(glm_rad(cam->rotation[0])) * sin(glm_rad(cam->rotation[1])));
 	 glm_normalize(cam->front);
 	 
 	 

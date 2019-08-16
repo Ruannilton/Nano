@@ -11,6 +11,10 @@
 #define NORMAL_FLAG 8
 #define UV_FLAG 16
 
+
+int mesh_loader_pre_alloc = (int)(kbyte(0.5f));
+
+
 typedef struct {
 	float* vertex;
 	unsigned int* index;
@@ -29,7 +33,112 @@ void mesh_calculateVertexSize(Mesh* mesh) {
 	if (mesh->flag & UV_FLAG) mesh->vertexSize += 2;
 }
 
+
 void mesh_LoadMesh(string path, Mesh* mesh) {
+
+	FILE* file;
+	fopen_s(&file, path, "r");
+	char desc[3];
+	
+	unsigned int vert_count = 0;
+	unsigned int index_count = 0;
+	unsigned int norm_count = 0;
+	unsigned int uv_count = 0;
+	unsigned int vertSize = 3;
+	unsigned int i;
+
+	vec3* vertList = (vec3*)malloc(sizeof(vec3*) * (mesh_loader_pre_alloc+1));
+	vec3* normList = (vec3*)malloc(sizeof(vec3*) * (mesh_loader_pre_alloc+1));
+	vec2* uvList   = (vec2*)malloc(sizeof(vec2*) * (mesh_loader_pre_alloc+1));
+	vec3* faceList = (vec3*)malloc(sizeof(vec3*) * (9*(mesh_loader_pre_alloc+1)));
+	
+	float* mesh_verts;
+	unsigned int* mesh_index;
+	int index_perline = 0;
+
+	#pragma region READ FILE
+	while (!feof(file))
+	{
+		if (fscanf_s(file,"%s", &desc)) {
+
+			if (strcmp(desc, "v") == 0) {
+				vert_count += 1;
+				fscanf_s(file, "%f %f %f", &vertList[vert_count][0], &vertList[vert_count][1], &vertList[vert_count][2]);
+			}
+			else if (strcmp(desc, "vn") == 0) {
+				norm_count += 1;
+				fscanf_s(file, "%f %f %f", &normList[norm_count][0], &normList[norm_count][1], &normList[norm_count][2]);
+			}
+			else if (strcmp(desc, "vt") == 0) {
+				uv_count += 1;
+				fscanf_s(file, "%f %f", &uvList[uv_count][0], &uvList[uv_count][1]);
+			}
+			else if (strcmp(desc, "f") == 0) {
+
+				int vert1, tex1, norm1, vert2, tex2, norm2, vert3, tex3, norm3;
+
+				if (uv_count == 0 && norm_count == 0) {
+					int matches = fscanf_s(file, "%d %d %d", &vert1, &vert2, &vert3);
+					tex1 = norm1 = -1;
+					tex2 = norm2 = -1;
+					tex3 = norm3 = -1;
+				}
+				else if (uv_count == 0) {
+					int matches = fscanf_s(file, " %d//%d %d//%d %d//%d", &vert1, &norm1, &vert2, &norm2, &vert3, &norm3);
+					tex1 = -1;
+					tex2 = -1;
+					tex3 = -1;
+				}
+				else if (norm_count == 0) {
+					int matches = fscanf_s(file, "%d/%d %d/%d %d/%d", &vert1, &tex1, &vert2, &norm2, &vert3, &norm3);
+					norm1 = -1;
+					norm2 = -1;
+					norm3 = -1;
+				}
+				else {
+					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);				
+				}
+
+				faceList [index_count][0] = (float)(vert1);
+				faceList [index_count + 1][0] = (float)(vert2);
+				faceList [index_count + 2][0] = (float)(vert3);
+				faceList [index_count][1] = (float)(tex1);
+				faceList [index_count + 1][1] = (float)(tex2);
+				faceList [index_count + 2][1] = (float)(tex3);
+				faceList [index_count][2] = (float)(norm1);
+				faceList [index_count + 1][2] = (float)(norm2);
+				faceList [index_count + 2][2] = (float)(norm3);
+				index_count += 3;
+			}
+		}
+	}
+#pragma endregion
+
+	mesh->flag = POSITION_FLAG;
+	
+	if (uv_count != 0) {
+		mesh->flag |= UV_FLAG;
+		vertSize += 2;
+	}
+	if (norm_count != 0) {
+		mesh->flag |= NORMAL_FLAG;
+		vertSize += 3;
+	}
+
+	mesh_verts = (float*)malloc(sizeof(float) * (vertSize * index_count));
+	mesh_index = (unsigned int*)malloc(sizeof(unsigned int) * index_count);
+	mesh->vertexCount = vertSize*index_count;
+	mesh->indexCount = index_count;
+	mesh->vertexSize = vertSize;
+	
+	unsigned int verti = 0;
+	int iv, in, it;
+	float v1, v2, v3, t1, t2, n1, n2, n3;
+	
+	for (i = 0; i < index_count; i++) {
+
+		mesh_index[i] = i;
+
 
 }
 
