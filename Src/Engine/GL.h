@@ -1,6 +1,8 @@
 #ifndef NANO_GL
 #define NANO_GL
 
+
+
 #ifndef NANO_GLEW
 #define NANO_GLEW
 #include <GLEW/GL/glew.h>
@@ -15,7 +17,6 @@
 #define NANO_CGLM
 #include <CGLM/cglm.h>
 #endif // !NANO_GLEW
-
 
 #endif // NANO_GL
 

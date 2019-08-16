@@ -5,7 +5,13 @@
 #include "../Utils.h"
 #include <string.h>
 
-typedef GLuint Shader;
+typedef struct 
+{
+	GLuint ID;
+	GLuint modelLoc;
+	GLuint viewLoc;
+	GLuint projectionLoc;
+} Shader;
 
 unsigned int shader_CompileShader(string src, GLenum type) {
 	GLuint id = glCreateShader(type);
@@ -29,6 +35,7 @@ unsigned int shader_CompileShader(string src, GLenum type) {
 
 Shader shader_CreateShader(string vs, string fs) {
 	
+	Shader s;
 	unsigned int prog = glCreateProgram();
 	unsigned int vsID = 0;
 	unsigned int fsID = 0;
@@ -44,8 +51,14 @@ Shader shader_CreateShader(string vs, string fs) {
 	glDeleteShader(vsID);
 	glDeleteShader(fsID);
 
+	s.ID = prog;
+	glUseProgram(prog);
+	s.projectionLoc = glGetUniformLocation(prog, "projection");
+	s.modelLoc = glGetUniformLocation(prog, "model");
+	s.viewLoc = glGetUniformLocation(prog, "view");
+	glUseProgram(0);
 
-	return prog;
+	return s;
 }
 
 #endif // !NANO_SHADER

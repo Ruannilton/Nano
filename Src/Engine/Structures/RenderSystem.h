@@ -1,0 +1,7 @@
+#ifndef NANO_RENDER_SYSTEM
+#define NANO_RENDER_SYSTEM
+
+
+
+
+#endif // !NANO_RENDER_SYSTEM

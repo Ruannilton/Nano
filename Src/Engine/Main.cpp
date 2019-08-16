@@ -1,44 +1,16 @@
 #include "NanoEngine.h"
 
-
-float vertices[] = {
-	-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  0.0f, 0.0f,
-	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
-	 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
-	-0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f,  0.0f, 1.0f 
-};
-unsigned int indices[] = {
-	0, 1, 3,
-	1, 2, 3
-};
-
 Mesh* plane;
 Texture* texture;
-
 RenderComponent rc;
 
 
  void Start() {
-	
-	 plane= mesh_BuildMesh(indices, vertices, POSITION_FLAG | COLOR_FLAG | UV_FLAG, SIZEVEC(indices),SIZEVEC(vertices));
-	 
-	 GLuint vao= mesh_genVAO(plane);
-	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
 
-	 rc.Vao = vao;
-	 rc.Shader = DefaultShader;
-	 rc.Texture = texture->id;
-	 rc.IndexCount = plane->indexCount;
-	 memcpy(&rc.Model, MAT4_IDENTITY, sizeof(MAT4_IDENTITY));
-	 
-
-
-	 uint id;
 	 mesh_loader_pre_alloc = kbyte(50);
-	 plane = manager_LoadMesh("Assets/models/Cerberus.obj",&id);
-	 texture = manager_LoadTexture("Assets/Images/Rat.png",&id);
+	 plane = mesh_LoadMesh("Assets/models/Cerberus.obj");
+	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
 	 _RenderComponent(&rc,DefaultShader.ID,texture->id, mesh_genVAO(plane),plane->indexCount);
-
 	 AddRenderComponent(&rc);
 }
  
@@ -56,8 +28,7 @@ RenderComponent rc;
 	 if (KeyHold(GLFW_KEY_S)) {
 		 currentCamera.position[2] += 0.1f;
 	 }
-
-	 currentCamera.rotation[0] += (float)mouse_offsetY;
-	 currentCamera.rotation[1] += (float)mouse_offsetX;
+	 currentCamera.rotation[0] += mouse_offsetY;
+	 currentCamera.rotation[1] += mouse_offsetX;
 	
  }

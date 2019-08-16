@@ -84,22 +84,25 @@ __inline void RenderStaticTree() {
 		shader = shader->prox;
 
 	}
+
 }
 
 __inline void RenderVector() {
 	int i = 0;
-	static mat4 view;
+	mat4 view;
 	camera_ViewProjection(&currentCamera,&view);
 	
 	for (; i < index_renders; i++) {
-
+		
 		glUseProgram(renders[i]->Shader);
 		glUniformMatrix4fv(glGetUniformLocation(renders[i]->Shader, "projection"), 1, GL_FALSE, currentCamera.projection[0]);
 		glUniformMatrix4fv(glGetUniformLocation(renders[i]->Shader, "view"), 1, GL_FALSE, view[0]);
 		glUniformMatrix4fv(glGetUniformLocation(renders[i]->Shader, "model"), 1, GL_FALSE, *(renders[i]->Model));
-		glBindVertexArray(renders[i]->Vao);
+
+		glBindVertexArray(renders[i]->Vao);		
 		glBindTexture(renders[i]->Shader, renders[i]->Texture);
 		glDrawElements(GL_TRIANGLES, renders[i]->IndexCount, GL_UNSIGNED_INT, 0);
+		
 	}
 }
 

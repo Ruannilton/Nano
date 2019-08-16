@@ -9,6 +9,7 @@
 #include "Graphic/Mesh.h"
 #include "Graphic/Texture.h"
 
+
 mat4 MAT4_IDENTITY = GLM_MAT4_IDENTITY_INIT;
 Nano* NanoApplication;
 
@@ -18,6 +19,8 @@ void Update();
 int main() {
 	NanoApplication = CreateNano();
 	
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 	glfwSetInputMode(NanoApplication->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glfwSetKeyCallback(NanoApplication->window, keyCallback);
@@ -25,7 +28,7 @@ int main() {
 	glfwSetMouseButtonCallback(NanoApplication->window, MouseButtonCallback);
 	glfwSetFramebufferSizeCallback(NanoApplication->window, framebufferSizeCallback);
 
-	DefaultShader = shader_CreateShader(ReadFile("Src/Shaders/default.vs"), ReadFile("Src/Shaders/default.fs"));
+	DefaultShader = shader_CreateShader(ReadFile("Assets/Shaders/default.vs"), ReadFile("Assets/Shaders/default.fs"));
 
 	window_height = NanoApplication->windowHeight;
 	window_widht = NanoApplication->windowWidht;
@@ -33,6 +36,10 @@ int main() {
 	initRenderSystem();
 
 	stbi_set_flip_vertically_on_load(1);
+
+	currentCamera.position[2] += 5;
+	currentCamera.rotation[0] = 0;
+	currentCamera.rotation[1] = 270;
 
 	Start();
 	printf("Press ESC to close\n");
