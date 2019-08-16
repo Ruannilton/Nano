@@ -1,6 +1,4 @@
-#ifndef NANO_TEXTURE
-#define NANO_TEXTURE
-
+#pragma once
 
 #include "../GL.h"
 #define STB_IMAGE_IMPLEMENTATION
@@ -49,4 +47,4 @@ Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 Texture* texture_LoadTextureDefault(const char* path) {
 	return texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER);
 }
-#endif // !_nano_texture_
+#pragma once

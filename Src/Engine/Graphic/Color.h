@@ -1,5 +1,4 @@
-#ifndef NANO_COLOR
-#define NANO_COLOR
+#pragma once
 
 #include "../GL.h"
 #define C_RED 0
@@ -12,4 +11,4 @@ typedef vec4 Color;
 #define chColor(R,G,B,A,COLOR) COLOR[C_RED] = R;COLOR[C_GREEN] = G;COLOR[C_BLUE] = B;COLOR[C_ALPHA] =A; 
 
 
-#endif // !NANO_COLOR
+

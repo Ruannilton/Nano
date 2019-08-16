@@ -1,6 +1,4 @@
-#ifndef NANO_GL
-#define NANO_GL
-
+#pragma once
 
 
 #ifndef NANO_GLEW
@@ -18,5 +16,5 @@
 #include <CGLM/cglm.h>
 #endif // !NANO_GLEW
 
-#endif // NANO_GL
+#pragma once
 

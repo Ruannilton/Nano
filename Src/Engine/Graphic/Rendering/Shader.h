@@ -1,17 +1,10 @@
-#ifndef NANO_SHADER
-#define NANO_SHDAER
+#pragma once
 
-#include "../GL.h"
-#include "../Utils.h"
+#include "../../GL.h"
+#include "../../Utils.h"
 #include <string.h>
 
-typedef struct 
-{
-	GLuint ID;
-	GLuint modelLoc;
-	GLuint viewLoc;
-	GLuint projectionLoc;
-} Shader;
+typedef GLuint Shader;
 
 unsigned int shader_CompileShader(string src, GLenum type) {
 	GLuint id = glCreateShader(type);
@@ -50,16 +43,7 @@ Shader shader_CreateShader(string vs, string fs) {
 
 	glDeleteShader(vsID);
 	glDeleteShader(fsID);
-
-	s.ID = prog;
-	glUseProgram(prog);
-	s.projectionLoc = glGetUniformLocation(prog, "projection");
-	s.modelLoc = glGetUniformLocation(prog, "model");
-	s.viewLoc = glGetUniformLocation(prog, "view");
-	glUseProgram(0);
-
-	return s;
+	
+	return prog;
 }
-
-#endif // !NANO_SHADER
 

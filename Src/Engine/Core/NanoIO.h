@@ -1,5 +1,4 @@
-#ifndef NANO_IO
-#define NANO_IO
+#pragma once
 
 #include "../Utils.h"
 
@@ -32,4 +31,3 @@ string ReadFile(string path) {
 }
 
 
-#endif

@@ -1,8 +1,6 @@
-#ifndef NANO_RENDER
-#define NANO_RENDER
+#pragma once
 
 #include "Color.h"
-#include "Shader.h"
 #include "Camera.h"
 #include "../Core/NanoIO.h"
 #include "../Components/RenderComponent.h"
@@ -11,8 +9,6 @@ Color BackGroundColor{ 0, 0.5f, 1, 1 };
 Shader DefaultShader;
 uint window_widht;
 uint window_height;
-
-
 
 RenderComponent* renders[256];
 int index_renders = 0;
@@ -47,13 +43,14 @@ void RenderScene() {
 	
 	for (; i < index_renders; i++) {
 		
-		glUseProgram(renders[i]->Shader);
-		glUniformMatrix4fv(glGetUniformLocation(renders[i]->Shader, "projection"), 1, GL_FALSE, currentCamera.projection[0]);
-		glUniformMatrix4fv(glGetUniformLocation(renders[i]->Shader, "view"), 1, GL_FALSE, view[0]);
-		glUniformMatrix4fv(glGetUniformLocation(renders[i]->Shader, "model"), 1, GL_FALSE, *(renders[i]->Model));
+		glUseProgram(renders[i]->mat->shader_id);
+		glUniformMatrix4fv(7, 1, GL_FALSE, currentCamera.projection[0]);
+		glUniformMatrix4fv(6, 1, GL_FALSE, view[0]);
+		glUniformMatrix4fv(5, 1, GL_FALSE, *(renders[i]->transform));
+		glBindVertexArray(renders[i]->Mesh_ID);		
 
-		glBindVertexArray(renders[i]->Vao);		
-		glBindTexture(renders[i]->Shader, renders[i]->Texture);
+		if(renders[i]->mat->fnc) renders[i]->mat->fnc(renders[i]->mat->shader_id,renders[i]->matData);
+		
 		glDrawElements(GL_TRIANGLES, renders[i]->IndexCount, GL_UNSIGNED_INT, 0);
 		
 	}
@@ -61,4 +58,3 @@ void RenderScene() {
 	
 }
 
-#endif // !NANO_RENDER_ENGINE

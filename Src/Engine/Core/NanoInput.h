@@ -1,6 +1,3 @@
-#ifndef NANO_INPUT
-#define NANO_INPUT
-
 #include"Keyboard.h"
 #include "Mouse.h"
 
@@ -9,4 +6,3 @@ void ClearInputs() {
 	MouseClear();
 }
 
-#endif // !NANO_INPUT

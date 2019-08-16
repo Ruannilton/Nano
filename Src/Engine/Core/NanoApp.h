@@ -1,5 +1,4 @@
-#ifndef NANO_APP
-#define NANO_APP
+#pragma once
 
 #include "../GL.h"
 #include "../Utils.h"
@@ -36,5 +35,5 @@ Nano* CreateNano() {
 	
 	return nano;
 }
-#endif // !NANO_APP
+
 

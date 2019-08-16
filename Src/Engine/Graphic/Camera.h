@@ -1,5 +1,4 @@
-#ifndef NANO_CAMERA
-#define NANO_CAMERA
+#pragma once
 
 #include "../GL.h"
 #include <string.h>
@@ -45,4 +44,4 @@ void camera_ViewProjection(Camera* cam,mat4* view) {
 	 glm_look(cam->position, cam->front, cam->up, *view);
 	
 }
-#endif // !NANO_CAMERA
+

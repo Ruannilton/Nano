@@ -1,26 +1,31 @@
-#ifndef NANO_RENDER_COMPONENT
-#define NANO_RENDER_COMPONENT
+#pragma once
 
 #include "../GL.h"
 #include <string.h>
+#include "..//Graphic/Rendering/Material.h"
+#include "..//Graphic/Mesh.h"
 
+typedef void* MaterialData;
 
 
 typedef struct {
-	GLuint Shader;
-	GLuint Texture;
-	GLuint Vao;
+	
+	GLuint Mesh_ID;
 	unsigned int IndexCount;
-	mat4 Model;
+	mat4 transform;
+
+	Material* mat;
+	MaterialData matData;
 }RenderComponent;
 
-__inline void _RenderComponent(RenderComponent* rc, GLuint shader, GLuint texture, GLuint vao, unsigned int IndexCount) {
-	mat4 identity = GLM_MAT4_IDENTITY_INIT;
-	rc->IndexCount = IndexCount;
-	rc->Shader = shader;
-	rc->Texture = texture;
-	rc->Vao = vao;
-	memcpy(rc->Model, identity, sizeof(identity));
+RenderComponent* RenderComponent_Create(Mesh* mesh, Material* mat, MaterialData dat) {
+	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
+	RenderComponent* cmp = NEW(RenderComponent);
+	cmp->IndexCount = mesh->indexCount;
+	cmp->mat = mat;
+	cmp->matData = dat;
+	cmp->Mesh_ID = mesh->mesh_id;
+	memcpy(cmp->transform, identity, sizeof(identity));
 }
 
-#endif // !NANO_RENDER_COMPONENT
+

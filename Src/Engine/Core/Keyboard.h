@@ -1,5 +1,4 @@
-#ifndef NANO_KEYBOARD
-#define NANO_KEYBOARD
+#pragma once
 
 #include "../GL.h"
 
@@ -17,4 +16,3 @@ void keyCallback(GLFWwindow* win, int key, int scancode, int action, int mod) {
 }
 
 
-#endif // !NANO_KEYBOARD

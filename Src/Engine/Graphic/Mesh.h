@@ -1,5 +1,4 @@
-#ifndef NANO_MESH
-#define NANO_MESH
+#pragma once
 
 #include "../Utils.h"
 #include "../Core/NanoIO.h"
@@ -11,12 +10,12 @@
 #define NORMAL_FLAG 8
 #define UV_FLAG 16
 
-int mesh_loader_pre_alloc = kbyte(0.5);
+__declspec(selectany) int mesh_loader_pre_alloc = kbyte(0.5);
 
 typedef struct {
 	float* vertex;
 	unsigned int* index;
-	
+	GLuint mesh_id;
 	unsigned int flag;
 	unsigned int vertexSize = 0;
 	unsigned int vertexCount;
@@ -30,6 +29,8 @@ void mesh_calculateVertexSize(Mesh* mesh) {
 	if (mesh->flag & NORMAL_FLAG) mesh->vertexSize += 3;
 	if (mesh->flag & UV_FLAG) mesh->vertexSize += 2;
 }
+
+GLuint mesh_genVAO(Mesh* mesh);
 
 Mesh* mesh_LoadMesh(string path) {
 	FILE* file;
@@ -194,6 +195,7 @@ Mesh* mesh_LoadMesh(string path) {
 	free(uvList);
 	free(faceList);
 	fclose(file);
+	mesh_genVAO(mesh);
 	printf("Loaded %s\n", path);
 	return mesh;
 }
@@ -253,7 +255,7 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	mesh->mesh_id = vao;
 	return vao;
 }
 
@@ -279,4 +281,4 @@ __inline void mesh_DisableFlags(Mesh* m, unsigned int flags) {
 	m->flag ^= flags;
 }
 
-#endif // !NANO_MESH
+

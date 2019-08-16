@@ -1,13 +1,12 @@
-#ifndef NANO_ENGINE
-#define NANO_ENGINE
+#pragma once
 
 #include "Core/NanoApp.h"
 #include "Core/NanoIO.h"
 #include "Core/NanoInput.h"
 
 #include "Graphic/NanoRender.h"
-#include "Graphic/Mesh.h"
 #include "Graphic/Texture.h"
+
 
 
 mat4 MAT4_IDENTITY = GLM_MAT4_IDENTITY_INIT;
@@ -60,5 +59,5 @@ int main() {
 	free(NanoApplication);
 	return 0;
 }
-#endif // ! NANO_ENGINE
+
 

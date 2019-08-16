@@ -2,16 +2,33 @@
 
 Mesh* plane;
 Texture* texture;
-RenderComponent rc;
+RenderComponent* rc;
 
+Material texMaterial;
+
+typedef struct TexturedMaterial {
+	GLuint tex_id;
+};
+
+void TexturedMaterialFnc(GLuint shader, void* data) {
+	TexturedMaterial* dat = (TexturedMaterial*)data;
+	glBindTexture(shader, dat->tex_id);
+}
+
+TexturedMaterial matData;
 
  void Start() {
+
+	 texMaterial.shader_id = DefaultShader;
+	 texMaterial.fnc = TexturedMaterialFnc;
 
 	 mesh_loader_pre_alloc = kbyte(50);
 	 plane = mesh_LoadMesh("Assets/models/Cerberus.obj");
 	 texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
-	 _RenderComponent(&rc,DefaultShader.ID,texture->id, mesh_genVAO(plane),plane->indexCount);
-	 AddRenderComponent(&rc);
+	 matData.tex_id = texture->id;
+	 rc = RenderComponent_Create(plane,&texMaterial, &matData);
+
+	 AddRenderComponent(rc);
 }
  
  void Update() {

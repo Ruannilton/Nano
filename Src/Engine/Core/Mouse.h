@@ -1,5 +1,4 @@
-#ifndef NANO_MOUSE
-#define NANO_MOUSE
+#pragma once
 
 #include "../GL.h"
 #include "../Utils.h"
@@ -45,4 +44,4 @@ void MousePosCallback(GLFWwindow* win,double xpos,double ypos) {
 	
 }
 
-#endif // !NANO_MOUSE
+

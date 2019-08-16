@@ -176,8 +176,7 @@
     <ClInclude Include="Src\Engine\Graphic\Rendering\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
-    <ClInclude Include="Src\Engine\Graphic\RenderTree.h" />
-    <ClInclude Include="Src\Engine\Graphic\Shader.h" />
+    <ClInclude Include="Src\Engine\Graphic\Rendering\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
