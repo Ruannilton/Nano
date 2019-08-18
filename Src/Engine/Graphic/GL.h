@@ -1,20 +1,16 @@
 #pragma once
 
-
 #ifndef NANO_GLEW
 #define NANO_GLEW
-#include <GLEW/GL/glew.h>
+#include "../../Dependencies/include/GLEW/GL/glew.h"
 #endif // !NANO_GLEW
 
 #ifndef NANO_GLFW
 #define NANO_GLFW
-#include <GLFW/glfw3.h>
+#include "../../Dependencies/include/GLFW/glfw3.h"
 #endif // !NANO_GLEW
 
 #ifndef NANO_CGLM
 #define NANO_CGLM
-#include <CGLM/cglm.h>
+#include "../../Dependencies/include/CGLM/cglm.h"
 #endif // !NANO_GLEW
-
-#pragma once
-

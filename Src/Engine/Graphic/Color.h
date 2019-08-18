@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GL.h"
+#include "GL.h"
 #define C_RED 0
 #define C_GREEN 1
 #define C_BLUE 2

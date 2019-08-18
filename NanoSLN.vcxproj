@@ -168,19 +168,19 @@
     <ClInclude Include="Src\Engine\Core\Keyboard.h" />
     <ClInclude Include="Src\Engine\Core\Mouse.h" />
     <ClInclude Include="Src\Engine\Core\NanoApp.h" />
+    <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
-    <ClInclude Include="Src\Engine\GL.h" />
+    <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
-    <ClInclude Include="Src\Engine\Graphic\Rendering\Material.h" />
+    <ClInclude Include="Src\Engine\Graphic\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
-    <ClInclude Include="Src\Engine\Graphic\Rendering\Shader.h" />
+    <ClInclude Include="Src\Engine\Graphic\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
-    <ClInclude Include="Src\Engine\Structures\RenderSystem.h" />
     <ClInclude Include="Src\Engine\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -203,7 +203,16 @@
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec3.c" />
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec4.c" />
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c" />
-    <ClCompile Include="Src\Engine\Components\RenderComponent.h" />
+    <ClCompile Include="Src\Engine\Core\Keyboard.c" />
+    <ClCompile Include="Src\Engine\Core\Mouse.c" />
+    <ClCompile Include="Src\Engine\Core\NanoApp.c" />
+    <ClCompile Include="Src\Engine\Core\NanoIO.c" />
+    <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
+    <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
+    <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />
+    <ClCompile Include="Src\Engine\Graphic\RenderComponent.h" />
+    <ClCompile Include="Src\Engine\Graphic\Shader.c" />
+    <ClCompile Include="Src\Engine\Graphic\Texture.c" />
     <ClCompile Include="Src\Engine\Main.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,14 @@
-#pragma once
+#ifndef NANO_MOUSE
+#define NANO_MOUSE
 
-#include "../GL.h"
+#include "../Graphic/GL.h"
 #include "../Utils.h"
+#include "NanoApp.h"
 
-float mouse_Xpos, mouse_Ypos,mouse_offsetX,mouse_offsetY,mouse_Sensitivity = 0.05f;
-int mouseButtons[GLFW_MOUSE_BUTTON_LAST + 1];
-int mouseButtonsHold[GLFW_MOUSE_BUTTON_LAST + 1];
-int first = 0;
+UNIQUE float mouse_Xpos, mouse_Ypos, mouse_offsetX, mouse_offsetY, mouse_Sensitivity = 0.05f;
+UNIQUE int mouseButtons[GLFW_MOUSE_BUTTON_LAST + 1];
+UNIQUE int mouseButtonsHold[GLFW_MOUSE_BUTTON_LAST + 1];
+UNIQUE int nano_mouse_first_flag = 0;
 
 #define MouseButtonPress(BUTTON) mouseButtons[BUTTON] == GLFW_PRESS+1
 #define MouseButtonHold(BUTTON) mouseButtonsHold[BUTTON] == GLFW_PRESS
@@ -17,31 +19,27 @@ __inline void initMouse(Nano* nanoApp) {
 	mouse_offsetY = nanoApp->windowHeight / 2.0f;
 }
 
-void MouseClear() {
-	REPEAT(GLFW_MOUSE_BUTTON_LAST+1) mouseButtons[i] = 0;
+__inline void MouseClear() {
+	REPEAT(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
 }
 
-void MouseScrollcallback(GLFWwindow* window, double xoffset, double yoffset)
-{
-}
-void MouseButtonCallback(GLFWwindow* win, int button, int action, int mods) {
-	mouseButtons[button] = action + 1;
-	mouseButtonsHold[button] = action;
-}
-void MousePosCallback(GLFWwindow* win,double xpos,double ypos) {
-	if (first == 0) {
-		first = 1;
-		mouse_Xpos = xpos;
-		mouse_Ypos = ypos;
-		return;
-	}
-	mouse_offsetX = xpos-mouse_Xpos;
-	mouse_offsetY = mouse_Ypos - ypos;
-	mouse_offsetX *= mouse_Sensitivity;
-	mouse_offsetY *= mouse_Sensitivity;
-	mouse_Xpos = xpos;
-	mouse_Ypos = ypos;
-	
-}
+void MousePosCallback(GLFWwindow* win, double xpos, double ypos);
+void MouseScrollcallback(GLFWwindow* window, double xoffset, double yoffset);
+void MouseButtonCallback(GLFWwindow* win, int button, int action, int mods);
+void MousePosCallback(GLFWwindow* win, double xpos, double ypos);
+
+
+#endif // !NANO_MOUSE
+
+
+
+
+
+
+
+
+
+
+
 
 

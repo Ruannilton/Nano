@@ -90,9 +90,6 @@
     <ClInclude Include="Src\Dependencies\include\STB\stretchy_buffer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\GL.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Engine\Core\NanoApp.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -276,16 +273,10 @@
     <ClInclude Include="Src\Engine\Core\Keyboard.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\Mesh.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Engine\Core\NanoInput.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Src\Engine\Core\Mouse.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\Texture.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h">
@@ -297,13 +288,22 @@
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Structures\RenderSystem.h">
+    <ClInclude Include="Src\Engine\Graphic\Texture.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\Rendering\Material.h">
+    <ClInclude Include="Src\Engine\Graphic\Material.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\Rendering\Shader.h">
+    <ClInclude Include="Src\Engine\Graphic\Mesh.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Shader.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\GL.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Core\NanoCore.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
@@ -368,7 +368,34 @@
     <ClCompile Include="Src\Engine\Main.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Engine\Components\RenderComponent.h">
+    <ClCompile Include="Src\Engine\Graphic\Mesh.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\RenderComponent.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\RenderComponent.h">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\Shader.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\Texture.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\NanoRender.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Core\NanoIO.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Core\Keyboard.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Core\NanoApp.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Core\Mouse.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>

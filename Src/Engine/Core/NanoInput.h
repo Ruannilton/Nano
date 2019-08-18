@@ -1,7 +1,7 @@
 #include"Keyboard.h"
 #include "Mouse.h"
 
-void ClearInputs() {
+__inline void ClearInputs() {
 	KeyClear();
 	MouseClear();
 }
