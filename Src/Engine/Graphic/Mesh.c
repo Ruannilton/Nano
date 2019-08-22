@@ -1,12 +1,13 @@
 #include "Mesh.h"
 #include "../Core/NanoIO.h"
 
+#define LINE_READED_BUFF_SIZE 128
 
 GLuint mesh_genVAO(Mesh* mesh) {
 	GLuint vbo;
 	GLuint ebo;
 	GLuint vao;
-	unsigned int count = 0;
+	uint count = 0;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -14,15 +15,15 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	
-	uint v_size = mesh->vertices_count*sizeof(uint);
-	uint n_size = mesh->normal_count*sizeof(uint);
-	uint t_size = mesh->uv_count*sizeof(uint);
-	uint c_size = mesh->color_count*sizeof(uint);
-
+	GLsizeiptr v_size = mesh->vertices_count*sizeof(Vec3);
+	GLsizeiptr n_size = mesh->normal_count*sizeof(Vec3);
+	GLsizeiptr t_size = mesh->uv_count*sizeof(Vec2);
+	GLsizeiptr c_size = mesh->color_count*sizeof(uint);
+	
 	glBufferSubData(GL_ARRAY_BUFFER, 0,v_size, mesh->vertices);
-	glBufferSubData(GL_ARRAY_BUFFER, v_size, n_size, mesh->normals);
-	glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size, t_size, mesh->uvs);
-	glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size + t_size, c_size, mesh->colors);
+	if (mesh->normal_count)glBufferSubData(GL_ARRAY_BUFFER, v_size, n_size, mesh->normals);
+	if (mesh->uv_count)glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size, t_size, mesh->uvs);
+	if (mesh->color_count)glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size + t_size, c_size, mesh->colors);
 
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -39,40 +40,45 @@ GLuint mesh_genVAO(Mesh* mesh) {
 Mesh* mesh_LoadMesh(string path) {
 	FILE* file;
 	fopen_s(&file, path, "r");
-	char desc[3];
+	char line_readed[LINE_READED_BUFF_SIZE];
 
-	unsigned int vert_count = 0;
-	unsigned int index_count = 0;
-	unsigned int norm_count = 0;
-	unsigned int uv_count = 0;
-	unsigned int i;
+	uint vert_count = 0;
+	uint index_count = 0;
+	uint norm_count = 0;
+	uint uv_count = 0;
+	uint i;
 
-	vec3* vertList = (vec3*)malloc(sizeof(vec3*) * (mesh_loader_pre_alloc + 1));
-	vec3* normList = (vec3*)malloc(sizeof(vec3*) * (mesh_loader_pre_alloc + 1));
-	vec2* uvList = (vec2*)malloc(sizeof(vec2*) * (mesh_loader_pre_alloc + 1));
-	vec3* faceList = (vec3*)malloc(sizeof(vec3*) * (9 * (mesh_loader_pre_alloc + 1)));
+	Vec3* vertList = (Vec3*)malloc(sizeof(Vec3*) * (mesh_loader_pre_alloc + 1));
+	Vec3* normList = (Vec3*)malloc(sizeof(Vec3*) * (mesh_loader_pre_alloc + 1));
+	Vec2* uvList   = (Vec2*)malloc(sizeof(Vec2*) * (mesh_loader_pre_alloc + 1));
+	Face* faceList = (Face*)malloc(sizeof(Face*) * (mesh_loader_pre_alloc + 1));
 
 	Mesh* mesh = (Mesh*)malloc(sizeof(Mesh));
+	mesh->color_count = 0;
+	mesh->uv_count = 0;
+	mesh->normal_count = 0;
+	mesh->colors = 0;
+	mesh->index_count = 0;
 	int index_perline = 0;
 
-#pragma region READ FILE
+
 	while (!feof(file))
 	{
-		if (fscanf_s(file, "%s", &desc)) {
+		if (fscanf_s(file, "%s", &line_readed, LINE_READED_BUFF_SIZE)) {
 
-			if (strcmp(desc, "v") == 0) {
-				vert_count += 3;
-				fscanf_s(file, "%f %f %f", &vertList[vert_count][0], &vertList[vert_count][1], &vertList[vert_count][2]);
+			if (strcmp(line_readed, "v") == 0) {
+				fscanf_s(file, "%f %f %f", &vertList[vert_count].x, &vertList[vert_count].y, &vertList[vert_count].z);
+				vert_count++;
 			}
-			else if (strcmp(desc, "vn") == 0) {
-				norm_count += 3;
-				fscanf_s(file, "%f %f %f", &normList[norm_count][0], &normList[norm_count][1], &normList[norm_count][2]);
+			else if (strcmp(line_readed, "vn") == 0) {
+				fscanf_s(file, "%f %f %f", &normList[norm_count].x, &normList[norm_count].y, &normList[norm_count].z);
+				norm_count++;
 			}
-			else if (strcmp(desc, "vt") == 0) {
-				uv_count += 2;
-				fscanf_s(file, "%f %f", &uvList[uv_count][0], &uvList[uv_count][1]);
+			else if (strcmp(line_readed, "vt") == 0) {				
+				fscanf_s(file, "%f %f", &uvList[uv_count].x, &uvList[uv_count].y);
+				uv_count++;
 			}
-			else if (strcmp(desc, "f") == 0) {
+			else if (strcmp(line_readed, "f") == 0) {
 
 				int vert1, tex1, norm1, vert2, tex2, norm2, vert3, tex3, norm3;
 
@@ -98,102 +104,67 @@ Mesh* mesh_LoadMesh(string path) {
 					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);
 				}
 
-				faceList[index_count][0] = vert1;
-				faceList[index_count + 1][0] = vert2;
-				faceList[index_count + 2][0] = vert3;
-				faceList[index_count][1] = tex1;
-				faceList[index_count + 1][1] = tex2;
-				faceList[index_count + 2][1] = tex3;
-				faceList[index_count][2] = norm1;
-				faceList[index_count + 1][2] = norm2;
-				faceList[index_count + 2][2] = norm3;
-				index_count += 3;
+				faceList[index_count].face1.x = vert1;
+				faceList[index_count].face1.y = tex1;
+				faceList[index_count].face1.z = norm1;
+
+				faceList[index_count].face2.x = vert2;
+				faceList[index_count].face2.y = tex2;
+				faceList[index_count].face2.z = norm2;
+
+				faceList[index_count].face3.x = vert3;
+				faceList[index_count].face3.y = tex3;
+				faceList[index_count].face3.z = norm3;
+
+				index_count ++;
 			}
 		}
 	}
-#pragma endregion
 
-	mesh->normal_count = norm_count;
+	mesh->vertices = (float*)malloc(sizeof(Vec3) * vert_count);
+	mesh->normals  = (float*)malloc(sizeof(Vec3) * norm_count);
+	mesh->uvs      = (float*)malloc(sizeof(Vec2) * uv_count);
+	mesh->index    = (int*)malloc  (sizeof(int)*3*index_count);
+	mesh->colors = 0;
+
 	mesh->vertices_count = vert_count;
+	mesh->normal_count = norm_count;
 	mesh->uv_count = uv_count;
-	mesh->index_count = index_count;
+	mesh->color_count = 0;
+	mesh->index_count = 3 * index_count;
 
-	mesh->vertices = (float*)malloc(sizeof(float) *3*index_count);
-	mesh->normals  = (float*)malloc(sizeof(float) *3*index_count);
-	mesh->index    = (uint*) malloc(sizeof(uint)  *1*index_count);
-	mesh->uvs 	   = (float*)malloc(sizeof(float) *2*index_count);
-	
+	Face face;
+	uint c = 0;
+	REPEAT(i,index_count*3,3) {
+		 c = i;
+		 face = faceList[c];
+		 mesh->vertices[c] = vertList[face.face1.x];
+		 mesh->uvs[c]      = uvList  [face.face1.y];
+		 mesh->normals[c]  = normList[face.face1.z];
+		 mesh->index[c] = c;
 
-	unsigned int verti = 0;
-	unsigned int vertu = 0;
-	int iv, in, it;
-	float v1, v2, v3, t1, t2, n1, n2, n3;
+		 c++;
+		 face = faceList[c];
+		 mesh->vertices[c] = vertList[face.face2.x];
+		 mesh->uvs[c] = uvList[face.face2.y];
+		 mesh->normals[c] = normList[face.face2.z];
+		 mesh->index[c] = c;
 
-	for (i = 0; i < index_count; i++) {
-
-		mesh->index[i] = i;
-
-		iv = (int)faceList[i][0];
-		it = (int)faceList[i][1];
-		in = (int)faceList[i][2];
-
-		v1 = vertList[iv][0];
-		v2 = vertList[iv][1];
-		v3 = vertList[iv][2];
-		t1 = uvList[it][0];
-		t2 = uvList[it][1];
-		n1 = normList[in][0];
-		n2 = normList[in][1];
-		n3 = normList[in][2];
-
-		if (uv_count && norm_count) {
-			mesh->vertices[verti] = v1;
-			mesh->vertices[verti + 1] = v2;
-			mesh->vertices[verti + 2] = v3;
-
-			mesh->normals[verti ] = n1;
-			mesh->normals[verti + 1] = n2;
-			mesh->normals[verti + 2] = n3;
-
-			mesh->uvs[vertu] = t1;
-			mesh->uvs[vertu+1] = t2;
-
-			verti += 3;
-			vertu += 2;
-		}
-		else if (uv_count) {
-			mesh->vertices[verti] = v1;
-			mesh->vertices[verti + 1] = v2;
-			mesh->vertices[verti + 2] = v3;
-
-			mesh->uvs[vertu] = t1;
-			mesh->uvs[vertu+1] = t2;
-
-			verti += 3;
-			vertu += 2;
-
-		}
-		else if (norm_count) {
-			mesh->vertices[verti] = v1;
-			mesh->vertices[verti + 1] = v2;
-			mesh->vertices[verti + 2] = v3;
-
-			mesh->normals[verti ] = n1;
-			mesh->normals[verti + 1] = n2;
-			mesh->normals[verti + 2] = n3;
-			
-			verti += 3;
-		}
-
+		 c++;
+		 face = faceList[c];
+		 mesh->vertices[c] = vertList[face.face3.x];
+		 mesh->uvs[c] = uvList[face.face3.y];
+		 mesh->normals[c] = normList[face.face3.z];
+		 mesh->index[c] = c;
 	}
-
+	
 	free(vertList);
 	free(normList);
 	free(uvList);
 	free(faceList);
 
 	fclose(file);
-	mesh_genVAO(mesh);
+	//mesh_genVAO(mesh);
 	printf("Loaded %s\n", path);
 	return mesh;
 }

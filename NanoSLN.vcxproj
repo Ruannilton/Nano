@@ -207,6 +207,7 @@
     <ClCompile Include="Src\Engine\Core\Mouse.c" />
     <ClCompile Include="Src\Engine\Core\NanoApp.c" />
     <ClCompile Include="Src\Engine\Core\NanoIO.c" />
+    <ClCompile Include="Src\Engine\Graphic\Camera.c" />
     <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
     <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />
@@ -219,8 +220,16 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="Program\glew32.dll" />
-    <None Include="Assets\Shaders\default.fs" />
-    <None Include="Assets\Shaders\default.vs" />
+    <Text Include="Assets\Shaders\default.fs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </Text>
+    <Text Include="Assets\Shaders\default.vs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </Text>
     <None Include="Src\Program\glew32.dll" />
   </ItemGroup>
   <ItemGroup>

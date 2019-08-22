@@ -10,14 +10,37 @@
 #define NORMAL_FLAG 8
 #define UV_FLAG 16
 
-UNIQUE int mesh_loader_pre_alloc = kbyte(0.5);
+UNIQUE  ulint mesh_loader_pre_alloc = kbyte(0.5);
 
 typedef struct {
-	float* vertices;
+	float x, y, z;
+}Vec3;
+
+typedef struct {
+	uint x, y, z;
+}uiVec3;
+
+typedef struct {
+	float x, y;
+}Vec2;
+
+typedef struct {
+	Vec3 pos;
+	Vec2 uv;
+	Vec3 normal;
+	Vec3 color;
+}Vertex;
+
+typedef struct {
+	uiVec3 face1, face2, face3;
+}Face;
+
+typedef struct {
+	Vec3* vertices;
 	uint* index;
-	float* uvs;
-	float* colors;
-	float* normals;
+	Vec2* uvs;
+	Vec3* colors;
+	Vec3* normals;
 
 	uint vertices_count;
 	uint index_count;
@@ -33,7 +56,6 @@ GLuint mesh_genVAO(Mesh* mesh);
 Mesh* mesh_LoadMesh(string path);
 
 void mesh_PrintMesh(Mesh* mesh);
-void mesh_calculateVertexSize(Mesh* mesh);
 
 #endif // !NANO_MESH
 

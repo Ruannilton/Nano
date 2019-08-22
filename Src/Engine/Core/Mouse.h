@@ -20,7 +20,7 @@ __inline void initMouse(Nano* nanoApp) {
 }
 
 __inline void MouseClear() {
-	REPEAT(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
+	REPEAT(i,GLFW_MOUSE_BUTTON_LAST + 1,1) mouseButtons[i] = 0;
 }
 
 void MousePosCallback(GLFWwindow* win, double xpos, double ypos);

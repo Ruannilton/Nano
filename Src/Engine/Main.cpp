@@ -3,8 +3,8 @@ extern "C" {
 }
 
  void Start() {
-	 mesh_LoadMesh("Assets/models/Cerberus.obj");
-	 
+	Mesh* m=mesh_LoadMesh("Assets/models/cube.obj");
+	
 }
  
  void Update() {
