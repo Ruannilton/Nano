@@ -10,6 +10,13 @@
 #include "Shader.h"
 #include "RenderComponent.h"
 
+#define SHADER_POS_LOC 0
+#define SHADER_COLOR_LOC 1
+#define SHADER_TEX_LOC 2
+#define SHADER_NORM_LOC 3
+#define SHADER_MODEL_LOC 4
+#define SHADER_VIEW_LOC 5
+#define SHADER_PROJ_LOC 6
 
 UNIQUE Color BackGroundColor;
 UNIQUE Shader DefaultShader;

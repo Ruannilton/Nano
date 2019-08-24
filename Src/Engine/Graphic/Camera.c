@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-void camera_ViewProjection(Camera* cam, mat4* view) {
+void camera_ViewProjection(Camera* cam) {
 	static vec3 pos;
 
 	cam->front[0] = cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1]));
@@ -10,7 +10,7 @@ void camera_ViewProjection(Camera* cam, mat4* view) {
 
 
 
-	glm_look(cam->position, cam->front, cam->up, *view);
+	glm_look(cam->position, cam->front, cam->up, cam->view);
 
 }
 

@@ -14,7 +14,7 @@ typedef struct {
 
 
 RenderComponent* RenderComponent_Create(Mesh* mesh, Material* mat);
-
+void RenderComponent_SetMaterialData(RenderComponent* rc, void* data);
 
 #endif // !NANO_RENDER_COMPONENT
 

@@ -7,6 +7,9 @@ typedef struct {
 	Texture* texture;
 }TexturedMaterial;
 
+Material_CreateBindFnc(TexturedMaterial) {
+	glBindTexture(shader, ((TexturedMaterial*)data)->texture->id);
+}
 
 
 #endif

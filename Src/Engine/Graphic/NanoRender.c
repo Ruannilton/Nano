@@ -22,6 +22,9 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 
 
 void RenderScene() {
-
+	camera_ViewProjection(&currentCamera);
+	glUseProgram(DefaultShader);
+	glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, currentCamera.projection);
+	glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, currentCamera.projection);
 }
 

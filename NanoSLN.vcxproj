@@ -182,6 +182,7 @@
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
     <ClInclude Include="Src\Engine\Utils.h" />
+    <ClInclude Include="Src\Materials\TexturedMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c" />

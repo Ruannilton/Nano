@@ -7,3 +7,7 @@ RenderComponent* RenderComponent_Create(Mesh* mesh, Material* mat) {
 	cmp->mesh = mesh;
 	memcpy(cmp->transform, identity, sizeof(identity));
 }
+
+void RenderComponent_SetMaterialData(RenderComponent* rc, void* data) {
+	rc->mat->data = data;
+}
