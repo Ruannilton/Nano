@@ -48,12 +48,12 @@ Mesh* mesh_LoadMesh(string path) {
 	uint uv_count = 0;
 	uint i;
 
-	Vec3* vertList = (Vec3*)malloc(sizeof(Vec3*) * (mesh_loader_pre_alloc + 1));
-	Vec3* normList = (Vec3*)malloc(sizeof(Vec3*) * (mesh_loader_pre_alloc + 1));
-	Vec2* uvList   = (Vec2*)malloc(sizeof(Vec2*) * (mesh_loader_pre_alloc + 1));
-	Face* faceList = (Face*)malloc(sizeof(Face*) * (mesh_loader_pre_alloc + 1));
+	Vec3* vertList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
+	Vec3* normList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
+	Vec2* uvList   = ARRAY(Vec2,mesh_loader_pre_alloc+1);
+	Face* faceList = ARRAY(Face,mesh_loader_pre_alloc+1);
 
-	Mesh* mesh = (Mesh*)malloc(sizeof(Mesh));
+	Mesh* mesh = NEW(Mesh);
 	mesh->color_count = 0;
 	mesh->uv_count = 0;
 	mesh->normal_count = 0;
@@ -121,41 +121,50 @@ Mesh* mesh_LoadMesh(string path) {
 		}
 	}
 
-	mesh->vertices = (float*)malloc(sizeof(Vec3) * vert_count);
-	mesh->normals  = (float*)malloc(sizeof(Vec3) * norm_count);
-	mesh->uvs      = (float*)malloc(sizeof(Vec2) * uv_count);
-	mesh->index    = (int*)malloc  (sizeof(int)*3*index_count);
+	REPEAT_1 (index_count) {
+		DEBUG("%d %d %d   %d %d %d   %d %d %d", faceList[i].face1.x, faceList[i].face1.y, faceList[i].face1.z, faceList[i].face2.x, faceList[i].face2.y, faceList[i].face2.z, faceList[i].face3.x, faceList[i].face3.y, faceList[i].face3.z);
+	}
+
+	mesh->vertices = ARRAY(Vec3, index_count * 3);
+	mesh->normals  = ARRAY(Vec3, index_count * 3);
+	mesh->uvs      = ARRAY(Vec3, index_count * 3);
+	mesh->index    = ARRAY(int , index_count);
 	mesh->colors = 0;
 
-	mesh->vertices_count = vert_count;
-	mesh->normal_count = norm_count;
-	mesh->uv_count = uv_count;
+	mesh->vertices_count = index_count * 3;
+	mesh->normal_count = index_count * 3;
+	mesh->uv_count = index_count * 3;
 	mesh->color_count = 0;
-	mesh->index_count = 3 * index_count;
+	mesh->index_count =index_count;
 
 	Face face;
-	uint c = 0;
-	REPEAT(i,index_count*3,3) {
-		 c = i;
-		 face = faceList[c];
-		 mesh->vertices[c] = vertList[face.face1.x];
-		 mesh->uvs[c]      = uvList  [face.face1.y];
-		 mesh->normals[c]  = normList[face.face1.z];
-		 mesh->index[c] = c;
+	uint index_c = 0;
+	uint data_c = 0;
+	
 
-		 c++;
-		 face = faceList[c];
-		 mesh->vertices[c] = vertList[face.face2.x];
-		 mesh->uvs[c] = uvList[face.face2.y];
-		 mesh->normals[c] = normList[face.face2.z];
-		 mesh->index[c] = c;
+	REPEAT_1(index_count) {
+		 index_c = i;
+		 face = faceList[i];
+		 mesh->vertices[data_c] = vertList[face.face1.x];
+		 mesh->uvs[data_c]      = uvList  [face.face1.y];
+		 mesh->normals[data_c]  = normList[face.face1.z];
+		 mesh->index[index_c] = index_c;
 
-		 c++;
-		 face = faceList[c];
-		 mesh->vertices[c] = vertList[face.face3.x];
-		 mesh->uvs[c] = uvList[face.face3.y];
-		 mesh->normals[c] = normList[face.face3.z];
-		 mesh->index[c] = c;
+		 index_c++;
+		 face = faceList[index_c];
+		 mesh->vertices[data_c] = vertList[face.face2.x];
+		 mesh->uvs[data_c]      = uvList[face.face2.y];
+		 mesh->normals[data_c]  = normList[face.face2.z];
+		 mesh->index[index_c] = index_c;
+
+		 index_c++;
+		 face = faceList[index_c];
+		 mesh->vertices[data_c] = vertList[face.face3.x];
+		 mesh->uvs[data_c]      = uvList[face.face3.y];
+		 mesh->normals[data_c]  = normList[face.face3.z];
+		 mesh->index[index_c] = index_c;
+		
+		 data_c += 3;
 	}
 	
 	free(vertList);
@@ -164,7 +173,7 @@ Mesh* mesh_LoadMesh(string path) {
 	free(faceList);
 
 	fclose(file);
-	//mesh_genVAO(mesh);
+	mesh_genVAO(mesh);
 	printf("Loaded %s\n", path);
 	return mesh;
 }

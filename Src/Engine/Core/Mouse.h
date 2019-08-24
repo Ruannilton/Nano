@@ -5,6 +5,7 @@
 #include "../Utils.h"
 #include "NanoApp.h"
 
+
 UNIQUE float mouse_Xpos, mouse_Ypos, mouse_offsetX, mouse_offsetY, mouse_Sensitivity = 0.05f;
 UNIQUE int mouseButtons[GLFW_MOUSE_BUTTON_LAST + 1];
 UNIQUE int mouseButtonsHold[GLFW_MOUSE_BUTTON_LAST + 1];
@@ -20,7 +21,7 @@ __inline void initMouse(Nano* nanoApp) {
 }
 
 __inline void MouseClear() {
-	REPEAT(i,GLFW_MOUSE_BUTTON_LAST + 1,1) mouseButtons[i] = 0;
+		REPEAT_1(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
 }
 
 void MousePosCallback(GLFWwindow* win, double xpos, double ypos);
