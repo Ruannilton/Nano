@@ -3,6 +3,11 @@
 
 #define LINE_READED_BUFF_SIZE 128
 
+#define SHADER_POS_LOC 0
+#define SHADER_COLOR_LOC 1
+#define SHADER_TEX_LOC 2
+#define SHADER_NORM_LOC 3
+
 GLuint mesh_genVAO(Mesh* mesh) {
 	GLuint vbo;
 	GLuint ebo;
@@ -13,29 +18,36 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	GLsizeiptr n_size = mesh->normal_count * sizeof(Vec3);
 	GLsizeiptr t_size = mesh->uv_count * sizeof(Vec2);
 	GLsizeiptr c_size = mesh->color_count * sizeof(Vec3);
+	GLsizeiptr i_size = mesh->index_count * sizeof(uint);
+
+	printf("Vert buffer size: %d\n", v_size);
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	
-	glBufferData(GL_ARRAY_BUFFER, v_size +n_size+t_size+c_size, 0, GL_STATIC_DRAW);
-	
+	glBufferData(GL_ARRAY_BUFFER, v_size, mesh->vertices, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0						 , v_size, mesh->vertices);
 	glBufferSubData(GL_ARRAY_BUFFER, v_size                  , n_size, mesh->normals);
 	glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size         , t_size, mesh->uvs);
 	glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size + t_size, c_size, mesh->colors);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*) 0); //vert pos
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*) v_size);//vert normal
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vec2), (void*) (v_size + n_size));//vert uv
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*) (v_size + n_size + t_size));//vert uv
+	glVertexAttribPointer(SHADER_POS_LOC, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*)0); //vert pos
+	glEnableVertexAttribArray(SHADER_POS_LOC);
+
+	glVertexAttribPointer(SHADER_NORM_LOC, 3, GL_FLOAT, GL_FALSE, n_size, (void*)v_size);//vert normal
+	glEnableVertexAttribArray(SHADER_NORM_LOC);
+
+	glVertexAttribPointer(SHADER_TEX_LOC, 2, GL_FLOAT, GL_FALSE, t_size, (void*)(v_size + n_size));//vert uv
+	glEnableVertexAttribArray(SHADER_TEX_LOC);
+
+	glVertexAttribPointer(SHADER_COLOR_LOC, 3, GL_FLOAT, GL_FALSE, c_size, (void*)(v_size + n_size + t_size));//vert color
+	glEnableVertexAttribArray(SHADER_COLOR_LOC);
 
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->index_count * sizeof(unsigned int), mesh->index, GL_STATIC_DRAW);
-
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, i_size, mesh->index, GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -193,6 +205,56 @@ Mesh* mesh_LoadMesh(string path) {
 	fclose(file);
 	mesh_genVAO(mesh);
 	printf("Loaded %s\n", path);
+	return mesh;
+}
+
+Mesh* mesh_LoadPrimitive(uint primitive) {
+
+	Mesh* mesh = NEW(Mesh);
+
+	if (primitive == PRIMITIVE_PLANE) {
+
+		mesh->index = ARRAY(uint, 6);
+		mesh->index[0] = 3;
+		mesh->index[1] = 1;
+		mesh->index[2] = 0;
+		mesh->index[3] = 3;
+		mesh->index[4] = 2;
+		mesh->index[5] = 1;
+		mesh->index_count = 6;
+
+		mesh->vertices = ARRAY(Vec3, 4);
+		mesh->vertices[0] = (Vec3){ 0.5f,  0.5f, 0.0f };
+		mesh->vertices[1] = (Vec3){ 0.5f, -0.5f, 0.0f };
+		mesh->vertices[2] = (Vec3){ -0.5f, -0.5f, 0.0f };
+		mesh->vertices[3] = (Vec3){ -0.5f,  0.5f, 0.0f };
+		mesh->vertices_count = 4;
+
+		mesh->colors = ARRAY(Vec3, 4);
+		mesh->colors[0] = (Vec3){ 1.0f,0.5f,0.5f };
+		mesh->colors[1] = (Vec3){ 1.0f,0.5f,0.5f };
+		mesh->colors[2] = (Vec3){ 1.0f,0.5f,0.5f };
+		mesh->colors[3] = (Vec3){ 1.0f,0.5f,0.5f };
+		mesh->color_count = 4;
+
+		mesh->uvs = ARRAY(Vec2, 4);
+		mesh->uvs[0] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[1] = (Vec2){ 1.0f,0.0f };
+		mesh->uvs[2] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[3] = (Vec2){ 0.0f,1.0f };
+		mesh->uv_count = 4;
+
+		mesh->normals = ARRAY(Vec3, 4);
+		mesh->normals[0] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normal_count = 4;
+
+	}
+
+	mesh_genVAO(mesh);
+
 	return mesh;
 }
 

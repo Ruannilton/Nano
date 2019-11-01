@@ -15,6 +15,7 @@ extern "C" {
 	RenderComponent* rc = RenderComponent_Create(m, mat);
 	
 	AddToRender(rc);
+
 	
 }
  

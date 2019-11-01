@@ -11,6 +11,7 @@ typedef struct {
 }TexturedMaterial;
 
 Material_CreateBindFnc(TexturedMaterial) {
+	printf("Binding texture %d on shader %d\n", ((TexturedMaterial*)data)->texture->id, shader);
 	glBindTexture(shader, ((TexturedMaterial*)data)->texture->id);
 }
 

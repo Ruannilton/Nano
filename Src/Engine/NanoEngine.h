@@ -30,9 +30,9 @@ int main() {
 	initRenderSystem();
 	// stbi_set_flip_vertically_on_load(1);
 
-	currentCamera.position[2] += 5;
-	currentCamera.rotation[0] = 0;
-	currentCamera.rotation[1] = 270;
+	//currentCamera.position[2] += 5;
+	//currentCamera.rotation[0] = 0;
+	//currentCamera.rotation[1] = 270;
 
 	Start();
 	printf("Press ESC to close\n");
@@ -46,8 +46,8 @@ int main() {
 
 		Update();
 		RenderScene();
-
 		glfwSwapBuffers(NanoApplication->window);
+		
 		mouse_offsetX = 0;
 		mouse_offsetY = 0;
 	}

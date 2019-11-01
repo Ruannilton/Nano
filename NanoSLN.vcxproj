@@ -171,8 +171,6 @@
     <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
-    <ClInclude Include="Src\Engine\Data Structures\LinkedTable.h" />
-    <ClInclude Include="Src\Engine\Data Structures\NanoDataStructures.h" />
     <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
@@ -210,7 +208,6 @@
     <ClCompile Include="Src\Engine\Core\Mouse.c" />
     <ClCompile Include="Src\Engine\Core\NanoApp.c" />
     <ClCompile Include="Src\Engine\Core\NanoIO.c" />
-    <ClCompile Include="Src\Engine\Data Structures\LinkedTable.c" />
     <ClCompile Include="Src\Engine\Graphic\Camera.c" />
     <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
     <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />

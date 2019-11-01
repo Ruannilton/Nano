@@ -19,6 +19,6 @@ __inline void camera_SetCameraOrtho(float x0, float y0, float x1, float y1, floa
 	glm_ortho(x0, y0, x1, y1, zNear, zFar, cam->projection);
 }
 
-void camera_ViewProjection(Camera* cam);
+void camera_UpdateView(Camera* cam);
 void camera_CreateCamera(Camera* cam, vec3 position);
 #endif

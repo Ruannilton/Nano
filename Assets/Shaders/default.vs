@@ -8,12 +8,14 @@ layout (location = 4) uniform mat4 model;
 layout (location = 5) uniform mat4 view;
 layout (location = 6) uniform mat4 projection;
 
+
 out vec3 ourColor;
 out vec2 TexCoord;
 
 
 void main()
 {
-    gl_Position = projection*view*model*vec4(aPos, 1.0);
+
+    gl_Position = /*projection*view*model*/vec4(aPos, 1.0);
     TexCoord = aTexCoord;
 }

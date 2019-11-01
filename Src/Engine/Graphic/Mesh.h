@@ -10,6 +10,9 @@
 #define NORMAL_FLAG 8
 #define UV_FLAG 16
 
+#define PRIMITIVE_PLANE 1
+#define PRIMITIVE_CUBE 2
+
 UNIQUE  ulint mesh_loader_pre_alloc = kbyte(0.5);
 
 typedef struct {
@@ -54,6 +57,7 @@ typedef struct {
 
 GLuint mesh_genVAO(Mesh* mesh);
 Mesh* mesh_LoadMesh(string path);
+Mesh* mesh_LoadPrimitive(uint primitive);
 
 void mesh_PrintMesh(Mesh* mesh);
 
