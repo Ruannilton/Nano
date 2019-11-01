@@ -5,8 +5,14 @@
 #include <string.h>
 
 typedef struct {
-	vec3 position,rotation,front, up;
-	mat4 projection,view;
+	vec3 position;
+	vec3 front;
+	vec3 up;
+
+	vec3 rotation;
+
+	mat4 projection;
+	mat4 view;
 }Camera;
 
 
@@ -21,4 +27,5 @@ __inline void camera_SetCameraOrtho(float x0, float y0, float x1, float y1, floa
 
 void camera_UpdateView(Camera* cam);
 void camera_CreateCamera(Camera* cam, vec3 position);
+void camera_Translate(Camera* cam, vec3 direction);
 #endif

@@ -2,7 +2,7 @@
 
 
 void camera_UpdateView(Camera* cam) {
-	static vec3 pos;
+	
 
 	cam->front[0] = cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1]));
 	cam->front[1] = sin(glm_rad(cam->rotation[0]));
@@ -12,7 +12,6 @@ void camera_UpdateView(Camera* cam) {
 }
 
 void camera_CreateCamera(Camera* cam, vec3 position) {
-	static mat4 identity = { {1.0f,1.0f,1.0f,1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,1.0f,1.0f,1.0f}};
 	
 	cam->position[0] = position[0];
 	cam->position[1] = position[1];
@@ -27,9 +26,21 @@ void camera_CreateCamera(Camera* cam, vec3 position) {
 	cam->front[1] = 0;
 	cam->front[2] = -1;
 
-	memcpy(cam->view, identity, sizeof(identity));
-	memcpy(cam->projection, identity, sizeof(identity));
+	glm_look(cam->position, cam->front, cam->up, cam->view);
+	//memcpy(cam->projection, identity, sizeof(identity));	
+}
 
-	glm_translate(cam->view, position);
+void camera_Translate(Camera* cam, vec3 direction) {
+	cam->position[2] += direction[2];
 	
+	vec3 x_axis = { 0,0,0 };
+	glm_cross(cam->front, cam->up, x_axis);
+	x_axis[0] *= direction[0];
+	x_axis[1] *= direction[0];
+	x_axis[2] *= direction[0];
+	glm_normalize(x_axis);
+
+	cam->position[0] += x_axis[0];
+	cam->position[1] += x_axis[1];
+	cam->position[2] += x_axis[2];
 }

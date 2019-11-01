@@ -11,7 +11,7 @@ extern "C" {
 
 	Material* mat = Material_Create(DefaultShader, Material_GetBindFnc(TexturedMaterial), t_mat);
 	
-	Mesh* m = mesh_LoadMesh("Assets/models/cube.obj");
+	Mesh* m = mesh_LoadPrimitive(PRIMITIVE_PLANE); //mesh_LoadMesh("Assets/models/cube.obj");
 	RenderComponent* rc = RenderComponent_Create(m, mat);
 	
 	AddToRender(rc);
