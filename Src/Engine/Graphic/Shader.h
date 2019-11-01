@@ -7,8 +7,10 @@
 
 typedef GLuint Shader;
 
-unsigned int shader_CompileShader(string src, GLenum type);
-Shader shader_CreateShader(string vs, string fs);
+
+	unsigned int shader_CompileShader(string src, GLenum type);
+	Shader shader_CreateShader(string vs, string fs);
+
 
 #endif // !NANO_SHADER
 

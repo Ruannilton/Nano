@@ -306,6 +306,9 @@
     <ClInclude Include="Src\Engine\Core\NanoCore.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Materials\TexturedMaterial.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c">
@@ -398,14 +401,15 @@
     <ClCompile Include="Src\Engine\Core\Mouse.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\Camera.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Program\glew32.dll" />
     <None Include="Program\glew32.dll" />
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="Assets\Shaders\default.fs" />
-    <None Include="Assets\Shaders\default.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">
@@ -419,5 +423,7 @@
     <Text Include="Assets\models\Irex_obj.obj" />
     <Object Include="Assets\models\Cerberus.obj" />
     <Object Include="Assets\models\cube.obj" />
+    <Text Include="Assets\Shaders\default.vs" />
+    <Text Include="Assets\Shaders\default.fs" />
   </ItemGroup>
 </Project>

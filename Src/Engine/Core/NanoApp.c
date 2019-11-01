@@ -26,3 +26,9 @@ Nano* CreateNano() {
 	return nano;
 }
 
+void DeleteNano(Nano* nano) {
+	if (!nano) return;
+	//glfwTerminate();
+	free(nano);
+}
+

@@ -5,6 +5,7 @@
 #include "Core/NanoCore.h"
 #include "Graphic/NanoRender.h"
 
+
 UNIQUE Nano* NanoApplication;
 
 void Start();
@@ -27,16 +28,14 @@ int main() {
 
 	initMouse(NanoApplication);
 	initRenderSystem();
-	//stbi_set_flip_vertically_on_load(1);
+	// stbi_set_flip_vertically_on_load(1);
 
-	currentCamera.position[2] += 5;
-	currentCamera.rotation[0] = 0;
-	currentCamera.rotation[1] = 270;
+	//currentCamera.position[2] += 5;
+	//currentCamera.rotation[0] = 0;
+	//currentCamera.rotation[1] = 270;
 
 	Start();
 	printf("Press ESC to close\n");
-
-
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{
 		if (KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
@@ -47,13 +46,13 @@ int main() {
 
 		Update();
 		RenderScene();
-
 		glfwSwapBuffers(NanoApplication->window);
+		
 		mouse_offsetX = 0;
 		mouse_offsetY = 0;
 	}
-	glfwTerminate();
-	free(NanoApplication);
+	DeleteNano(NanoApplication);
+	
 	return 0;
 }
 

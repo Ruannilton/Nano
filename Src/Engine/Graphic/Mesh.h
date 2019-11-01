@@ -10,33 +10,56 @@
 #define NORMAL_FLAG 8
 #define UV_FLAG 16
 
-UNIQUE int mesh_loader_pre_alloc = kbyte(0.5);
+#define PRIMITIVE_PLANE 1
+#define PRIMITIVE_CUBE 2
+
+UNIQUE  ulint mesh_loader_pre_alloc = kbyte(0.5);
 
 typedef struct {
-	float* vertex;
-	unsigned int* index;
-	GLuint mesh_id;
-	unsigned int flag;
-	unsigned int vertexSize;
-	unsigned int vertexCount;
-	unsigned int indexCount;
+	float x, y, z;
+}Vec3;
+
+typedef struct {
+	uint x, y, z;
+}uiVec3;
+
+typedef struct {
+	float x, y;
+}Vec2;
+
+typedef struct {
+	Vec3 pos;
+	Vec2 uv;
+	Vec3 normal;
+	Vec3 color;
+}Vertex;
+
+typedef struct {
+	uiVec3 face1, face2, face3;
+}Face;
+
+typedef struct {
+	Vec3* vertices;
+	uint* index;
+	Vec2* uvs;
+	Vec3* colors;
+	Vec3* normals;
+
+	uint vertices_count;
+	uint index_count;
+	uint uv_count;
+	uint color_count;
+	uint normal_count;
+	uint mesh_id;
 }Mesh;
 
 
-GLuint mesh_genVAO(Mesh* mesh);
 
+GLuint mesh_genVAO(Mesh* mesh);
 Mesh* mesh_LoadMesh(string path);
-Mesh* mesh_BuildMesh(unsigned int* index, float* vertex, unsigned int flags, int indexCount, int vertexCount);
+Mesh* mesh_LoadPrimitive(uint primitive);
 
 void mesh_PrintMesh(Mesh* mesh);
-void mesh_calculateVertexSize(Mesh* mesh);
 
-
-__inline void mesh_EnableFlags(Mesh* m, unsigned int flags) {
-	m->flag |= flags;
-}
-__inline void mesh_DisableFlags(Mesh* m, unsigned int flags) {
-	m->flag ^= flags;
-}
 #endif // !NANO_MESH
 
