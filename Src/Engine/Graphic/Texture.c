@@ -1,4 +1,6 @@
 #include "Texture.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include <STB/stb_image.h>
 
 Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
 	Texture* tex = (Texture*)malloc(sizeof(Texture));
@@ -10,7 +12,7 @@ Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
 
-
+	
 	unsigned char* data = stbi_load(path, &tex->widht, &tex->height, &tex->channels, 0);
 
 	if (data)

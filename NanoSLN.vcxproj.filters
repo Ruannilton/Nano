@@ -309,6 +309,12 @@
     <ClInclude Include="Src\Materials\TexturedMaterial.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Data Structures\NanoDataStructures.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Data Structures\LinkedTable.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c">
@@ -402,6 +408,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Src\Engine\Graphic\Camera.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Data Structures\LinkedTable.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>

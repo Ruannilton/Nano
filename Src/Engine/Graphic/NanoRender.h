@@ -23,8 +23,10 @@ UNIQUE Shader DefaultShader;
 UNIQUE uint window_widht;
 UNIQUE uint window_height;
 UNIQUE Camera currentCamera;
+UNIQUE RenderComponent render[5];
 
 void initRenderSystem();
+void AddToRender(RenderComponent* r);
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void RenderScene();
 

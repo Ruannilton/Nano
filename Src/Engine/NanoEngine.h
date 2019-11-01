@@ -5,8 +5,6 @@
 #include "Core/NanoCore.h"
 #include "Graphic/NanoRender.h"
 
-#define STBI_IMAGE_IMPLEMENTATION
-//#include "..//Dependencies/include/STB/stb_image.h"
 
 UNIQUE Nano* NanoApplication;
 
@@ -53,8 +51,8 @@ int main() {
 		mouse_offsetX = 0;
 		mouse_offsetY = 0;
 	}
-	glfwTerminate();
-	free(NanoApplication);
+	DeleteNano(NanoApplication);
+	
 	return 0;
 }
 

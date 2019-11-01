@@ -1,5 +1,6 @@
 #include "Camera.h"
 
+
 void camera_ViewProjection(Camera* cam) {
 	static vec3 pos;
 

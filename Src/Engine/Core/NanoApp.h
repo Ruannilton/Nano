@@ -12,6 +12,7 @@ typedef struct {
 }Nano;
 
 Nano* CreateNano();
+void DeleteNano(Nano* nano);
 #endif // !NANO_APP
 
 

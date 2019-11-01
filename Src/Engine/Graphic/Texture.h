@@ -1,10 +1,11 @@
+
 #ifndef NANO_TEXTURE
 #define NANO_TEXTURE
 
 #include "GL.h"
 #include <stdio.h>
-#define STB_IMAGE_IMPLEMENTATION
 #include <STB/stb_image.h>
+
 
 
 #define DEFAULT_WRAP GL_REPEAT

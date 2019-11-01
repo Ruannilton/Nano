@@ -13,8 +13,18 @@ typedef struct {
 }RenderComponent;
 
 
-RenderComponent* RenderComponent_Create(Mesh* mesh, Material* mat);
-void RenderComponent_SetMaterialData(RenderComponent* rc, void* data);
+inline RenderComponent* RenderComponent_Create(Mesh* mesh, Material* mat) {
+	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
+	RenderComponent* cmp = NEW(RenderComponent);
+	cmp->mat = mat;
+	cmp->mesh = mesh;
+	memcpy(cmp->transform, identity, sizeof(identity));
+	return cmp;
+}
+
+inline void RenderComponent_SetMaterialData(RenderComponent* rc, void* data) {
+	rc->mat->data = data;
+}
 
 #endif // !NANO_RENDER_COMPONENT
 
