@@ -4,6 +4,7 @@
 #include "Utils.h"
 #include "Core/NanoCore.h"
 #include "Graphic/NanoRender.h"
+#include <STB/stb_image.h>
 
 
 UNIQUE Nano* NanoApplication;
@@ -17,7 +18,7 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	glfwSetInputMode(NanoApplication->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(NanoApplication->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwSetKeyCallback(NanoApplication->window, keyCallback);
 	glfwSetCursorPosCallback(NanoApplication->window, MousePosCallback);
 	glfwSetMouseButtonCallback(NanoApplication->window, MouseButtonCallback);
@@ -28,12 +29,9 @@ int main() {
 
 	initMouse(NanoApplication);
 	initRenderSystem();
-	// stbi_set_flip_vertically_on_load(1);
+	 stbi_set_flip_vertically_on_load(1);
 
-	//currentCamera.position[2] += 5;
-	//currentCamera.rotation[0] = 0;
-	//currentCamera.rotation[1] = 270;
-
+	
 	Start();
 	printf("Press ESC to close\n");
 	while (!glfwWindowShouldClose(NanoApplication->window))

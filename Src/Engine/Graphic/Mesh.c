@@ -20,14 +20,14 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	GLsizeiptr c_size = mesh->color_count * sizeof(Vec3);
 	GLsizeiptr i_size = mesh->index_count * sizeof(uint);
 
-	printf("Vert buffer size: %d\n", v_size);
+	printf("Vert buffer size: %d\n", c_size);
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, v_size, mesh->vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, v_size+n_size+t_size+c_size, 0, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0						 , v_size, mesh->vertices);
 	glBufferSubData(GL_ARRAY_BUFFER, v_size                  , n_size, mesh->normals);
 	glBufferSubData(GL_ARRAY_BUFFER, v_size + n_size         , t_size, mesh->uvs);
@@ -231,16 +231,16 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices_count = 4;
 
 		mesh->colors = ARRAY(Vec3, 4);
-		mesh->colors[0] = (Vec3){ 1.0f,0.5f,0.5f };
-		mesh->colors[1] = (Vec3){ 1.0f,0.5f,0.5f };
-		mesh->colors[2] = (Vec3){ 1.0f,0.5f,0.5f };
-		mesh->colors[3] = (Vec3){ 1.0f,0.5f,0.5f };
+		mesh->colors[0] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3] = (Vec3){ 1.0f,1.0f,1.0f };
 		mesh->color_count = 4;
 
 		mesh->uvs = ARRAY(Vec2, 4);
-		mesh->uvs[0] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[0] = (Vec2){ 1.0f,1.0f };
 		mesh->uvs[1] = (Vec2){ 1.0f,0.0f };
-		mesh->uvs[2] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[2] = (Vec2){ 0.0f,0.0f };
 		mesh->uvs[3] = (Vec2){ 0.0f,1.0f };
 		mesh->uv_count = 4;
 

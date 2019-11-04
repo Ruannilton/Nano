@@ -4,7 +4,7 @@
 
 Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
 	Texture* tex = (Texture*)malloc(sizeof(Texture));
-
+	
 	glGenTextures(1, &tex->id);
 	glBindTexture(GL_TEXTURE_2D, tex->id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
@@ -14,10 +14,9 @@ Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 
 	
 	unsigned char* data = stbi_load(path, &tex->widht, &tex->height, &tex->channels, 0);
-
+	
 	if (data)
 	{
-
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->widht, tex->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
