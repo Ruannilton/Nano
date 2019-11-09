@@ -1,5 +1,6 @@
 #include "NanoRender.h"
 
+
 UNIQUE RenderComponent* render_list[128];
 UNIQUE int render_list_count = 0;
 
@@ -12,9 +13,9 @@ void initRenderSystem() {
 	BackGroundColor[3] = 1;
 
 	glViewport(0, 0, window_widht, window_height);
-    DefaultShader = shader_CreateShader(ReadFile("Assets/Shaders/default.vs"), ReadFile("Assets/Shaders/default.fs"));
+    DefaultShader = shader_CreateShader(ReadFile("Assets/Shaders/default.vert"), ReadFile("Assets/Shaders/default.frag"));
 	camera_CreateCamera(&currentCamera, pos);
-	camera_SetCameraPerspective(glm_rad(70.0f), ((float)window_widht) / window_height, 0.1f, 1000.0f, &currentCamera);
+	camera_SetCameraPerspective(currentCamera.fov, ((float)window_widht) / window_height, 0.1f, 1000.0f, &currentCamera);
 }
 
 void AddToRender(RenderComponent* c) {
@@ -28,11 +29,13 @@ void AddToRender(RenderComponent* c) {
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
+	camera_SetCameraPerspective(currentCamera.fov, ((float)width) / height, currentCamera.zNear, currentCamera.zFar, &currentCamera);
 }
 
 
 void RenderScene() {
 	camera_UpdateView(&currentCamera);
+	
 	
 	register int i = 0;
 	

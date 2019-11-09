@@ -6,7 +6,7 @@
 #include "NanoApp.h"
 
 
-UNIQUE float mouse_Xpos, mouse_Ypos, mouse_offsetX, mouse_offsetY, mouse_Sensitivity = 0.05f;
+UNIQUE double mouse_Xpos, mouse_Ypos, mouse_delta_x = 0, mouse_delta_y = 0, mouse_Sensitivity = 0.05f, mouse_delta_scroll_x=0, mouse_delta_scroll_y=0;
 UNIQUE int mouseButtons[GLFW_MOUSE_BUTTON_LAST + 1];
 UNIQUE int mouseButtonsHold[GLFW_MOUSE_BUTTON_LAST + 1];
 UNIQUE int nano_mouse_first_flag = 0;
@@ -16,16 +16,22 @@ UNIQUE int nano_mouse_first_flag = 0;
 #define MouseButtonRelease(BUTTON) mouseButtons[BUTTON] == GLFW_RELEASE+1
 
 __inline void initMouse(Nano* nanoApp) {
-	mouse_offsetX = nanoApp->windowWidht / 2.0f;
-	mouse_offsetY = nanoApp->windowHeight / 2.0f;
+	REPEAT_1(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
 }
 
 __inline void MouseClear() {
 		REPEAT_1(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
 }
 
+__inline void MouseRestore() {
+	mouse_delta_x = 0;
+	mouse_delta_y = 0;
+	mouse_delta_scroll_x = 0;
+	mouse_delta_scroll_y = 0;
+}
+
 void MousePosCallback(GLFWwindow* win, double xpos, double ypos);
-void MouseScrollcallback(GLFWwindow* window, double xoffset, double yoffset);
+void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void MouseButtonCallback(GLFWwindow* win, int button, int action, int mods);
 void MousePosCallback(GLFWwindow* win, double xpos, double ypos);
 

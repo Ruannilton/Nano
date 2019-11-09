@@ -39,10 +39,10 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	glVertexAttribPointer(SHADER_NORM_LOC, 3, GL_FLOAT, GL_FALSE, n_size, (void*)v_size);//vert normal
 	glEnableVertexAttribArray(SHADER_NORM_LOC);
 
-	glVertexAttribPointer(SHADER_TEX_LOC, 2, GL_FLOAT, GL_FALSE, t_size, (void*)(v_size + n_size));//vert uv
+	glVertexAttribPointer(SHADER_TEX_LOC, 2, GL_FLOAT, GL_TRUE, t_size, (void*)(v_size + n_size));//vert uv
 	glEnableVertexAttribArray(SHADER_TEX_LOC);
 
-	glVertexAttribPointer(SHADER_COLOR_LOC, 3, GL_FLOAT, GL_FALSE, c_size, (void*)(v_size + n_size + t_size));//vert color
+	glVertexAttribPointer(SHADER_COLOR_LOC, 3, GL_FLOAT, GL_TRUE, c_size, (void*)(v_size + n_size + t_size));//vert color
 	glEnableVertexAttribArray(SHADER_COLOR_LOC);
 
 	glGenBuffers(1, &ebo);
@@ -230,7 +230,7 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[3] = (Vec3){ -0.5f,  0.5f, 0.0f };
 		mesh->vertices_count = 4;
 
-		mesh->colors = ARRAY(Vec3, 4);
+		mesh->colors = ARRAY(Vec3, 3);
 		mesh->colors[0] = (Vec3){ 1.0f,1.0f,1.0f };
 		mesh->colors[1] = (Vec3){ 1.0f,1.0f,1.0f };
 		mesh->colors[2] = (Vec3){ 1.0f,1.0f,1.0f };
@@ -239,9 +239,9 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 
 		mesh->uvs = ARRAY(Vec2, 4);
 		mesh->uvs[0] = (Vec2){ 1.0f,1.0f };
-		mesh->uvs[1] = (Vec2){ 1.0f,0.0f };
+		mesh->uvs[1] = (Vec2){ 0.0f,1.0f };
 		mesh->uvs[2] = (Vec2){ 0.0f,0.0f };
-		mesh->uvs[3] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[3] = (Vec2){ 1.0f,0.0f };
 		mesh->uv_count = 4;
 
 		mesh->normals = ARRAY(Vec3, 4);
@@ -252,7 +252,204 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->normal_count = 4;
 
 	}
+	else if (primitive == PRIMITIVE_CUBE) {
+		
+		mesh->vertices = ARRAY(Vec3, 24);
+		mesh->colors = ARRAY(Vec3, 24);
+		mesh->normals = ARRAY(Vec3, 24);
+		mesh->uvs = ARRAY(Vec3, 24);
+		mesh->index = ARRAY(uint, 36);
 
+		mesh->vertices_count = 24;
+		mesh->color_count = 24;
+		mesh->normal_count = 24;
+		mesh->uv_count = 24;
+		mesh->index_count = 36;
+		
+		int vert_c = 0, index_c = 0;
+
+		//front
+		mesh->vertices[0+ vert_c] = (Vec3){ 1.0f,  1.0, 0.0f };
+		mesh->vertices[1+ vert_c] = (Vec3){ 1.0f, 0.0f, 0.0f };
+		mesh->vertices[2+ vert_c] = (Vec3){ 0.0f, 0.0f, 0.0f };
+		mesh->vertices[3+ vert_c] = (Vec3){ 0.0f,  1.0f, 0.0f };
+		
+		mesh->colors[0 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->normals[0 + vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1 + vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2 + vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3 + vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+
+		mesh->uvs[0 + vert_c] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[1 + vert_c] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[2 + vert_c] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[3 + vert_c] = (Vec2){ 1.0f,0.0f };
+		
+		mesh->index[0+index_c] = 3;
+		mesh->index[1+index_c] = 1;
+		mesh->index[2+index_c] = 0;
+		mesh->index[3+index_c] = 3;
+		mesh->index[4+index_c] = 2;
+		mesh->index[5+index_c] = 1;
+
+		vert_c += 4;
+		index_c += 6;
+
+		//back
+		mesh->vertices[0+ vert_c] = (Vec3){ 0.0f,0.0f,0.0f };
+		mesh->vertices[1+ vert_c] = (Vec3){ 1.0f,0.0f,0.0f };
+		mesh->vertices[2+ vert_c] = (Vec3){ 1.0f,1.0f,0.0f };
+		mesh->vertices[3+ vert_c] = (Vec3){ 0.0f,1.0f,0.0f };
+
+		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+
+		mesh->uvs[0+ vert_c] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[1+ vert_c] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[2+ vert_c] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[3+ vert_c] = (Vec2){ 1.0f,0.0f };
+
+		mesh->index[0+ index_c] = 3;
+		mesh->index[1+ index_c] = 1;
+		mesh->index[2+ index_c] = 0;
+		mesh->index[3+ index_c] = 3;
+		mesh->index[4+ index_c] = 2;
+		mesh->index[5+ index_c] = 1;
+
+		vert_c += 4;
+		index_c += 6;
+
+		//right
+		mesh->vertices[0+ vert_c] = (Vec3){ 0.0f,0.0f,0.0f };
+		mesh->vertices[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->vertices[2+ vert_c] = (Vec3){ 0.0f,1.0f,0.0f };
+		mesh->vertices[3+ vert_c] = (Vec3){ 0.0f,1.0f,1.0f };
+
+		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+
+		mesh->uvs[0+ vert_c] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[1+ vert_c] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[2+ vert_c] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[3+ vert_c] = (Vec2){ 1.0f,0.0f };
+
+		mesh->index[0+ index_c] = 3;
+		mesh->index[1+ index_c] = 1;
+		mesh->index[2+ index_c] = 0;
+		mesh->index[3+ index_c] = 3;
+		mesh->index[4+ index_c] = 2;
+		mesh->index[5+ index_c] = 1;
+
+		vert_c += 4;
+		index_c += 6;
+		//left
+		mesh->vertices[0+ vert_c] = (Vec3){ 1.0f,0.0f,0.0f };
+		mesh->vertices[1+ vert_c] = (Vec3){ 1.0f,0.0f,1.0f };
+		mesh->vertices[2+ vert_c] = (Vec3){ 1.0f,1.0f,0.0f };
+		mesh->vertices[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+
+		mesh->uvs[0+ vert_c] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[1+ vert_c] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[2+ vert_c] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[3+ vert_c] = (Vec2){ 1.0f,0.0f };
+
+		mesh->index[0+ index_c] = 3;
+		mesh->index[1+ index_c] = 1;
+		mesh->index[2+ index_c] = 0;
+		mesh->index[3+ index_c] = 3;
+		mesh->index[4+ index_c] = 2;
+		mesh->index[5+ index_c] = 1;
+
+		vert_c += 4;
+		index_c += 6;
+		//top
+		mesh->vertices[0+ vert_c] = (Vec3){ 0.0f,1.0f,0.0f };
+		mesh->vertices[1+ vert_c] = (Vec3){ 0.0f,1.0f,1.0f };
+		mesh->vertices[2+ vert_c] = (Vec3){ 1.0f,1.0f,0.0f };
+		mesh->vertices[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+
+		mesh->uvs[0+ vert_c] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[1+ vert_c] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[2+ vert_c] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[3+ vert_c] = (Vec2){ 1.0f,0.0f };
+
+		mesh->index[0+ index_c] = 3;
+		mesh->index[1+ index_c] = 1;
+		mesh->index[2+ index_c] = 0;
+		mesh->index[3+ index_c] = 3;
+		mesh->index[4+ index_c] = 2;
+		mesh->index[5+ index_c] = 1;
+		
+		vert_c += 4;
+		index_c += 6;
+
+		//bot
+		mesh->vertices[0+ vert_c] = (Vec3){ 0.0f,0.0f,0.0f };
+		mesh->vertices[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->vertices[2+ vert_c] = (Vec3){ 1.0f,0.0f,0.0f };
+		mesh->vertices[3+ vert_c] = (Vec3){ 1.0f,0.0f,1.0f };
+
+		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+
+		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[2+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+		mesh->normals[3+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
+
+		mesh->uvs[0+ vert_c] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[1+ vert_c] = (Vec2){ 0.0f,1.0f };
+		mesh->uvs[2+ vert_c] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[3+ vert_c] = (Vec2){ 1.0f,0.0f };
+
+		mesh->index[0+ index_c] = 3;
+		mesh->index[1+ index_c] = 1;
+		mesh->index[2+ index_c] = 0;
+		mesh->index[3+ index_c] = 3;
+		mesh->index[4+ index_c] = 2;
+		mesh->index[5+ index_c] = 1;
+		
+	}
 	mesh_genVAO(mesh);
 
 	return mesh;

@@ -423,7 +423,7 @@
     <Text Include="Assets\models\Irex_obj.obj" />
     <Object Include="Assets\models\Cerberus.obj" />
     <Object Include="Assets\models\cube.obj" />
-    <Text Include="Assets\Shaders\default.vs" />
-    <Text Include="Assets\Shaders\default.fs" />
+    <Text Include="Assets\Shaders\default.vert" />
+    <Text Include="Assets\Shaders\default.frag" />
   </ItemGroup>
 </Project>
