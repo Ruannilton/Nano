@@ -13,7 +13,7 @@ extern "C" {
 	
 	Mesh* m = mesh_LoadPrimitive(PRIMITIVE_CUBE);
 	RenderComponent* rc = RenderComponent_Create(m, mat);
-	vec3 pos = { 0,0,0 };
+	vec3 pos = { 1.5f,0,-2.5f };
 	glm_translate(rc->transform, pos);
 	AddToRender(rc);
 
@@ -33,10 +33,10 @@ extern "C" {
 	 DEBUG_C(ANSI_LIGHT_BLUE,"Mouse position:  %f %f",mouse_Xpos,mouse_Ypos);
 	 DEBUG_C(ANSI_LIGHT_GREEN, "Camera looking to: %f %f %f", currentCamera.rotation[0], currentCamera.rotation[1], currentCamera.rotation[2]);
 	 
-	 vec3 left = { -0.5f,0,0 };
-	 vec3 right = {  0.5f,0,0 };
-	 vec3 foward = { 0,0,0.5f };
-	 vec3 backward = { 0.0f,0,-0.5f };
+	 vec3 left = { -0.5f*delta_time,0,0 };
+	 vec3 right = {  0.5f * delta_time,0,0 };
+	 vec3 foward = { 0,0,0.5f * delta_time };
+	 vec3 backward = { 0.0f,0,-0.5f * delta_time };
 
 	 if (KeyHold(GLFW_KEY_A)) {
 		 camera_Translate(&currentCamera, left);

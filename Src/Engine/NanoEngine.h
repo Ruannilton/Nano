@@ -8,6 +8,9 @@
 
 
 UNIQUE Nano* NanoApplication;
+UNIQUE float delta_time = 0;
+UNIQUE double last_time = 0;
+UNIQUE double current_time = 0;
 
 void Start();
 void Update();
@@ -35,6 +38,10 @@ int main() {
 	printf("Press ESC to close\n");
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{
+		current_time = glfwGetTime();
+		delta_time = (float)(current_time - last_time);
+		last_time = current_time;
+
 		if (KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
 		ClearInputs();
 		glfwPollEvents();
