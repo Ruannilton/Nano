@@ -140,7 +140,9 @@ Mesh* mesh_LoadMesh(string path) {
 			}
 		}
 	}
-
+	REPEAT_1(vert_count) {
+		DEBUG("V: %f %f %f", vertList[i].x, vertList[i].y, vertList[i].z);
+	}
 	
 
 	mesh->vertices = ARRAY(Vec3, vert_count * 3);
@@ -155,7 +157,7 @@ Mesh* mesh_LoadMesh(string path) {
 	mesh->color_count = 0;
 	mesh->index_count =index_count * 9;
 
-	//DEBUG("Mesh sizes > \nvert: %d\nnormal: %d\nuv: %d\nindex: %d", mesh->vertices_count, mesh->normal_count, mesh->uv_count, mesh->index_count);
+	DEBUG("Mesh sizes > \nvert: %d\nnormal: %d\nuv: %d\nindex: %d", mesh->vertices_count, mesh->normal_count, mesh->uv_count, mesh->index_count);
 
 	Face face;
 	uint index_c = 0;
@@ -166,7 +168,11 @@ Mesh* mesh_LoadMesh(string path) {
 		 index_c = i;
 		 face = faceList[i];
 
-		// DEBUG("face[%d] %d/%d/%d   %d/%d/%d   %d/%d/%d", i, faceList[i].face1.x, faceList[i].face1.y, faceList[i].face1.z, faceList[i].face2.x, faceList[i].face2.y, faceList[i].face2.z, faceList[i].face3.x, faceList[i].face3.y, faceList[i].face3.z);
+		 Vec3 vert1 = vertList[faceList[i].face1.x];
+		 Vec2 uv1 = uvList[faceList[i].face1.y];
+		 Vec3 norm1 = normList[faceList[i].face1.z];
+
+		 DEBUG("face[%d] %d/%d/%d   %d/%d/%d   %d/%d/%d", i, faceList[i].face1.x, faceList[i].face1.y, faceList[i].face1.z, faceList[i].face2.x, faceList[i].face2.y, faceList[i].face2.z, faceList[i].face3.x, faceList[i].face3.y, faceList[i].face3.z);
 
 		 mesh->vertices[data_c] = vertList[face.face1.x];
 		 mesh->uvs[data_c]      = uvList  [face.face1.y];

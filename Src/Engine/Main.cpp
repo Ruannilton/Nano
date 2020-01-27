@@ -11,10 +11,11 @@ extern "C" {
 
 	Material* mat = Material_Create(TexturedMaterial,DefaultShader, t_mat);
 	
-	Mesh* m = mesh_LoadPrimitive(PRIMITIVE_CUBE);
+	Mesh* m = mesh_LoadMesh("Assets/models/cube.obj");
 	RenderComponent* rc = RenderComponent_Create(m, mat);
 	vec3 pos = { 1.5f,0,-2.5f };
 	glm_translate(rc->transform, pos);
+	glm_scale(rc->transform, vec3{ 10, 10, 10 });
 	AddToRender(rc);
 
 	
