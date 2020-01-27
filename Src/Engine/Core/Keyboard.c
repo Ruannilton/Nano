@@ -1,5 +1,8 @@
 #include "Keyboard.h"
 
+void SetKeyWindow(GLFWwindow* win) {
+	window = win;
+}
 void KeyClear() {
 	for (int i = 0; i < 256; i++) keyboard[i] = 0;
 }

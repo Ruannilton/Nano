@@ -9,7 +9,7 @@ extern "C" {
 	TexturedMaterial* t_mat = NEW(TexturedMaterial);
 	t_mat->texture = texture_LoadTextureDefault("Assets/Images/Rat.png");
 
-	Material* mat = Material_Create(DefaultShader, Material_GetBindFnc(TexturedMaterial), t_mat);
+	Material* mat = Material_Create(TexturedMaterial,DefaultShader, t_mat);
 	
 	Mesh* m = mesh_LoadPrimitive(PRIMITIVE_CUBE);
 	RenderComponent* rc = RenderComponent_Create(m, mat);
@@ -33,21 +33,21 @@ extern "C" {
 	 DEBUG_C(ANSI_LIGHT_BLUE,"Mouse position:  %f %f",mouse_Xpos,mouse_Ypos);
 	 DEBUG_C(ANSI_LIGHT_GREEN, "Camera looking to: %f %f %f", currentCamera.rotation[0], currentCamera.rotation[1], currentCamera.rotation[2]);
 	 
-	 vec3 left = { -0.5f*delta_time,0,0 };
-	 vec3 right = {  0.5f * delta_time,0,0 };
-	 vec3 foward = { 0,0,0.5f * delta_time };
-	 vec3 backward = { 0.0f,0,-0.5f * delta_time };
+	 vec3 left = { -2.5f*delta_time,0,0 };
+	 vec3 right = {  2.5f * delta_time,0,0 };
+	 vec3 foward = { 0,0,2.5f * delta_time };
+	 vec3 backward = { 0.0f,0,-2.5f * delta_time };
 
-	 if (KeyHold(GLFW_KEY_A)) {
+	 if (Key(GLFW_KEY_A)) {
 		 camera_Translate(&currentCamera, left);
 	 }
-	 if (KeyHold(GLFW_KEY_D)) {
+	 if (Key(GLFW_KEY_D)) {
 		 camera_Translate(&currentCamera, right);
 	 }
-	 if (KeyHold(GLFW_KEY_W)) {
+	 if (Key(GLFW_KEY_W)) {
 		 camera_Translate(&currentCamera, foward);
 	 }
-	 if (KeyHold(GLFW_KEY_S)) {
+	 if (Key(GLFW_KEY_S)) {
 		 camera_Translate(&currentCamera, backward);
 	 }
 	 

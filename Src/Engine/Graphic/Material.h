@@ -18,7 +18,9 @@ struct _Material {
 
 typedef struct _Material Material;
 
-inline Material* Material_Create(Shader shader, BindFnc bindFnc, void* data) {
+#define Material_Create(ShaderType,Shader, Data) iMaterial_Create(Shader,Material_GetBindFnc(ShaderType),Data)
+
+inline Material* iMaterial_Create(Shader shader, BindFnc bindFnc, void* data) {
 	Material* m = NEW(Material);
 	m->data = data;
 	m->fnc = bindFnc;

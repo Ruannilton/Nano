@@ -5,7 +5,7 @@ UNIQUE RenderComponent* render_list[128];
 UNIQUE int render_list_count = 0;
 
 void initRenderSystem() {
-	vec3 pos = { 0,0,3.0f };
+	vec3 pos = { 0,0,10.0f };
 
 	BackGroundColor[0] = 0;
 	BackGroundColor[1] = 0.5f;

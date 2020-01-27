@@ -5,10 +5,7 @@
 #include <string.h>
 
 typedef struct {
-	vec3 position;
-	vec3 front;
-	vec3 up;
-	vec3 rotation;
+	vec3 position, front, up, rotation;
 
 	float max_y_angle;
 	float min_y_angle;
