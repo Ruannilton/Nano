@@ -36,13 +36,13 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	glVertexAttribPointer(SHADER_POS_LOC, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*)0); //vert pos
 	glEnableVertexAttribArray(SHADER_POS_LOC);
 
-	glVertexAttribPointer(SHADER_NORM_LOC, 3, GL_FLOAT, GL_FALSE, n_size, (void*)v_size);//vert normal
+	glVertexAttribPointer(SHADER_NORM_LOC, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), (void*)v_size);//vert normal
 	glEnableVertexAttribArray(SHADER_NORM_LOC);
 
-	glVertexAttribPointer(SHADER_TEX_LOC, 2, GL_FLOAT, GL_TRUE, t_size, (void*)(v_size + n_size));//vert uv
+	glVertexAttribPointer(SHADER_TEX_LOC, 2, GL_FLOAT, GL_TRUE, sizeof(Vec2), (void*)(v_size + n_size));//vert uv
 	glEnableVertexAttribArray(SHADER_TEX_LOC);
 
-	glVertexAttribPointer(SHADER_COLOR_LOC, 3, GL_FLOAT, GL_TRUE, c_size, (void*)(v_size + n_size + t_size));//vert color
+	glVertexAttribPointer(SHADER_COLOR_LOC, 3, GL_FLOAT, GL_TRUE, sizeof(Vec3), (void*)(v_size + n_size + t_size));//vert color
 	glEnableVertexAttribArray(SHADER_COLOR_LOC);
 
 	glGenBuffers(1, &ebo);
@@ -70,7 +70,7 @@ Mesh* mesh_LoadMesh(string path) {
 	Vec3* vertList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec3* normList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec2* uvList   = ARRAY(Vec2,mesh_loader_pre_alloc+1);
-	Face* faceList = ARRAY(Face,mesh_loader_pre_alloc+1);
+	Vertex* faceList = ARRAY(Vertex,mesh_loader_pre_alloc+1);
 
 	Mesh* mesh = NEW(Mesh);
 	mesh->color_count = 0;
@@ -80,7 +80,7 @@ Mesh* mesh_LoadMesh(string path) {
 	mesh->index_count = 0;
 	int index_perline = 0;
 
-
+	int quadFace = 0;
 	while (!feof(file))
 	{
 		if (fscanf_s(file, "%s", &line_readed, LINE_READED_BUFF_SIZE)) {
@@ -94,13 +94,14 @@ Mesh* mesh_LoadMesh(string path) {
 				fscanf_s(file, "%f %f %f", &normList[norm_count].x, &normList[norm_count].y, &normList[norm_count].z);
 				norm_count++;
 			}
-			else if (strcmp(line_readed, "vt") == 0) {				
+			else if (strcmp(line_readed, "vt") == 0) {
 				fscanf_s(file, "%f %f", &uvList[uv_count].x, &uvList[uv_count].y);
 				uv_count++;
 			}
 			else if (strcmp(line_readed, "f") == 0) {
 
-				int vert1, tex1, norm1, vert2, tex2, norm2, vert3, tex3, norm3;
+				int vert1, tex1, norm1, vert2, tex2, norm2, vert3, tex3, norm3,vert4,tex4,norm4;
+				
 
 				if (uv_count == 0 && norm_count == 0) {
 					int matches = fscanf_s(file, "%d %d %d", &vert1, &vert2, &vert3);
@@ -121,79 +122,77 @@ Mesh* mesh_LoadMesh(string path) {
 					norm3 = -1;
 				}
 				else {
-					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);
+
+					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3,&vert4,&tex4,&norm4);
+					if (matches == 12) quadFace = 1;
+					//matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);
 				}
 
-				faceList[index_count].face1.x = vert1;
-				faceList[index_count].face1.y = tex1;
-				faceList[index_count].face1.z = norm1;
+				faceList[index_count].pos = vertList[vert1 - 1]; 
+				faceList[index_count].uv = uvList[tex1 - 1];
+				faceList[index_count].normal = normList[norm1 - 1];
+				index_count++;
 
-				faceList[index_count].face2.x = vert2;
-				faceList[index_count].face2.y = tex2;
-				faceList[index_count].face2.z = norm2;
+				faceList[index_count].pos = vertList[vert2 - 1];
+				faceList[index_count].uv = uvList[tex2 - 1];
+				faceList[index_count].normal = normList[norm2 - 1];
+				index_count++;
 
-				faceList[index_count].face3.x = vert3;
-				faceList[index_count].face3.y = tex3;
-				faceList[index_count].face3.z = norm3;
-
+				faceList[index_count].pos = vertList[vert3 - 1];
+				faceList[index_count].uv = uvList[tex3 - 1];
+				faceList[index_count].normal = normList[norm3 - 1];
 				index_count ++;
+
+				if (quadFace) {
+					faceList[index_count].pos = vertList[vert1 - 1];
+					faceList[index_count].uv = uvList[tex1 - 1];
+					faceList[index_count].normal = normList[norm1 - 1];
+					index_count++;
+					
+					faceList[index_count].pos = vertList[vert3 - 1];
+					faceList[index_count].uv = uvList[tex3 - 1];
+					faceList[index_count].normal = normList[norm3 - 1];
+					index_count++;
+
+					faceList[index_count].pos = vertList[vert4 - 1];
+					faceList[index_count].uv = uvList[tex4 - 1];
+					faceList[index_count].normal = normList[norm4 - 1];
+					index_count++;
+				}
 			}
 		}
 	}
-	REPEAT_1(vert_count) {
-		DEBUG("V: %f %f %f", vertList[i].x, vertList[i].y, vertList[i].z);
-	}
+	
+	
 	
 
-	mesh->vertices = ARRAY(Vec3, vert_count * 3);
-	mesh->normals  = ARRAY(Vec3, norm_count * 3);
-	mesh->uvs      = ARRAY(Vec3, uv_count * 3);
-	mesh->index    = ARRAY(int , index_count * 9);
+	mesh->vertices = ARRAY(Vec3, index_count);
+	mesh->normals  = ARRAY(Vec3, index_count);
+	mesh->uvs      = ARRAY(Vec2, index_count);
+	mesh->index    = ARRAY(int , index_count);
 	mesh->colors = 0;
 
-	mesh->vertices_count = index_count * 3;
-	mesh->normal_count = index_count * 3;
-	mesh->uv_count = index_count * 3;
+	mesh->vertices_count = index_count;
+	mesh->normal_count = index_count;
+	mesh->index_count = index_count;
+	mesh->uv_count = index_count;
 	mesh->color_count = 0;
-	mesh->index_count =index_count * 9;
+	
 
 	DEBUG("Mesh sizes > \nvert: %d\nnormal: %d\nuv: %d\nindex: %d", mesh->vertices_count, mesh->normal_count, mesh->uv_count, mesh->index_count);
 
 	Face face;
-	uint index_c = 0;
-	uint data_c = 0;
 	
-
 	REPEAT_1(index_count) {
-		 index_c = i;
-		 face = faceList[i];
+			
+		// DEBUG("face[%d] %d/%d/%d   %d/%d/%d   %d/%d/%d", i, faceList[i].face1.x, faceList[i].face1.y, faceList[i].face1.z, faceList[i].face2.x, faceList[i].face2.y, faceList[i].face2.z, faceList[i].face3.x, faceList[i].face3.y, faceList[i].face3.z);
 
-		 Vec3 vert1 = vertList[faceList[i].face1.x];
-		 Vec2 uv1 = uvList[faceList[i].face1.y];
-		 Vec3 norm1 = normList[faceList[i].face1.z];
+		 mesh->vertices[i] = faceList[i].pos;
+		 mesh->uvs[i]      = faceList[i].uv;
+		 mesh->normals[i]  = faceList[i].normal;
+		 mesh->index[i] = i;
 
-		 DEBUG("face[%d] %d/%d/%d   %d/%d/%d   %d/%d/%d", i, faceList[i].face1.x, faceList[i].face1.y, faceList[i].face1.z, faceList[i].face2.x, faceList[i].face2.y, faceList[i].face2.z, faceList[i].face3.x, faceList[i].face3.y, faceList[i].face3.z);
-
-		 mesh->vertices[data_c] = vertList[face.face1.x];
-		 mesh->uvs[data_c]      = uvList  [face.face1.y];
-		 mesh->normals[data_c]  = normList[face.face1.z];
-		 mesh->index[index_c] = index_c;
-
-		 index_c++;
-		// face = faceList[index_c];
-		 mesh->vertices[data_c] = vertList[face.face2.x];
-		 mesh->uvs[data_c]      = uvList[face.face2.y];
-		 mesh->normals[data_c]  = normList[face.face2.z];
-		 mesh->index[index_c] = index_c;
-
-		 index_c++;
-		// face = faceList[index_c];
-		 mesh->vertices[data_c] = vertList[face.face3.x];
-		 mesh->uvs[data_c]      = uvList[face.face3.y];
-		 mesh->normals[data_c]  = normList[face.face3.z];
-		 mesh->index[index_c] = index_c;
 		
-		 data_c += 3;
 	}
 	
 	free(vertList);
@@ -237,10 +236,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->color_count = 4;
 
 		mesh->uvs = ARRAY(Vec2, 4);
-		mesh->uvs[0] = (Vec2){ 1.0f,1.0f };
-		mesh->uvs[1] = (Vec2){ 0.0f,1.0f };
-		mesh->uvs[2] = (Vec2){ 0.0f,0.0f };
-		mesh->uvs[3] = (Vec2){ 1.0f,0.0f };
+		mesh->uvs[0] = (Vec2){ 0.0f,0.0f };
+		mesh->uvs[1] = (Vec2){ 1.0f,0.0f };
+		mesh->uvs[2] = (Vec2){ 1.0f,1.0f };
+		mesh->uvs[3] = (Vec2){ 0.0f,1.0f };
 		mesh->uv_count = 4;
 
 		mesh->normals = ARRAY(Vec3, 4);

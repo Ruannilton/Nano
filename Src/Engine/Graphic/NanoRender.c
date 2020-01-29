@@ -23,6 +23,7 @@ void AddToRender(RenderComponent* c) {
 		render_list[render_list_count] = c;
 		render_list_count++;
 	 }
+	DEBUG("CCOMP COUNT: %d", render_list_count);
 	
 }
 

@@ -52,7 +52,7 @@ int main() {
 
 	initRenderSystem();
 	SetKeyWindow(NanoApplication->window);
-	stbi_set_flip_vertically_on_load(1);
+	//stbi_set_flip_vertically_on_load(1);
 	Start();
 
 	printf("Press ESC to close\n");

@@ -64,7 +64,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;soil2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -82,7 +82,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;soil2.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;soil2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -147,25 +147,23 @@
     <ClInclude Include="Src\Dependencies\include\GLEW\GL\wglew.h" />
     <ClInclude Include="Src\Dependencies\include\GLFW\glfw3.h" />
     <ClInclude Include="Src\Dependencies\include\GLFW\glfw3native.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_connected_components.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_c_lexer.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_divide.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_dxt.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_easy_font.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_herringbone_wang_tile.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_image.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_image_resize.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_image_write.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_leakcheck.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_perlin.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_rect_pack.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_sprintf.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_textedit.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_tilemap_editor.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_truetype.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_voxel_render.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stretchy_buffer.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\etc1_utils.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\image_DXT.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\image_helper.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\jo_jpeg.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\pkm_helper.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\pvr_helper.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\SOIL2.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_DDS.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_DDS_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_ext.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_ext_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pkm.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pkm_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image_write.h" />
     <ClInclude Include="Src\Engine\Core\Keyboard.h" />
     <ClInclude Include="Src\Engine\Core\Mouse.h" />
     <ClInclude Include="Src\Engine\Core\NanoApp.h" />
@@ -204,7 +202,10 @@
     <ClCompile Include="Src\Dependencies\include\CGLM\src\sphere.c" />
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec3.c" />
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec4.c" />
-    <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\etc1_utils.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\image_DXT.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\image_helper.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\SOIL2.c" />
     <ClCompile Include="Src\Engine\Core\Keyboard.c" />
     <ClCompile Include="Src\Engine\Core\Mouse.c" />
     <ClCompile Include="Src\Engine\Core\NanoApp.c" />
@@ -236,10 +237,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Cerberus_A.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\Images\example2.jpg">
+      <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="Assets\Images\Rat.png">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>

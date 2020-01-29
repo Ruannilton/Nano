@@ -31,14 +31,14 @@ typedef struct {
 	Vec3 pos;
 	Vec2 uv;
 	Vec3 normal;
-	Vec3 color;
 }Vertex;
 
 typedef struct {
-	uiVec3 face1, face2, face3;
+	Vertex vert1, vert2, vert3;
 }Face;
 
 typedef struct {
+	
 	Vec3* vertices;
 	uint* index;
 	Vec2* uvs;
