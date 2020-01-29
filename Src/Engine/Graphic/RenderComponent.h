@@ -6,6 +6,8 @@
 #include "Material.h"
 #include "Mesh.h"
 
+#define RC_SetPosition RenderComponent_SetPosition
+
 typedef struct {
 	Mesh* mesh;
 	Material* mat;
@@ -24,6 +26,10 @@ inline RenderComponent* RenderComponent_Create(Mesh* mesh, Material* mat) {
 
 inline void RenderComponent_SetMaterialData(RenderComponent* rc, void* data) {
 	rc->mat->data = data;
+}
+
+inline void RenderComponent_SetPosition(RenderComponent* rc, vec3 pos) {
+	glm_translate(rc->transform, pos);
 }
 
 #endif // !NANO_RENDER_COMPONENT

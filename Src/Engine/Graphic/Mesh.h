@@ -61,5 +61,9 @@ Mesh* mesh_LoadPrimitive(uint primitive);
 
 void mesh_PrintMesh(Mesh* mesh);
 
+CTR(Mesh) {
+	return self;
+}
+
 #endif // !NANO_MESH
 

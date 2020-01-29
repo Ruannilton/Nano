@@ -6,23 +6,17 @@ extern "C" {
 
  void Start() {
 
-	TexturedMaterial* t_mat = NEW(TexturedMaterial);
-	t_mat->texture = texture_LoadTextureDefault("Assets/Images/Cerberus_A.png");
-
-	Material* mat = Material_Create(TexturedMaterial,DefaultShader, t_mat);
 	mesh_loader_pre_alloc = mbyte(10);
+
+	TexturedMaterial* t_mat = CNEW(TexturedMaterial, "Assets/Images/Cerberus_A.png");
+	Material* mat = CNEW(Material,DefaultShader, TexturedMaterialbndFnc, t_mat);
 	Mesh* m = mesh_LoadMesh("Assets/models/Cerberus.obj");
 	
 	RenderComponent* rc = RenderComponent_Create(m, mat);
 	RenderComponent* rc2 = RenderComponent_Create(m, mat);
 	
-	vec3 pos = { 0.5f,0,-2.5f };
-	glm_translate(rc->transform, pos);
-	glm_scale(rc->transform, vec3{ 1, 1, 1 });
-
-	vec3 pos2 = { -0.5f,0,-2.5f };
-	glm_translate(rc2->transform, pos2);
-	glm_scale(rc2->transform, vec3{ 1, 1, 1 });
+	RC_SetPosition(rc,  vec3{ 0.5f,0,-2.5f });;
+	RC_SetPosition(rc2, vec3{ -0.5f,0,-2.5f });
 
 	AddToRender(rc);
 	AddToRender(rc2);

@@ -18,14 +18,13 @@ struct _Material {
 
 typedef struct _Material Material;
 
-#define Material_Create(ShaderType,Shader, Data) iMaterial_Create(Shader,Material_GetBindFnc(ShaderType),Data)
 
-inline Material* iMaterial_Create(Shader shader, BindFnc bindFnc, void* data) {
-	Material* m = NEW(Material);
-	m->data = data;
-	m->fnc = bindFnc;
-	m->shader_id = shader;
-	return m;
+inline Material* Material_CTR (Material* self, Shader shader, BindFnc bindFnc, void* data) {
+
+	self->data = data;
+	self->fnc = bindFnc;
+	self->shader_id = shader;
+	return self;
 }
 
 

@@ -14,5 +14,9 @@ Material_CreateBindFnc(TexturedMaterial) {
 	glBindTexture(shader, ((TexturedMaterial*)data)->texture->id);
 }
 
+inline TexturedMaterial* TexturedMaterial_CTR(TexturedMaterial* self, string file) {
+	self->texture = texture_LoadTextureDefault("Assets/Images/Cerberus_A.png");
+	return self;
+}
 
 #endif

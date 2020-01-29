@@ -12,7 +12,8 @@ Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 
 	if (tex->id == 0)
 	{
-		printf("%s\n", "Failed to load texture");
+		printf("%s", "Failed to load texture");
+		printf("%s\n", SOIL_last_result());
 		return NULL;
 	}
 
