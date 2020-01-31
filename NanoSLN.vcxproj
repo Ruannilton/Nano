@@ -170,6 +170,7 @@
     <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
+    <ClInclude Include="Src\Engine\DataStructures\Vector.h" />
     <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Src\Engine\Core\Mouse.c" />
     <ClCompile Include="Src\Engine\Core\NanoApp.c" />
     <ClCompile Include="Src\Engine\Core\NanoIO.c" />
+    <ClCompile Include="Src\Engine\DataStructures\Vector.c" />
     <ClCompile Include="Src\Engine\Graphic\Camera.c" />
     <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
     <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
@@ -239,6 +241,9 @@
     <Image Include="Assets\Images\Cerberus_A.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\Images\A_dva.png">
+      <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="Assets\Images\example2.jpg">
       <DeploymentContent>true</DeploymentContent>

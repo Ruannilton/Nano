@@ -11,12 +11,14 @@ typedef struct {
 }TexturedMaterial;
 
 Material_CreateBindFnc(TexturedMaterial) {
-	glBindTexture(shader, ((TexturedMaterial*)data)->texture->id);
+	glBindTexture(GL_TEXTURE_2D, ((TexturedMaterial*)data)->texture->id);
 }
 
-inline TexturedMaterial* TexturedMaterial_CTR(TexturedMaterial* self, string file) {
-	self->texture = texture_LoadTextureDefault("Assets/Images/Cerberus_A.png");
-	return self;
+
+inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, string file) {
+	self->texture = texture_LoadTextureDefault(file);
+	Material* mat = CNEW(Material, shader, TexturedMaterialbndFnc,self);
+	return mat;
 }
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "../Utils.h"
 #include "GL.h"
+#include "../DataStructures/Vector.h"
 
 #define STATIC_FLAG 1
 #define POSITION_FLAG 2

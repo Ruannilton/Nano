@@ -303,6 +303,9 @@
     <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr_c.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\DataStructures\Vector.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c">
@@ -407,6 +410,9 @@
     <ClCompile Include="Src\Dependencies\include\SOIL2\SOIL2.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Engine\DataStructures\Vector.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Program\glew32.dll" />
@@ -422,6 +428,9 @@
       <Filter>Arquivos de Recurso</Filter>
     </Image>
     <Image Include="Assets\Images\example2.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\A_dva.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

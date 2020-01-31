@@ -37,23 +37,23 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 void RenderScene() {
 	camera_UpdateView(&currentCamera);
 	
+	glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, currentCamera.projection);
+	glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, currentCamera.view);
 	
 	register int i = 0;
-	
+	Material* cMat;
 	for (; i < render_list_count; i++) {
-		
-		if (render_list[i]->mat == NULL) glUseProgram(DefaultShader);
-		else glUseProgram(render_list[i]->mat->shader_id);
+		cMat = render_list[i]->mat;
 
-	
-		glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, currentCamera.projection);
-	    glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, currentCamera.view);
+		if (cMat == NULL) glUseProgram(DefaultShader);
+		else glUseProgram(cMat->shader_id);
+
         glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE, render_list[i]->transform);
-		
-		render_list[i]->mat->fnc(render_list[i]->mat->shader_id, render_list[i]->mat->data);
+		cMat->fnc(cMat->shader_id, cMat->data);
+
 		glBindVertexArray(render_list[i]->mesh->mesh_id);
 		glDrawElements(GL_TRIANGLES, render_list[i]->mesh->index_count, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
 	}
+		glBindVertexArray(0);
 }
 

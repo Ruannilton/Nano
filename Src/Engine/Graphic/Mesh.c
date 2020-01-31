@@ -20,7 +20,6 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	GLsizeiptr c_size = mesh->color_count * sizeof(Vec3);
 	GLsizeiptr i_size = mesh->index_count * sizeof(uint);
 
-	printf("Vert buffer size: %d\n", c_size);
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -104,19 +103,21 @@ Mesh* mesh_LoadMesh(string path) {
 				
 
 				if (uv_count == 0 && norm_count == 0) {
-					int matches = fscanf_s(file, "%d %d %d", &vert1, &vert2, &vert3);
+					int matches = fscanf_s(file, "%d %d %d %d", &vert1, &vert2, &vert3,&vert4);
 					tex1 = norm1 = -1;
 					tex2 = norm2 = -1;
 					tex3 = norm3 = -1;
+					tex4 = norm4 = -1;
 				}
 				else if (uv_count == 0) {
-					int matches = fscanf_s(file, " %d//%d %d//%d %d//%d", &vert1, &norm1, &vert2, &norm2, &vert3, &norm3);
+					int matches = fscanf_s(file, " %d//%d %d//%d %d//%d %d//%d", &vert1, &norm1, &vert2, &norm2, &vert3, &norm3, &vert4, &norm4);
 					tex1 = -1;
 					tex2 = -1;
 					tex3 = -1;
+					tex4 = -1;
 				}
 				else if (norm_count == 0) {
-					int matches = fscanf_s(file, "%d/%d %d/%d %d/%d", &vert1, &tex1, &vert2, &norm2, &vert3, &norm3);
+					int matches = fscanf_s(file, "%d/%d %d/%d %d/%d %d/%d", &vert1, &tex1, &vert2, &tex2, &vert3, &tex3,&vert4,&tex4);
 					norm1 = -1;
 					norm2 = -1;
 					norm3 = -1;
@@ -125,7 +126,7 @@ Mesh* mesh_LoadMesh(string path) {
 
 					int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3,&vert4,&tex4,&norm4);
 					if (matches == 12) quadFace = 1;
-					//matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d", &vert1, &tex1, &norm1, &vert2, &tex2, &norm2, &vert3, &tex3, &norm3);
+					else quadFace = 0;
 				}
 
 				faceList[index_count].pos = vertList[vert1 - 1]; 
@@ -163,9 +164,6 @@ Mesh* mesh_LoadMesh(string path) {
 		}
 	}
 	
-	
-	
-
 	mesh->vertices = ARRAY(Vec3, index_count);
 	mesh->normals  = ARRAY(Vec3, index_count);
 	mesh->uvs      = ARRAY(Vec2, index_count);
@@ -184,15 +182,10 @@ Mesh* mesh_LoadMesh(string path) {
 	Face face;
 	
 	REPEAT_1(index_count) {
-			
-		// DEBUG("face[%d] %d/%d/%d   %d/%d/%d   %d/%d/%d", i, faceList[i].face1.x, faceList[i].face1.y, faceList[i].face1.z, faceList[i].face2.x, faceList[i].face2.y, faceList[i].face2.z, faceList[i].face3.x, faceList[i].face3.y, faceList[i].face3.z);
-
 		 mesh->vertices[i] = faceList[i].pos;
 		 mesh->uvs[i]      = faceList[i].uv;
 		 mesh->normals[i]  = faceList[i].normal;
 		 mesh->index[i] = i;
-
-		
 	}
 	
 	free(vertList);
@@ -202,7 +195,8 @@ Mesh* mesh_LoadMesh(string path) {
 
 	fclose(file);
 	mesh_genVAO(mesh);
-	printf("Loaded %s\n", path);
+
+	DEBUG_C(ANSI_LIGHT_GREEN, "Loaded Model: %s", path);
 	return mesh;
 }
 

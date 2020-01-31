@@ -4,7 +4,7 @@
 #include "Utils.h"
 #include "Core/NanoCore.h"
 #include "Graphic/NanoRender.h"
-#include <STB/stb_image.h>
+
 
 
 UNIQUE Nano* NanoApplication;
@@ -23,9 +23,6 @@ __inline void MouseUpdate() {
 
 		DEBUG_C(ANSI_MAGENTA, "Camera FOV:  %f", currentCamera.fov);
 	}
-	DEBUG_C(ANSI_RED, "Delta Time:  %f", delta_time);
-	DEBUG_C(ANSI_LIGHT_BLUE, "Mouse position:  %f %f", mouse_Xpos, mouse_Ypos);
-	DEBUG_C(ANSI_LIGHT_GREEN, "Camera looking to: %f %f %f", currentCamera.rotation[0], currentCamera.rotation[1], currentCamera.rotation[2]);
 }
 
 __inline void TimeUpdate() {
@@ -56,10 +53,13 @@ int main() {
 	Start();
 
 	printf("Press ESC to close\n");
+	char* title = (char*)malloc(1);
+
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{
 		TimeUpdate();
-
+		sprintf(title, "FPS: %u", 1.0 / delta_time);
+		glfwSetWindowTitle(NanoApplication->window,title);
 		if (KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
 		ClearInputs();
 		glfwPollEvents();
