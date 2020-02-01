@@ -12,8 +12,8 @@ UNIQUE float delta_time = 0;
 UNIQUE double last_time = 0;
 UNIQUE double current_time = 0;
 
-void Start();
-void Update();
+extern void Start();
+extern void Update();
 
 __inline void MouseUpdate() {
 	vec3 mouse_mov = { mouse_delta_x, mouse_delta_y, 0 };
