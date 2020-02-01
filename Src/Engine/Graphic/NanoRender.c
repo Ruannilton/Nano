@@ -6,8 +6,7 @@ UNIQUE int render_list_count = 0;
 
 void initRenderSystem() {
 	vec3 pos = { 0,0,10.0f };
-	AmbientLight = (Vec3){ 1.0f,1.0f,1.0f };
-	LightIntensity = 1.0f;
+	
 
 	BackGroundColor[0] = 0;
 	BackGroundColor[1] = 0.5f;

@@ -7,10 +7,8 @@ in vec3 ourColor;
 
 uniform sampler2D ourTexture;
 
-layout (location = 7) uniform float LightIntensity;
-layout (location = 8) uniform vec3 AmbientLight;
 
 void main()
 {
-    FragColor = texture(ourTexture, TexCoord) * vec4(AmbientLight * LightIntensity,1.0) ;
+    FragColor = texture(ourTexture, TexCoord);
 }

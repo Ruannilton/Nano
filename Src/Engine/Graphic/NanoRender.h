@@ -19,8 +19,6 @@
 #define SHADER_PROJ_LOC 6
 
 UNIQUE Color BackGroundColor;
-UNIQUE Vec3 AmbientLight;
-UNIQUE float LightIntensity;
 UNIQUE Shader DefaultShader;
 UNIQUE uint window_widht;
 UNIQUE uint window_height;
