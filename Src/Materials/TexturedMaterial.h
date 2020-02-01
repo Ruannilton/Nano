@@ -12,6 +12,8 @@ typedef struct {
 
 Material_CreateBindFnc(TexturedMaterial) {
 	glBindTexture(GL_TEXTURE_2D, ((TexturedMaterial*)data)->texture->id);
+	glUniform1f(7, LightIntensity);
+	glUniform3f(8, AmbientLight.x, AmbientLight.y, AmbientLight.z);
 }
 
 
