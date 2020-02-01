@@ -85,6 +85,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.tlog
+*.idb
 
 # Chutzpah Test files
 _Chutzpah*
@@ -332,3 +334,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+*.tlog
+*.tlog
+*.idb
