@@ -63,7 +63,7 @@ int main() {
 		if (KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
 		ClearInputs();
 		glfwPollEvents();
-		glClearColor(BackGroundColor[C_RED], BackGroundColor[C_GREEN], BackGroundColor[C_BLUE], BackGroundColor[C_ALPHA]);
+		glClearColor(BackGroundColor.R, BackGroundColor.G, BackGroundColor.B, BackGroundColor.A);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		MouseUpdate();

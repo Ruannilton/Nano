@@ -71,6 +71,7 @@ Mesh* mesh_LoadMesh(string path) {
 	Vec2* uvList   = ARRAY(Vec2,mesh_loader_pre_alloc+1);
 	Vertex* faceList = ARRAY(Vertex,mesh_loader_pre_alloc+1);
 
+	
 	Mesh* mesh = NEW(Mesh);
 	mesh->color_count = 0;
 	mesh->uv_count = 0;

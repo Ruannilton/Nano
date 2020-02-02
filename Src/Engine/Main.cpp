@@ -6,7 +6,10 @@ extern "C" {
 
  void Start() {
 
-	mesh_loader_pre_alloc = mbyte(10);
+	mesh_loader_pre_alloc = mbyte(10); // alloca 10 mb para o carregamento dos modelos, será feito automaticamente futuramente
+
+	setColor(1.0f,0.5f,0.5f,1.0f, AmbientLight);
+	AmbientIntensity = 0.75f;
 
 	Material* dva_mat = CNEW(TexturedMaterial,DefaultShader, "Assets/Images/A_dva.png");
 	Mesh* dva_mesh = mesh_LoadMesh("Assets/models/dva.obj");
@@ -25,11 +28,13 @@ extern "C" {
 	glm_scale(cerb->transform, vec3{ 0.75f,0.75f,0.75f });
 	AddToRender(cerb);
 
-	 setColor(1.0f,0.6f,1.0f,1.0f, AmbientLight);
-	 AmbientIntensity = 0.75f;
+	 
 }
  
  void Update() {
+
+	 AmbientIntensity = 0.5f + fabs(cos(current_time))*0.5f;
+
 
 	 vec3 mouse_mov = { (float)mouse_delta_x, (float)mouse_delta_y, 0 };
 	 camera_Rotate(&currentCamera, mouse_mov);

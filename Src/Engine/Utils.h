@@ -1,7 +1,9 @@
-#pragma once
+#ifndef NANO_UTILS
+#define NANO_UTILS
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Graphic/GL.h"
 
 #define ANSI_RED "\x1b[31m"
 
@@ -48,4 +50,25 @@ typedef const char* string;
 typedef unsigned int uint;
 typedef unsigned long int ulint;
 
+typedef union {
+	vec4 arr;
+	struct {
+		float x, y, z, w;
+	};
+}Vec4;
 
+typedef union {
+	vec3 arr;
+	struct {
+		float x, y, z;
+	};
+}Vec3;
+
+typedef union {
+	vec2 arr;
+	struct {
+		float x, y;
+	};
+}Vec2;
+
+#endif

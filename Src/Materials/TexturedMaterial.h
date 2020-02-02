@@ -12,7 +12,7 @@ typedef struct {
 
 Material_CreateBindFnc(TexturedMaterial) {
 	glBindTexture(GL_TEXTURE_2D, ((TexturedMaterial*)data)->texture->id);
-	glUniform3fv(7, 1, AmbientLight);
+	glUniform3fv(7, 1, AmbientLight.arr);
 	glUniform1f(8, AmbientIntensity);
 }
 

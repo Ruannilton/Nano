@@ -16,17 +16,6 @@
 
 UNIQUE  ulint mesh_loader_pre_alloc = (ulint)kbyte(0.5);
 
-typedef struct {
-	float x, y, z;
-}Vec3;
-
-typedef struct {
-	uint x, y, z;
-}uiVec3;
-
-typedef struct {
-	float x, y;
-}Vec2;
 
 typedef struct {
 	Vec3 pos;

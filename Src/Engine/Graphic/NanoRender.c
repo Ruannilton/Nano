@@ -9,15 +9,9 @@ void initRenderSystem() {
 
 	AmbientIntensity = 0.5f;
 	
-	AmbientLight[0] = 1.0f;
-	AmbientLight[1] = 0.6f;
-	AmbientLight[2] = 0.6f;
-	AmbientLight[3] = 1.0f;
-
-	BackGroundColor[0] = 0;
-	BackGroundColor[1] = 0.5f;
-	BackGroundColor[2] = 1;
-	BackGroundColor[3] = 1;
+	AmbientLight = (Color){ 1.0f,0.6f,0.6f,1.0f };
+	BackGroundColor = (Color){ 0.0f,0.5f,1.0f,1.0f };
+	
 
 	glViewport(0, 0, window_widht, window_height);
     DefaultShader = shader_CreateShader(ReadFile("Assets/Shaders/default.vert"), ReadFile("Assets/Shaders/default.frag"));
