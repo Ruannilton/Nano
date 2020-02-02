@@ -8,7 +8,7 @@
 
 typedef vec4 Color;
 
-#define chColor(R,G,B,A,COLOR) COLOR[C_RED] = R;COLOR[C_GREEN] = G;COLOR[C_BLUE] = B;COLOR[C_ALPHA] =A; 
+#define setColor(R,G,B,A,COLOR) COLOR[C_RED] = R;COLOR[C_GREEN] = G;COLOR[C_BLUE] = B;COLOR[C_ALPHA] =A; 
 
 
 

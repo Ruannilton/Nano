@@ -25,11 +25,13 @@ extern "C" {
 	glm_scale(cerb->transform, vec3{ 0.75f,0.75f,0.75f });
 	AddToRender(cerb);
 
+	 setColor(1.0f,0.6f,1.0f,1.0f, AmbientLight);
+	 AmbientIntensity = 0.75f;
 }
  
  void Update() {
 
-	 vec3 mouse_mov = { mouse_delta_x, mouse_delta_y, 0 };
+	 vec3 mouse_mov = { (float)mouse_delta_x, (float)mouse_delta_y, 0 };
 	 camera_Rotate(&currentCamera, mouse_mov);
 	 
 	 if (mouse_delta_scroll_y != 0) {

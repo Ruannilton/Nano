@@ -6,7 +6,13 @@ UNIQUE int render_list_count = 0;
 
 void initRenderSystem() {
 	vec3 pos = { 0,0,10.0f };
+
+	AmbientIntensity = 0.5f;
 	
+	AmbientLight[0] = 1.0f;
+	AmbientLight[1] = 0.6f;
+	AmbientLight[2] = 0.6f;
+	AmbientLight[3] = 1.0f;
 
 	BackGroundColor[0] = 0;
 	BackGroundColor[1] = 0.5f;
@@ -24,7 +30,7 @@ void AddToRender(RenderComponent* c) {
 		render_list[render_list_count] = c;
 		render_list_count++;
 	 }
-	DEBUG("CCOMP COUNT: %d", render_list_count);
+	
 	
 }
 
@@ -38,19 +44,23 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 void RenderScene() {
 	camera_UpdateView(&currentCamera);
 	
-	glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, currentCamera.projection);
-	glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, currentCamera.view);
+	glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, (GLfloat*) currentCamera.projection);
+	glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, (GLfloat*) currentCamera.view);
 	
 	register int i = 0;
 	Material* cMat;
+	uint shader;
+
 	for (; i < render_list_count; i++) {
 		cMat = render_list[i]->mat;
 
-		if (cMat == NULL) glUseProgram(DefaultShader);
-		else glUseProgram(cMat->shader_id);
-		cMat->fnc(cMat->shader_id, cMat->data);
+		if (cMat == NULL) shader = DefaultShader;
+		else shader = cMat->shader_id;
+		
+		glUseProgram(shader);
+		cMat->fnc(shader, cMat->data);
 
-        glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE, render_list[i]->transform);
+        glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE,(GLfloat*) render_list[i]->transform);
 		glBindVertexArray(render_list[i]->mesh->mesh_id);
 		glDrawElements(GL_TRIANGLES, render_list[i]->mesh->index_count, GL_UNSIGNED_INT, 0);
 	}

@@ -1,5 +1,12 @@
 #include "Mouse.h"
 
+void MouseRestore() {
+	mouse_delta_x = 0;
+	mouse_delta_y = 0;
+	mouse_delta_scroll_x = 0;
+	mouse_delta_scroll_y = 0;
+}
+
 void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	mouse_delta_scroll_x = xoffset;

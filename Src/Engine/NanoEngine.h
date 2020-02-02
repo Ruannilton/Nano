@@ -16,7 +16,7 @@ extern void Start();
 extern void Update();
 
 __inline void MouseUpdate() {
-	vec3 mouse_mov = { mouse_delta_x, mouse_delta_y, 0 };
+	vec3 mouse_mov = { (float)mouse_delta_x, (float)mouse_delta_y, 0 };
 	camera_Rotate(&currentCamera, mouse_mov);
 	if (mouse_delta_scroll_y != 0) {
 		camera_Zoom(&currentCamera, mouse_delta_scroll_y);
@@ -58,7 +58,7 @@ int main() {
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{
 		TimeUpdate();
-		sprintf(title, "FPS: %u", 1.0 / delta_time);
+		sprintf(title, "FPS: %f", 1.0 / delta_time);
 		glfwSetWindowTitle(NanoApplication->window,title);
 		if (KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
 		ClearInputs();

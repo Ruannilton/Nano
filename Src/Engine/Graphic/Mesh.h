@@ -14,7 +14,7 @@
 #define PRIMITIVE_PLANE 1
 #define PRIMITIVE_CUBE 2
 
-UNIQUE  ulint mesh_loader_pre_alloc = kbyte(0.5);
+UNIQUE  ulint mesh_loader_pre_alloc = (ulint)kbyte(0.5);
 
 typedef struct {
 	float x, y, z;

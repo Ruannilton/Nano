@@ -6,7 +6,7 @@ void* Vector_Add(Vector* self,uint* index_added) {
 		DEBUG("Increasing: %d",self->lenght);
 		self->buff = realloc(self->buff, self->lenght * self->data_size);
 	}
-	size_t ptr = self->buff;
+	size_t ptr = (size_t)self->buff;
 	if(index_added !=NULL)index_added = self->count;
 	size_t stride = self->count * self->data_size;
 	self->count++;

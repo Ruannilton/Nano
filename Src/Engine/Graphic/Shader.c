@@ -22,7 +22,7 @@ unsigned int shader_CompileShader(string src, GLenum type) {
 
 Shader shader_CreateShader(string vs, string fs) {
 
-	Shader s;
+	
 	unsigned int prog = glCreateProgram();
 	unsigned int vsID = 0;
 	unsigned int fsID = 0;

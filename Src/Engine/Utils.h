@@ -48,10 +48,4 @@ typedef const char* string;
 typedef unsigned int uint;
 typedef unsigned long int ulint;
 
-#define EXT_C extern "C" {
-#define END_EXT_C }
 
-#ifdef __cplusplus
-#define EXT_C 
-#define END_EXT_C 
-#endif

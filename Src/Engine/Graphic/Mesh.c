@@ -64,7 +64,7 @@ Mesh* mesh_LoadMesh(string path) {
 	uint index_count = 0;
 	uint norm_count = 0;
 	uint uv_count = 0;
-	uint i;
+	
 
 	Vec3* vertList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec3* normList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
@@ -179,7 +179,7 @@ Mesh* mesh_LoadMesh(string path) {
 
 	DEBUG("Mesh sizes > \nvert: %d\nnormal: %d\nuv: %d\nindex: %d", mesh->vertices_count, mesh->normal_count, mesh->uv_count, mesh->index_count);
 
-	Face face;
+	
 	
 	REPEAT_1(index_count) {
 		 mesh->vertices[i] = faceList[i].pos;
@@ -249,7 +249,7 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices = ARRAY(Vec3, 24);
 		mesh->colors = ARRAY(Vec3, 24);
 		mesh->normals = ARRAY(Vec3, 24);
-		mesh->uvs = ARRAY(Vec3, 24);
+		mesh->uvs = ARRAY(Vec2, 24);
 		mesh->index = ARRAY(uint, 36);
 
 		mesh->vertices_count = 24;

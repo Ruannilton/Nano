@@ -4,16 +4,16 @@
 void camera_UpdateView(Camera* cam) {
 	
 
-	cam->front[0] = cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1]));
-	cam->front[1] = sin(glm_rad(cam->rotation[1]));
-	cam->front[2] = sin(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1]));
+	cam->front[0] = (float)(cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1])));
+	cam->front[1] = (float)(sin(glm_rad(cam->rotation[1])));
+	cam->front[2] = (float)(sin(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1])));
 	glm_normalize(cam->front);
 	glm_look(cam->position, cam->front, cam->up, cam->view);
 }
 
 void camera_Zoom(Camera* cam, double delta) {
 	if (cam->fov >= cam->min_fov && cam->fov <= cam->max_fov) {
-		cam->fov -= delta;
+		cam->fov -= (float)delta;
 		
 		if (cam->fov < cam->min_fov) cam->fov = cam->min_fov;
 		if (cam->fov > cam->max_fov) cam->fov = cam->max_fov;
