@@ -6,6 +6,9 @@ extern "C" {
 
  void Start() {
 
+	 //Heap corruption bug 
+	 //Press continue until run
+
 	mesh_loader_pre_alloc = mbyte(10); // alloca 10 mb para o carregamento dos modelos, será feito automaticamente futuramente
 
 	setColor(1.0f,0.5f,0.5f,1.0f, AmbientLight);
