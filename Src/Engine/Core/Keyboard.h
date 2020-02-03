@@ -5,7 +5,7 @@
 #include "..//Utils.h"
 
 GLFWwindow* window;
-UNIQUE unsigned int keyboard[256];
+UNIQUE unsigned int keyboard[257];
 #define NONE 3
 
 #define Key(K) glfwGetKey(window, K) != GLFW_RELEASE

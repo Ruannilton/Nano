@@ -54,6 +54,7 @@ int main() {
 
 	printf("Press ESC to close\n");
 	char* title = (char*)malloc(1);
+	VERIFY(title, 0);
 
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{

@@ -36,7 +36,7 @@ extern "C" {
  
  void Update() {
 
-	 AmbientIntensity = 0.5f + fabs(cos(current_time))*0.5f;
+	 AmbientIntensity = 0.5 + fabs(cos(current_time))*0.5;
 
 
 	 vec3 mouse_mov = { (float)mouse_delta_x, (float)mouse_delta_y, 0 };

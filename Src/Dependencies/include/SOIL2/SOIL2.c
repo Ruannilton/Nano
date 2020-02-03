@@ -1269,6 +1269,7 @@ unsigned int
 	}
 	sz = dw+dh;
 	sub_img = (unsigned char *)malloc( sz*sz*channels );
+	if (!sub_img) return 0;
 	/*	do the splitting and uploading	*/
 	tex_id = reuse_texture_ID;
 	for( i = 0; i < 6; ++i )
@@ -1854,6 +1855,7 @@ int
 
 	/*  Get the data from OpenGL	*/
 	pixel_data = (unsigned char*)malloc( 3*width*height );
+	if (!pixel_data) return 0;
 	glReadPixels (x, y, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixel_data);
 
 	if ( 1 != pack_aligment )
@@ -2257,6 +2259,7 @@ unsigned int SOIL_direct_load_DDS_from_memory(
 		{
 			unsigned int byte_offset = DDS_main_size;
 			memcpy( (void*)DDS_data, (const void*)(&buffer[buffer_index]), DDS_full_size );
+			if (!DDS_data) return NULL;
 			buffer_index += DDS_full_size;
 			/*	upload the main chunk	*/
 			if( uncompressed )

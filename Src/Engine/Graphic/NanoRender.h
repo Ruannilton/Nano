@@ -20,7 +20,7 @@
 
 UNIQUE Color BackGroundColor;
 UNIQUE Color AmbientLight;
-UNIQUE float AmbientIntensity;
+UNIQUE double AmbientIntensity;
 UNIQUE Shader DefaultShader;
 UNIQUE uint window_widht;
 UNIQUE uint window_height;

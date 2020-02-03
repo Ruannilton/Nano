@@ -65,14 +65,20 @@ Mesh* mesh_LoadMesh(string path) {
 	uint norm_count = 0;
 	uint uv_count = 0;
 	
-
+	int size = mesh_loader_pre_alloc + 1;
 	Vec3* vertList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec3* normList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec2* uvList   = ARRAY(Vec2,mesh_loader_pre_alloc+1);
 	Vertex* faceList = ARRAY(Vertex,mesh_loader_pre_alloc+1);
+	Mesh* mesh = NEW(Mesh);
+
+	VERIFY(mesh, NULL);
+	VERIFY(vertList, NULL);
+	VERIFY(normList, NULL);
+	VERIFY(uvList, NULL);
+	VERIFY(faceList, NULL);
 
 	
-	Mesh* mesh = NEW(Mesh);
 	mesh->color_count = 0;
 	mesh->uv_count = 0;
 	mesh->normal_count = 0;
@@ -85,10 +91,9 @@ Mesh* mesh_LoadMesh(string path) {
 	{
 		if (fscanf_s(file, "%s", &line_readed, LINE_READED_BUFF_SIZE)) {
 
-			if (strcmp(line_readed, "v") == 0) {
-				fscanf_s(file, "%f %f %f", &(vertList[vert_count].x), &(vertList[vert_count].y), &(vertList[vert_count].z));
-				vert_count++;
-
+			if (strcmp(line_readed, "v") == 0) {				
+					fscanf_s(file, "%f %f %f", &(vertList[vert_count].x), &(vertList[vert_count].y), &(vertList[vert_count].z));
+					vert_count++;
 			}
 			else if (strcmp(line_readed, "vn") == 0) {
 				fscanf_s(file, "%f %f %f", &normList[norm_count].x, &normList[norm_count].y, &normList[norm_count].z);
@@ -182,7 +187,7 @@ Mesh* mesh_LoadMesh(string path) {
 
 	
 	
-	REPEAT_1(index_count) {
+	for (uint i = 0; i < index_count;i++) {
 		 mesh->vertices[i] = faceList[i].pos;
 		 mesh->uvs[i]      = faceList[i].uv;
 		 mesh->normals[i]  = faceList[i].normal;
@@ -204,10 +209,12 @@ Mesh* mesh_LoadMesh(string path) {
 Mesh* mesh_LoadPrimitive(uint primitive) {
 
 	Mesh* mesh = NEW(Mesh);
+	VERIFY(mesh, NULL);
 
 	if (primitive == PRIMITIVE_PLANE) {
 
 		mesh->index = ARRAY(uint, 6);
+		VERIFY(mesh->index, NULL);
 		mesh->index[0] = 3;
 		mesh->index[1] = 1;
 		mesh->index[2] = 0;
@@ -217,13 +224,15 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->index_count = 6;
 
 		mesh->vertices = ARRAY(Vec3, 4);
+		VERIFY(mesh->vertices, NULL);
 		mesh->vertices[0] = (Vec3){ 0.5f,  0.5f, 0.0f };
 		mesh->vertices[1] = (Vec3){ 0.5f, -0.5f, 0.0f };
 		mesh->vertices[2] = (Vec3){ -0.5f, -0.5f, 0.0f };
 		mesh->vertices[3] = (Vec3){ -0.5f,  0.5f, 0.0f };
 		mesh->vertices_count = 4;
 
-		mesh->colors = ARRAY(Vec3, 3);
+		mesh->colors = ARRAY(Vec3, 4);
+		VERIFY(mesh->colors, NULL);
 		mesh->colors[0] = (Vec3){ 1.0f,1.0f,1.0f };
 		mesh->colors[1] = (Vec3){ 1.0f,1.0f,1.0f };
 		mesh->colors[2] = (Vec3){ 1.0f,1.0f,1.0f };
@@ -231,6 +240,7 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->color_count = 4;
 
 		mesh->uvs = ARRAY(Vec2, 4);
+		VERIFY(mesh->uvs, NULL);
 		mesh->uvs[0] = (Vec2){ 0.0f,0.0f };
 		mesh->uvs[1] = (Vec2){ 1.0f,0.0f };
 		mesh->uvs[2] = (Vec2){ 1.0f,1.0f };
@@ -238,6 +248,7 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->uv_count = 4;
 
 		mesh->normals = ARRAY(Vec3, 4);
+		VERIFY(mesh->normals, NULL);
 		mesh->normals[0] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[2] = (Vec3){ 0.0f,0.0f,1.0f };
@@ -252,6 +263,12 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->normals = ARRAY(Vec3, 24);
 		mesh->uvs = ARRAY(Vec2, 24);
 		mesh->index = ARRAY(uint, 36);
+
+		VERIFY(mesh->vertices, NULL);
+		VERIFY(mesh->colors, NULL);
+		VERIFY(mesh->uvs, NULL);
+		VERIFY(mesh->index, NULL);
+		VERIFY(mesh->normals, NULL);
 
 		mesh->vertices_count = 24;
 		mesh->color_count = 24;

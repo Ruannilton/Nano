@@ -3,11 +3,15 @@
 void* Vector_Add(Vector* self,uint* index_added) {
 	if (self->count == self->lenght) {
 		self->lenght += (int)(self->lenght * 1.5f);
-		DEBUG("Increasing: %d",self->lenght);
-		self->buff = realloc(self->buff, self->lenght * self->data_size);
+		
+		if (self->buff) {
+			void* tmp = realloc(self->buff, self->lenght * self->data_size);
+			self->buff = tmp;
+		}
+		VERIFY(self->buff, NULL);
 	}
 	size_t ptr = (size_t)self->buff;
-	if(index_added !=NULL)index_added = self->count;
+	if(index_added !=NULL)*index_added = self->count;
 	size_t stride = self->count * self->data_size;
 	self->count++;
 	return (void*)(ptr + stride);

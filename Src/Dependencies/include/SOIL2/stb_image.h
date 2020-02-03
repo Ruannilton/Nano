@@ -3814,6 +3814,7 @@ static stbi_uc *load_jpeg_image(stbi__jpeg *z, int *out_x, int *out_y, int *comp
                }
             } else {
                stbi_uc *y = coutput[0];
+			   if (!y) return NULL;
                if (n == 1)
                   for (i=0; i < z->s->img_x; ++i) out[i] = y[i];
                else

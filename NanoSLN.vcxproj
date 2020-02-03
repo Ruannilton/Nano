@@ -226,12 +226,12 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="Program\glew32.dll" />
-    <Text Include="Assets\Shaders\default.frag">
+    <Text Include="Inter\Shaders\default.frag">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </Text>
-    <Text Include="Assets\Shaders\default.vert">
+    <Text Include="Inter\Shaders\default.vert">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
       <FileType>Document</FileType>

@@ -7,7 +7,8 @@ Nano* CreateNano() {
 	}
 
 	Nano* nano = NEW(Nano);
-	if (!nano) DEBUG("Error Nano Alloc");
+	VERIFY(nano, NULL);
+	
 
 	nano->windowWidht = 800;
 	nano->windowHeight = 640;

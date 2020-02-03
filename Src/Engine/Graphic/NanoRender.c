@@ -43,17 +43,18 @@ void RenderScene() {
 	
 	register int i = 0;
 	Material* cMat;
-	uint shader;
 
 	for (; i < render_list_count; i++) {
 		cMat = render_list[i]->mat;
 
-		if (cMat == NULL) shader = DefaultShader;
-		else shader = cMat->shader_id;
+		if (cMat != NULL) {
+			glUseProgram(cMat->shader_id);
+			cMat->fnc(cMat->shader_id, cMat->data);
+		}
+		else {
+			glUseProgram(DefaultShader);
+		}
 		
-		glUseProgram(shader);
-		cMat->fnc(shader, cMat->data);
-
         glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE,(GLfloat*) render_list[i]->transform);
 		glBindVertexArray(render_list[i]->mesh->mesh_id);
 		glDrawElements(GL_TRIANGLES, render_list[i]->mesh->index_count, GL_UNSIGNED_INT, 0);

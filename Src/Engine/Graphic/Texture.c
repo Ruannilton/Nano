@@ -5,8 +5,9 @@
 
 Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
 	Texture* tex = (Texture*)malloc(sizeof(Texture));
-	
-	tex->id = SOIL_load_OGL_texture(path, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y|SOIL_FLAG_MIPMAPS);
+	VERIFY(tex, NULL);
+
+	tex->id = SOIL_load_OGL_texture(path, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS);
 
 	if (tex->id == 0)
 	{
