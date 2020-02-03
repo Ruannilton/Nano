@@ -19,8 +19,16 @@
 #define SHADER_PROJ_LOC 6
 
 UNIQUE Color BackGroundColor;
+
+//	Ambient Light
 UNIQUE Color AmbientLight;
 UNIQUE double AmbientIntensity;
+
+//	Diffuse Light
+UNIQUE Color DiffuseLight;
+UNIQUE double DiffuseIntensity;
+UNIQUE Vec3 DiffusePos;
+
 UNIQUE Shader DefaultShader;
 UNIQUE uint window_widht;
 UNIQUE uint window_height;

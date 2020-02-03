@@ -7,9 +7,13 @@ UNIQUE int render_list_count = 0;
 void initRenderSystem() {
 	vec3 pos = { 0,0,10.0f };
 
-	AmbientIntensity = 0.5f;
-	
+	AmbientIntensity = 0.1f;
 	AmbientLight = (Color){ 1.0f,0.6f,0.6f,1.0f };
+
+	DiffuseIntensity = 0.8f;
+	DiffuseLight = (Color){ 1.0f,1.0f,1.0f,1.0f };
+	DiffusePos = (Vec3){5.0f,10.0f,-2.0f};
+
 	BackGroundColor = (Color){ 0.0f,0.5f,1.0f,1.0f };
 	
 
