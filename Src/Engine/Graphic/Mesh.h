@@ -21,6 +21,7 @@ typedef struct {
 	Vec3 pos;
 	Vec2 uv;
 	Vec3 normal;
+	Vec4 color;
 }Vertex;
 
 typedef struct {
@@ -32,7 +33,7 @@ typedef struct {
 	Vec3* vertices;
 	uint* index;
 	Vec2* uvs;
-	Vec3* colors;
+	Vec4* colors;
 	Vec3* normals;
 
 	uint vertices_count;

@@ -7,18 +7,15 @@ UNIQUE int render_list_count = 0;
 void initRenderSystem() {
 	vec3 pos = { 0,0,10.0f };
 
-	AmbientIntensity = 0.1f;
-	AmbientLight = (Color){ 1.0f,0.6f,0.6f,1.0f };
-
-	DiffuseIntensity = 0.8f;
-	DiffuseLight = (Color){ 1.0f,1.0f,1.0f,1.0f };
-	DiffusePos = (Vec3){5.0f,10.0f,-2.0f};
+	SceneLight.Ambient = (Vec3){ 0.4f,0.4f,0.4f };
+	SceneLight.Diffuse = (Vec3){ 0.5f,0.5f,0.5f };
+	SceneLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
+	SceneLight.Position = (Vec3){ 10.0f,7.0f,5.0f };
 
 	BackGroundColor = (Color){ 0.0f,0.5f,1.0f,1.0f };
+    DefaultShader = shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
 	
-
 	glViewport(0, 0, window_widht, window_height);
-    DefaultShader = shader_CreateShader(ReadFile("Assets/Shaders/default.vert"), ReadFile("Assets/Shaders/default.frag"));
 	camera_CreateCamera(&currentCamera, pos);
 	camera_SetCameraPerspective(currentCamera.fov, ((float)window_widht) / window_height, 0.1f, 1000.0f, &currentCamera);
 }
@@ -62,7 +59,9 @@ void RenderScene() {
         glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE,(GLfloat*) render_list[i]->transform);
 		glBindVertexArray(render_list[i]->mesh->mesh_id);
 		glDrawElements(GL_TRIANGLES, render_list[i]->mesh->index_count, GL_UNSIGNED_INT, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-		glBindVertexArray(0);
+	
+	glBindVertexArray(0);
 }
 

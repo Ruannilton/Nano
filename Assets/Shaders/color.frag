@@ -13,17 +13,16 @@ struct Light{
 	vec3 Specular;
 	vec3 Position;
 };
-
-in vec2 TexCoord;
+  
 in vec4 ourColor;
 in vec3 FragPos;
 in vec3 Normal;
 
 
 uniform vec3 CameraPos;
-uniform sampler2D ourTexture;
 uniform Light light;
 uniform Material material;
+uniform vec4 color;
 
 out vec4 FragColor;
 
@@ -46,5 +45,5 @@ void main()
 
 	vec4 lightRes = vec4( ambient + diffuse+specular,1.0);
 
-    FragColor = texture(ourTexture, TexCoord) * lightRes * ourColor;
+    FragColor = lightRes * ourColor* color;
 }

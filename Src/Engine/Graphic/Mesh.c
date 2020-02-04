@@ -138,32 +138,38 @@ Mesh* mesh_LoadMesh(string path) {
 				faceList[index_count].pos = vertList[vert1 - 1]; 
 				faceList[index_count].uv = uvList[tex1 - 1];
 				faceList[index_count].normal = normList[norm1 - 1];
+				faceList[index_count].color = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 				index_count++;
 
 				faceList[index_count].pos = vertList[vert2 - 1];
 				faceList[index_count].uv = uvList[tex2 - 1];
 				faceList[index_count].normal = normList[norm2 - 1];
+				faceList[index_count].color = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 				index_count++;
 
 				faceList[index_count].pos = vertList[vert3 - 1];
 				faceList[index_count].uv = uvList[tex3 - 1];
 				faceList[index_count].normal = normList[norm3 - 1];
+				faceList[index_count].color = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 				index_count ++;
 
 				if (quadFace) {
 					faceList[index_count].pos = vertList[vert1 - 1];
 					faceList[index_count].uv = uvList[tex1 - 1];
 					faceList[index_count].normal = normList[norm1 - 1];
+					faceList[index_count].color = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 					index_count++;
 					
 					faceList[index_count].pos = vertList[vert3 - 1];
 					faceList[index_count].uv = uvList[tex3 - 1];
 					faceList[index_count].normal = normList[norm3 - 1];
+					faceList[index_count].color = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 					index_count++;
 
 					faceList[index_count].pos = vertList[vert4 - 1];
 					faceList[index_count].uv = uvList[tex4 - 1];
 					faceList[index_count].normal = normList[norm4 - 1];
+					faceList[index_count].color = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 					index_count++;
 				}
 			}
@@ -174,13 +180,13 @@ Mesh* mesh_LoadMesh(string path) {
 	mesh->normals  = ARRAY(Vec3, index_count);
 	mesh->uvs      = ARRAY(Vec2, index_count);
 	mesh->index    = ARRAY(int , index_count);
-	mesh->colors = 0;
+	mesh->colors = ARRAY(Vec4, index_count);;
 
 	mesh->vertices_count = index_count;
 	mesh->normal_count = index_count;
 	mesh->index_count = index_count;
 	mesh->uv_count = index_count;
-	mesh->color_count = 0;
+	mesh->color_count = index_count;
 	
 
 	DEBUG("Mesh sizes > \nvert: %d\nnormal: %d\nuv: %d\nindex: %d", mesh->vertices_count, mesh->normal_count, mesh->uv_count, mesh->index_count);
@@ -191,6 +197,7 @@ Mesh* mesh_LoadMesh(string path) {
 		 mesh->vertices[i] = faceList[i].pos;
 		 mesh->uvs[i]      = faceList[i].uv;
 		 mesh->normals[i]  = faceList[i].normal;
+		 mesh->colors[i] = faceList[i].color;
 		 mesh->index[i] = i;
 	}
 	
@@ -233,10 +240,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 
 		mesh->colors = ARRAY(Vec3, 4);
 		VERIFY(mesh->colors, NULL);
-		mesh->colors[0] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[1] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[2] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[3] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 		mesh->color_count = 4;
 
 		mesh->uvs = ARRAY(Vec2, 4);
@@ -259,7 +266,7 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 	else if (primitive == PRIMITIVE_CUBE) {
 		
 		mesh->vertices = ARRAY(Vec3, 24);
-		mesh->colors = ARRAY(Vec3, 24);
+		mesh->colors = ARRAY(Vec4, 24);
 		mesh->normals = ARRAY(Vec3, 24);
 		mesh->uvs = ARRAY(Vec2, 24);
 		mesh->index = ARRAY(uint, 36);
@@ -284,10 +291,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[2+ vert_c] = (Vec3){ 0.5f, 0.5f, 0.5f };
 		mesh->vertices[3+ vert_c] = (Vec3){ -0.5f, 0.5f, 0.5f };
 		
-		mesh->colors[0 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3 + vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f ,1.0f};
+		mesh->colors[1 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f ,1.0f};
+		mesh->colors[2 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f ,1.0f};
+		mesh->colors[3 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f ,1.0f};
 
 		mesh->normals[0 + vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1 + vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
@@ -315,10 +322,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[2 + vert_c] = (Vec3){ -0.5f, -0.5f, -0.5f };
 		mesh->vertices[3 + vert_c] = (Vec3){ -0.5f, 0.5f, -0.5f };
 
-		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[1 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[2 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[3 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 
 		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
@@ -346,10 +353,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[2+ vert_c] = (Vec3){ 0.5f, 0.5f, -0.5f };
 		mesh->vertices[3+ vert_c] = (Vec3){ 0.5f, 0.5f, 0.5f };
 
-		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[1 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[2 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[3 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 
 		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
@@ -376,10 +383,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[2+ vert_c] = (Vec3){ -0.5f, 0.5f, -0.5f };
 		mesh->vertices[3+ vert_c] = (Vec3){ -0.5f, -0.5f, -0.5f};
 
-		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[1 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[2 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[3 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 
 		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
@@ -406,10 +413,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[2+ vert_c] = (Vec3){ 0.5f, 0.5f, -0.5f };
 		mesh->vertices[3+ vert_c] = (Vec3){ -0.5f, 0.5f, -0.5f };
 
-		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[1 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[2 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[3 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 
 		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
@@ -437,10 +444,10 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[2+ vert_c] = (Vec3){ 0.5f, -0.5f, -0.5f };
 		mesh->vertices[3+ vert_c] = (Vec3){ -0.5f, -0.5f, -0.5f };
 
-		mesh->colors[0+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[1+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[2+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
-		mesh->colors[3+ vert_c] = (Vec3){ 1.0f,1.0f,1.0f };
+		mesh->colors[0 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[1 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[2 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
+		mesh->colors[3 + vert_c] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 
 		mesh->normals[0+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };
 		mesh->normals[1+ vert_c] = (Vec3){ 0.0f,0.0f,1.0f };

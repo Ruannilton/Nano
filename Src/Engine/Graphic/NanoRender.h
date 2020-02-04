@@ -9,6 +9,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "RenderComponent.h"
+#include "Light.h"
 
 #define SHADER_POS_LOC 0
 #define SHADER_COLOR_LOC 1
@@ -20,14 +21,8 @@
 
 UNIQUE Color BackGroundColor;
 
-//	Ambient Light
-UNIQUE Color AmbientLight;
-UNIQUE double AmbientIntensity;
-
-//	Diffuse Light
-UNIQUE Color DiffuseLight;
-UNIQUE double DiffuseIntensity;
-UNIQUE Vec3 DiffusePos;
+//Light
+UNIQUE Light SceneLight;
 
 UNIQUE Shader DefaultShader;
 UNIQUE uint window_widht;

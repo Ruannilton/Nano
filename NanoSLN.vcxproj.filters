@@ -306,6 +306,12 @@
     <ClInclude Include="Src\Engine\DataStructures\Vector.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Materials\ColorMaterial.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Light.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c">
@@ -413,12 +419,17 @@
     <ClCompile Include="Src\Engine\DataStructures\Vector.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\Light.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Program\glew32.dll" />
     <None Include="Program\glew32.dll" />
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Assets\Shaders\color.frag" />
+    <None Include="Assets\Shaders\color.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">

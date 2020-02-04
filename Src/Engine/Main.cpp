@@ -1,6 +1,7 @@
 extern "C" {
 #include "NanoEngine.h"
 #include "..//Materials/TexturedMaterial.h"
+#include "..//Materials/ColorMaterial.h"
 }
 
 
@@ -11,24 +12,11 @@ extern "C" {
 
 	mesh_loader_pre_alloc = mbyte(10); // alloca 10 mb para o carregamento dos modelos, será feito automaticamente futuramente
 
-	setColor(1.0f,0.5f,0.5f,1.0f, AmbientLight);
-	AmbientIntensity = 0.75f;
-
-	Material* dva_mat = CNEW(TexturedMaterial,DefaultShader, "Assets/Images/A_dva.png");
-	Mesh* dva_mesh = mesh_LoadMesh("Assets/models/dva.obj");
-
-	Material* cerb_mat = CNEW(TexturedMaterial, DefaultShader, "Assets/Images/Cerberus_A.png");
-	Mesh* cerb_mesh = mesh_LoadMesh("Assets/models/Cerberus.obj");
-
-	
-	RenderComponent* dva = RenderComponent_Create(dva_mesh, dva_mat);
-	RC_SetPosition(dva,  vec3{ 0.5f,-1,-2.5f });
-	glm_scale(dva->transform, vec3{ 0.025f,0.025f,0.025f });
-	AddToRender(dva);
-	
-	RenderComponent* cerb = RenderComponent_Create(cerb_mesh, cerb_mat);
-	RC_SetPosition(cerb, vec3{ 0.5f,0,-1.5f });
-	glm_scale(cerb->transform, vec3{ 0.75f,0.75f,0.75f });
+	Shader colorShader = shader_CreateShader("Assets/Shaders/color.vert", "Assets/Shaders/color.frag");
+	Material* color_mat = CNEW(ColorMaterial, colorShader, { 1.0f,1.0f,1.0f,1.0f });
+	Mesh* cube_mesh = mesh_LoadMesh("Assets/models/cube.obj");
+	RenderComponent* cerb = RenderComponent_Create(cube_mesh, color_mat);
+	RC_SetPosition(cerb, vec3{ 1,0,0 });
 	AddToRender(cerb);
 
 	 

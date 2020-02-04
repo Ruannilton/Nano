@@ -27,8 +27,8 @@ Shader shader_CreateShader(string vs, string fs) {
 	unsigned int vsID = 0;
 	unsigned int fsID = 0;
 
-	vsID = shader_CompileShader(vs, GL_VERTEX_SHADER);
-	fsID = shader_CompileShader(fs, GL_FRAGMENT_SHADER);
+	vsID = shader_CompileShader(ReadFile(vs), GL_VERTEX_SHADER);
+	fsID = shader_CompileShader(ReadFile(fs), GL_FRAGMENT_SHADER);
 
 	glAttachShader(prog, vsID);
 	glAttachShader(prog, fsID);
