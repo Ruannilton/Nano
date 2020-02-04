@@ -238,7 +238,7 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->vertices[3] = (Vec3){ -0.5f,  0.5f, 0.0f };
 		mesh->vertices_count = 4;
 
-		mesh->colors = ARRAY(Vec3, 4);
+		mesh->colors = ARRAY(Vec4, 4);
 		VERIFY(mesh->colors, NULL);
 		mesh->colors[0] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };
 		mesh->colors[1] = (Vec4){ 1.0f,1.0f,1.0f,1.0f };

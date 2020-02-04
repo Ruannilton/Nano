@@ -12,9 +12,9 @@ typedef struct {
 
 Material_CreateBindFnc(TexturedMaterial) {
 	Shader_SetTexture(((TexturedMaterial*)data)->texture->id);
-	vec3 ambient = { 0.05375f,0.05f,0.06625 };
-	vec3 diffuse = { 0.18275f,0.17f,0.63 };
-	vec3 specular = { 0.332741f,0.328634f,0.346435 };
+	vec3 ambient = { 0.05375f,0.05f,0.06625f };
+	vec3 diffuse = { 0.18275f,0.17f,0.63f };
+	vec3 specular = { 0.332741f,0.328634f,0.346435f };
 
 
 	Shader_SetVec3(shader, "material.Ambient", ambient);
