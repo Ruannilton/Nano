@@ -21,6 +21,10 @@ __inline void Shader_SetTextureUnit(uint texID, GLenum unit) {
 	glBindTexture(GL_TEXTURE_2D, texID);
 }
 
+__inline void Shader_SetInt(Shader shader, string local, int value) {
+	glUniform1d(glGetUniformLocation(shader, local), value);
+}
+
 __inline void Shader_SetFloat(Shader shader,string local, float value) {
 	glUniform1f(glGetUniformLocation(shader, local), value);
 }

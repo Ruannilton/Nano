@@ -459,12 +459,12 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->uvs[2+ vert_c] = (Vec2){ 0.0f,0.0f };
 		mesh->uvs[3+ vert_c] = (Vec2){ 1.0f,0.0f };
 
-		mesh->index[0 + index_c] = 0 + vert_c;
+		mesh->index[0 + index_c] = 3 + vert_c;
 		mesh->index[1 + index_c] = 1 + vert_c;
-		mesh->index[2 + index_c] = 3 + vert_c;
-		mesh->index[3 + index_c] = 1 + vert_c;
+		mesh->index[2 + index_c] = 0 + vert_c;
+		mesh->index[3 + index_c] = 3 + vert_c;
 		mesh->index[4 + index_c] = 2 + vert_c;
-		mesh->index[5 + index_c] = 3 + vert_c;
+		mesh->index[5 + index_c] = 1 + vert_c;
 		
 	}
 	mesh_genVAO(mesh);

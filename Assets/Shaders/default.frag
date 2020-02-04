@@ -1,9 +1,8 @@
 #version 430 core
 
 struct Material{
-	vec3 Ambient;
-	vec3 Diffuse;
-	vec3 Specular;
+	sampler2D diffuse;
+	sampler2D specular;
 	float Shininess;
 };
 
@@ -30,21 +29,23 @@ out vec4 FragColor;
 void main()
 {
 
-	vec3 ambient = light.Ambient * material.Ambient;
+	
+	vec3 texDiffuse = vec3(texture(material.diffuse, TexCoord));
 
-	//difuse
 	vec3 norm = normalize(Normal);
 	vec3 lightDir = normalize(light.Position - FragPos);
 	float diff = max(dot(norm,lightDir),0.0);
-	vec3 diffuse = light.Diffuse * (material.Diffuse * diff);
-
-	//specular
+		
 	vec3 viewDir = normalize(CameraPos - FragPos);
 	vec3 reflectDir = reflect(-lightDir, norm);  
 	float spec = pow(max(0,dot(viewDir, reflectDir)), material.Shininess);
-	vec3 specular = light.Specular * (material.Specular*spec);
+	
+
+	vec3 ambient  = light.Ambient  * texDiffuse;
+	vec3 diffuse  = light.Diffuse  * diff * texDiffuse;
+	vec3 specular = light.Specular * spec * vec3(texture(material.specular, TexCoord));
 
 	vec4 lightRes = vec4( ambient + diffuse+specular,1.0);
 
-    FragColor = texture(ourTexture, TexCoord) * lightRes * ourColor;
+    FragColor = lightRes;
 }

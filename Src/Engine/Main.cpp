@@ -12,11 +12,11 @@ extern "C" {
 
 	mesh_loader_pre_alloc = mbyte(10); // alloca 10 mb para o carregamento dos modelos, será feito automaticamente futuramente
 
-	Shader colorShader = shader_CreateShader("Assets/Shaders/color.vert", "Assets/Shaders/color.frag");
-	Material* color_mat = CNEW(ColorMaterial, colorShader, { 1.0f,1.0f,1.0f,1.0f });
-	Mesh* cube_mesh = mesh_LoadMesh("Assets/models/cube.obj");
+	//Shader colorShader = shader_CreateShader("Assets/Shaders/color.vert", "Assets/Shaders/color.frag");
+	Material* color_mat = CNEW(TexturedMaterial, DefaultShader, "Assets/Images/wood_box.png", "Assets/Images/wood_box.png", "Assets/Images/specular_wood_box.png");
+	Mesh* cube_mesh = mesh_LoadPrimitive(PRIMITIVE_CUBE);
 	RenderComponent* cerb = RenderComponent_Create(cube_mesh, color_mat);
-	RC_SetPosition(cerb, vec3{ 1,0,0 });
+	RC_SetPosition(cerb, vec3{ 0,0,0 });
 	AddToRender(cerb);
 
 	 

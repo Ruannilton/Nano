@@ -8,19 +8,23 @@
 
 typedef struct {
 	Texture* texture;
+	Texture* difffuse;
+	Texture* specular;
 }TexturedMaterial;
 
 Material_CreateBindFnc(TexturedMaterial) {
-	Shader_SetTexture(((TexturedMaterial*)data)->texture->id);
-	vec3 ambient = { 0.05375f,0.05f,0.06625f };
-	vec3 diffuse = { 0.18275f,0.17f,0.63f };
-	vec3 specular = { 0.332741f,0.328634f,0.346435f };
+	
+	
+	Shader_SetInt(shader, "ourTexture", 0);
+	Shader_SetTextureUnit(((TexturedMaterial*)data)->texture->id, GL_TEXTURE0);
 
+	Shader_SetInt(shader, "material.diffuse", 1);
+	Shader_SetTextureUnit(((TexturedMaterial*)data)->difffuse->id,GL_TEXTURE1);
 
-	Shader_SetVec3(shader, "material.Ambient", ambient);
-	Shader_SetVec3(shader, "material.Diffuse", diffuse);
-	Shader_SetVec3(shader, "material.Specular", specular);
-	Shader_SetFloat(shader, "material.Shininess", 0.3f*128);
+	Shader_SetInt(shader, "material.specular", 2);
+	Shader_SetTextureUnit(((TexturedMaterial*)data)->specular->id, GL_TEXTURE2);
+
+	Shader_SetFloat(shader, "material.Shininess", 32.0f);
 
 	Shader_SetVec3(shader, "CameraPos", currentCamera.position);
 	Light_Bind(shader, &SceneLight);
@@ -28,8 +32,10 @@ Material_CreateBindFnc(TexturedMaterial) {
 }
 
 
-inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, string file) {
-	self->texture = texture_LoadTextureDefault(file);
+inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, string texture, string diffuse, string specular) {
+	self->texture = texture_LoadTextureDefault(texture);
+	self->difffuse = texture_LoadTextureDefault(diffuse);
+	self->specular = texture_LoadTextureDefault(specular);
 	Material* mat = CNEW(Material, shader, TexturedMaterialbndFnc,self);
 	return mat;
 }

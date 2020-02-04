@@ -10,9 +10,9 @@ void initRenderSystem() {
 	SceneLight.Ambient = (Vec3){ 0.4f,0.4f,0.4f };
 	SceneLight.Diffuse = (Vec3){ 0.5f,0.5f,0.5f };
 	SceneLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
-	SceneLight.Position = (Vec3){ 10.0f,7.0f,5.0f };
+	SceneLight.Position = (Vec3){ 0,2.0f,5.0f };
 
-	BackGroundColor = (Color){ 0.0f,0.5f,1.0f,1.0f };
+	BackGroundColor = (Color){ 0.0f,0.0f,0.0f,1.0f };
     DefaultShader = shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
 	
 	glViewport(0, 0, window_widht, window_height);
