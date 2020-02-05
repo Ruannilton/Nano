@@ -309,7 +309,13 @@
     <ClInclude Include="Src\Materials\ColorMaterial.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\Light.h">
+    <ClInclude Include="Src\Engine\Graphic\Lights\Light.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Lights\DirectionalLight.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\NanoHeader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
@@ -417,9 +423,6 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Src\Engine\DataStructures\Vector.c">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Engine\Graphic\Light.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>

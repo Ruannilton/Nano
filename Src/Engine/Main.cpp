@@ -1,25 +1,29 @@
 extern "C" {
 #include "NanoEngine.h"
 #include "..//Materials/TexturedMaterial.h"
-#include "..//Materials/ColorMaterial.h"
 }
 
 
  void Start() {
 
-	 //Heap corruption bug 
-	 //Press continue until run
 
-	mesh_loader_pre_alloc = mbyte(10); // alloca 10 mb para o carregamento dos modelos, será feito automaticamente futuramente
+	 mesh_loader_pre_alloc = mbyte(10);
 
-	//Shader colorShader = shader_CreateShader("Assets/Shaders/color.vert", "Assets/Shaders/color.frag");
-	Material* color_mat = CNEW(TexturedMaterial, DefaultShader, "Assets/Images/wood_box.png", "Assets/Images/wood_box.png", "Assets/Images/specular_wood_box.png");
+	Texture* wood_box = texture_LoadTextureDefault("Assets/Images/wood_box.png");
+	Texture* specular_wood_box = texture_LoadTextureDefault("Assets/Images/specular_wood_box.png");
+	Texture* cerberus = texture_LoadTextureDefault("Assets/Images/Cerberus_A.png");
+
 	Mesh* cube_mesh = mesh_LoadPrimitive(PRIMITIVE_CUBE);
+
+	Material* color_mat = CNEW(TexturedMaterial, DefaultShader, wood_box, wood_box, specular_wood_box);
 	RenderComponent* cerb = RenderComponent_Create(cube_mesh, color_mat);
-	RC_SetPosition(cerb, vec3{ 0,0,0 });
+	RC_SetPosition(cerb, vec3{ 1,0,0 });
 	AddToRender(cerb);
 
-	 
+	Material* color_mat2 = CNEW(TexturedMaterial, DefaultShader, cerberus, cerberus, cerberus);
+	RenderComponent* cerb2 = RenderComponent_Create(cube_mesh, color_mat2);
+	RC_SetPosition(cerb2, vec3{ -1,0,0 });
+	AddToRender(cerb2);
 }
  
  void Update() {

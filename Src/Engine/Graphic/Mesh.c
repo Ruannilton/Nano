@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#include "../Core/NanoIO.h"
+
 
 #define LINE_READED_BUFF_SIZE 128
 
@@ -69,7 +69,7 @@ Mesh* mesh_LoadMesh(string path) {
 	Vec3* vertList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec3* normList = ARRAY(Vec3,mesh_loader_pre_alloc+1);
 	Vec2* uvList   = ARRAY(Vec2,mesh_loader_pre_alloc+1);
-	Vertex* faceList = ARRAY(Vertex,mesh_loader_pre_alloc+1);
+	Vertex* faceList = ARRAY(Vertex,3*mesh_loader_pre_alloc+1);
 	Mesh* mesh = NEW(Mesh);
 
 	VERIFY(mesh, NULL);
@@ -89,6 +89,16 @@ Mesh* mesh_LoadMesh(string path) {
 	int quadFace = 0;
 	while (!feof(file))
 	{
+
+		if (vert_count >= size) {
+			DEBUG_C(ANSI_RED, "[ERROR] Load mesh: %s\nvert_count is out of bounds", path);
+			return NULL;
+		}
+		if (index_count >= size *3) {
+			DEBUG_C(ANSI_RED, "[ERROR] Load mesh:%s\n index_count is out of bounds", path);
+			return NULL;
+		}
+		
 		if (fscanf_s(file, "%s", &line_readed, LINE_READED_BUFF_SIZE)) {
 
 			if (strcmp(line_readed, "v") == 0) {				

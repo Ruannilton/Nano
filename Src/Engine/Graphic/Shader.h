@@ -22,7 +22,7 @@ __inline void Shader_SetTextureUnit(uint texID, GLenum unit) {
 }
 
 __inline void Shader_SetInt(Shader shader, string local, int value) {
-	glUniform1d(glGetUniformLocation(shader, local), value);
+	glUniform1i(glGetUniformLocation(shader, local), value);
 }
 
 __inline void Shader_SetFloat(Shader shader,string local, float value) {

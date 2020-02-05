@@ -3,6 +3,7 @@
 
 #include "../Utils.h"
 #include "GL.h"
+#include "../Core/NanoIO.h"
 #include "../DataStructures/Vector.h"
 
 #define STATIC_FLAG 1

@@ -7,12 +7,18 @@ UNIQUE int render_list_count = 0;
 void initRenderSystem() {
 	vec3 pos = { 0,0,10.0f };
 
-	SceneLight.Ambient = (Vec3){ 0.4f,0.4f,0.4f };
-	SceneLight.Diffuse = (Vec3){ 0.5f,0.5f,0.5f };
+	SceneLight.Ambient  = (Vec3){ 0.4f,0.4f,0.4f };
+	SceneLight.Diffuse  = (Vec3){ 0.5f,0.5f,0.5f };
 	SceneLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
-	SceneLight.Position = (Vec3){ 0,2.0f,5.0f };
+	SceneLight.Position = (Vec3){ 2,2,2 };
 
-	BackGroundColor = (Color){ 0.0f,0.0f,0.0f,1.0f };
+	Directional.Ambient   = (Vec3){ 0.4f,0.4f,0.4f };
+	Directional.Diffuse   = (Vec3){ 0.5f,0.5f,0.5f };
+	Directional.Specular  = (Vec3){ 1.0f,1.0f,1.0f };
+	Directional.Direction = (Vec3){ -0.2f , -1.0f, -0.3f };
+
+
+	BackGroundColor = (Color){ 0.0f,0.8f,1.0f,1.0f };
     DefaultShader = shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
 	
 	glViewport(0, 0, window_widht, window_height);
@@ -59,7 +65,7 @@ void RenderScene() {
         glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE,(GLfloat*) render_list[i]->transform);
 		glBindVertexArray(render_list[i]->mesh->mesh_id);
 		glDrawElements(GL_TRIANGLES, render_list[i]->mesh->index_count, GL_UNSIGNED_INT, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+	
 	}
 	
 	glBindVertexArray(0);

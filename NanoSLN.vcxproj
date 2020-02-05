@@ -175,13 +175,15 @@
     <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
-    <ClInclude Include="Src\Engine\Graphic\Light.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\DirectionalLight.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\Light.h" />
     <ClInclude Include="Src\Engine\Graphic\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
+    <ClInclude Include="Src\Engine\NanoHeader.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
     <ClInclude Include="Src\Engine\Utils.h" />
     <ClInclude Include="Src\Materials\ColorMaterial.h" />
@@ -216,7 +218,6 @@
     <ClCompile Include="Src\Engine\Core\NanoIO.c" />
     <ClCompile Include="Src\Engine\DataStructures\Vector.c" />
     <ClCompile Include="Src\Engine\Graphic\Camera.c" />
-    <ClCompile Include="Src\Engine\Graphic\Light.c" />
     <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
     <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />

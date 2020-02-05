@@ -6,6 +6,7 @@
 #include "..//Engine/Graphic/Texture.h"
 
 
+
 typedef struct {
 	Texture* texture;
 	Texture* difffuse;
@@ -24,18 +25,18 @@ Material_CreateBindFnc(TexturedMaterial) {
 	Shader_SetInt(shader, "material.specular", 2);
 	Shader_SetTextureUnit(((TexturedMaterial*)data)->specular->id, GL_TEXTURE2);
 
-	Shader_SetFloat(shader, "material.Shininess", 32.0f);
+	Shader_SetFloat(shader, "material.Shininess", 128.0f);
 
 	Shader_SetVec3(shader, "CameraPos", currentCamera.position);
-	Light_Bind(shader, &SceneLight);
+	DirectionalLight_SetLight(shader, &Directional);
 	
 }
 
 
-inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, string texture, string diffuse, string specular) {
-	self->texture = texture_LoadTextureDefault(texture);
-	self->difffuse = texture_LoadTextureDefault(diffuse);
-	self->specular = texture_LoadTextureDefault(specular);
+inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, Texture* texture, Texture* diffuse, Texture* specular) {
+	self->texture = texture;
+	self->difffuse = diffuse;
+	self->specular = specular;
 	Material* mat = CNEW(Material, shader, TexturedMaterialbndFnc,self);
 	return mat;
 }
