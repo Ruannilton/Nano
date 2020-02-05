@@ -183,7 +183,6 @@
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
-    <ClInclude Include="Src\Engine\NanoHeader.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
     <ClInclude Include="Src\Engine\Utils.h" />
     <ClInclude Include="Src\Materials\ColorMaterial.h" />

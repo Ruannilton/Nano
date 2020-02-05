@@ -23,7 +23,7 @@
 UNIQUE Color BackGroundColor;
 
 //Light
-UNIQUE Light SceneLight;
+UNIQUE SpotLight SceneLight;
 UNIQUE DirectionalLight Directional;
 
 UNIQUE Shader DefaultShader;

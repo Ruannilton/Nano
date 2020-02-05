@@ -18,7 +18,7 @@ inline DirectionalLight* DirectionalLight_CTR(DirectionalLight* self, Vec3 Direc
 	return self;
 }
 
-inline void DirectionalLight_SetLight(Shader shader, DirectionalLight* direction) {
+inline void DirectionalLight_Bind(Shader shader, DirectionalLight* direction) {
 	Shader_SetVec3(shader, "directional_light.Direction", direction->Direction.arr);
 	Shader_SetVec3(shader, "directional_light.Ambient", direction->Ambient.arr);
 	Shader_SetVec3(shader, "directional_light.Diffuse", direction->Diffuse.arr);

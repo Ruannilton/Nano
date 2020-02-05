@@ -6,11 +6,15 @@ struct Material{
 	float Shininess;
 };
 
-struct Light{
+struct PointLight{
 	vec3 Ambient;
 	vec3 Diffuse;
 	vec3 Specular;
 	vec3 Position;
+
+	float Constant;
+	float Linear;
+	float Quadratic;
 };
 
 struct DirectionalLight{
@@ -30,7 +34,7 @@ in vec3 Normal;
 uniform vec3 CameraPos;
 uniform sampler2D ourTexture;
 
-uniform Light light;
+uniform PointLight light;
 uniform DirectionalLight directional_light;
 
 uniform Material material;
@@ -61,6 +65,9 @@ vec4 SpotLight(){
 	vec3 texDiffuse = vec3(texture(material.diffuse, TexCoord));
 	vec3 texSpec = vec3(texture(material.specular, TexCoord));
 
+	float dist = distance(light.Position,FragPos);
+	float attenuation = 1.0/(light.Constant + (light.Linear * dist) + (light.Quadratic * dist * dist));
+
 	vec3 norm = normalize(Normal);
 	vec3 lightDir = normalize(light.Position - FragPos);
 	float diff = max(dot(norm,lightDir),0.0);
@@ -69,15 +76,15 @@ vec4 SpotLight(){
 	vec3 reflectDir = reflect(-lightDir, norm);  
 	float spec = pow(max(0,dot(viewDir, reflectDir)), material.Shininess);
 	
-	vec3 ambient  = light.Ambient  * texDiffuse;
-	vec3 diffuse  = light.Diffuse  * diff * texDiffuse;
-	vec3 specular = light.Specular * spec * texSpec;
+	vec3 ambient  = light.Ambient  * texDiffuse * attenuation;
+	vec3 diffuse  = light.Diffuse  * diff * texDiffuse * attenuation;
+	vec3 specular = light.Specular * spec * texSpec * attenuation;
 
-	return vec4(ambient + diffuse+specular,1.0) ;
+	return vec4((ambient + diffuse + specular),1.0);
 }
 
 void main()
 {
 
-    FragColor =  DirecLight() * ourColor;
+    FragColor =  SpotLight() * ourColor;
 }

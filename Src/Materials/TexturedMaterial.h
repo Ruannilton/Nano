@@ -25,11 +25,11 @@ Material_CreateBindFnc(TexturedMaterial) {
 	Shader_SetInt(shader, "material.specular", 2);
 	Shader_SetTextureUnit(((TexturedMaterial*)data)->specular->id, GL_TEXTURE2);
 
-	Shader_SetFloat(shader, "material.Shininess", 128.0f);
+	Shader_SetFloat(shader, "material.Shininess", 32.0f);
 
 	Shader_SetVec3(shader, "CameraPos", currentCamera.position);
-	DirectionalLight_SetLight(shader, &Directional);
-	
+	//DirectionalLight_SetLight(shader, &Directional);
+	Light_Bind(shader, &SceneLight);
 }
 
 

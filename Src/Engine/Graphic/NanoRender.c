@@ -10,7 +10,10 @@ void initRenderSystem() {
 	SceneLight.Ambient  = (Vec3){ 0.4f,0.4f,0.4f };
 	SceneLight.Diffuse  = (Vec3){ 0.5f,0.5f,0.5f };
 	SceneLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
-	SceneLight.Position = (Vec3){ 2,2,2 };
+	SceneLight.Position = (Vec3){ 0,0.5f,1 };
+	SceneLight.Constant = 1.0f;
+	SceneLight.Linear = 0.045f;
+	SceneLight.Quadratic = 0.0075f;
 
 	Directional.Ambient   = (Vec3){ 0.4f,0.4f,0.4f };
 	Directional.Diffuse   = (Vec3){ 0.5f,0.5f,0.5f };
@@ -18,7 +21,7 @@ void initRenderSystem() {
 	Directional.Direction = (Vec3){ -0.2f , -1.0f, -0.3f };
 
 
-	BackGroundColor = (Color){ 0.0f,0.8f,1.0f,1.0f };
+	BackGroundColor = (Color){ 0.0f,0.0f,0.0f,1.0f };
     DefaultShader = shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
 	
 	glViewport(0, 0, window_widht, window_height);

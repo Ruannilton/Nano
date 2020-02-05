@@ -16,14 +16,19 @@ extern "C" {
 	Mesh* cube_mesh = mesh_LoadPrimitive(PRIMITIVE_CUBE);
 
 	Material* color_mat = CNEW(TexturedMaterial, DefaultShader, wood_box, wood_box, specular_wood_box);
+	
 	RenderComponent* cerb = RenderComponent_Create(cube_mesh, color_mat);
-	RC_SetPosition(cerb, vec3{ 1,0,0 });
+	RC_SetPosition(cerb, vec3{ 0,0,0 });
 	AddToRender(cerb);
 
-	Material* color_mat2 = CNEW(TexturedMaterial, DefaultShader, cerberus, cerberus, cerberus);
-	RenderComponent* cerb2 = RenderComponent_Create(cube_mesh, color_mat2);
-	RC_SetPosition(cerb2, vec3{ -1,0,0 });
+	RenderComponent* cerb1 = RenderComponent_Create(cube_mesh, color_mat);
+	RC_SetPosition(cerb1, vec3{ 0,0,-15 });
+	AddToRender(cerb1);
+
+	RenderComponent* cerb2 = RenderComponent_Create(cube_mesh, color_mat);
+	RC_SetPosition(cerb2, vec3{ 0,0,-30 });
 	AddToRender(cerb2);
+
 }
  
  void Update() {
