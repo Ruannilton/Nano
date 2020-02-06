@@ -1,24 +1,34 @@
 #include "NanoRender.h"
 
 
-UNIQUE RenderComponent* render_list[128];
-UNIQUE int render_list_count = 0;
+
 
 void initRenderSystem() {
 	vec3 pos = { 0,0,10.0f };
 
-	SceneLight.Ambient  = (Vec3){ 0.4f,0.4f,0.4f };
-	SceneLight.Diffuse  = (Vec3){ 0.5f,0.5f,0.5f };
-	SceneLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
-	SceneLight.Position = (Vec3){ 0,0.5f,1 };
-	SceneLight.Constant = 1.0f;
-	SceneLight.Linear = 0.045f;
-	SceneLight.Quadratic = 0.0075f;
+	pointLight.Ambient  = (Vec3){ 0.4f,0.4f,0.4f };
+	pointLight.Diffuse  = (Vec3){ 0.5f,0.5f,0.5f };
+	pointLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
+	pointLight.Position = (Vec3){ 0,0.5f,1 };
+	pointLight.Constant = 1.0f;
+	pointLight.Linear = 0.045f;
+	pointLight.Quadratic = 0.0075f;
 
-	Directional.Ambient   = (Vec3){ 0.4f,0.4f,0.4f };
-	Directional.Diffuse   = (Vec3){ 0.5f,0.5f,0.5f };
-	Directional.Specular  = (Vec3){ 1.0f,1.0f,1.0f };
-	Directional.Direction = (Vec3){ -0.2f , -1.0f, -0.3f };
+	spotLight.Ambient = (Vec3){ 0.4f,0.4f,0.4f };
+	spotLight.Diffuse = (Vec3){ 0.5f,0.5f,0.5f };
+	spotLight.Specular = (Vec3){ 1.0f,1.0f,1.0f };
+	spotLight.Position = (Vec3){ 0,0,2.0f };
+	spotLight.Constant = 1.0f;
+	spotLight.Linear = 0.045f;
+	spotLight.Quadratic = 0.0075f;
+	spotLight.Direction = (Vec3){ 0 , 0, -0.3f };
+	spotLight.cutOff = 12.5f;
+	spotLight.outerCutOff = 17.5f;
+
+	directionalLight.Ambient   = (Vec3){ 0.4f,0.4f,0.4f };
+	directionalLight.Diffuse   = (Vec3){ 0.5f,0.5f,0.5f };
+	directionalLight.Specular  = (Vec3){ 1.0f,1.0f,1.0f };
+	directionalLight.Direction = (Vec3){ -0.2f , -1.0f, -0.3f };
 
 
 	BackGroundColor = (Color){ 0.0f,0.0f,0.0f,1.0f };

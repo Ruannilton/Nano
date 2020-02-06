@@ -1,7 +1,9 @@
 #ifndef NANO_DIRECTIONAL
 #define NANO_DIRECTIONAL
 
-#include "Light.h"
+#include "../GL.h"
+#include "../../Utils.h"
+#include "../Shader.h"
 
 typedef struct {
 	Vec3 Ambient;

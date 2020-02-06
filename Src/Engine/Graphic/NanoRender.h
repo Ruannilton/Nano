@@ -10,7 +10,6 @@
 #include "Shader.h"
 #include "RenderComponent.h"
 #include "Lights/Light.h"
-#include "Lights/DirectionalLight.h"
 
 #define SHADER_POS_LOC 0
 #define SHADER_COLOR_LOC 1
@@ -20,17 +19,19 @@
 #define SHADER_VIEW_LOC 5
 #define SHADER_PROJ_LOC 6
 
-UNIQUE Color BackGroundColor;
 
-//Light
-UNIQUE SpotLight SceneLight;
-UNIQUE DirectionalLight Directional;
+UNIQUE PointLight pointLight;
+UNIQUE DirectionalLight directionalLight;
+UNIQUE SpotLight spotLight;
 
-UNIQUE Shader DefaultShader;
 UNIQUE uint window_widht;
 UNIQUE uint window_height;
+UNIQUE uint render_list_count = 0;
+
+UNIQUE Shader DefaultShader;
 UNIQUE Camera currentCamera;
-UNIQUE RenderComponent render[5];
+UNIQUE Color BackGroundColor;
+UNIQUE RenderComponent* render_list[128];
 
 void initRenderSystem();
 void AddToRender(RenderComponent* r);

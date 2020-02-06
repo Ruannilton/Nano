@@ -28,8 +28,9 @@ Material_CreateBindFnc(TexturedMaterial) {
 	Shader_SetFloat(shader, "material.Shininess", 32.0f);
 
 	Shader_SetVec3(shader, "CameraPos", currentCamera.position);
-	//DirectionalLight_SetLight(shader, &Directional);
-	Light_Bind(shader, &SceneLight);
+	//DirectionalLight_Bind(shader, &Directional);
+	//PointLight_Bind(shader, &SceneLight);
+	SpotLight_Bind(shader, &spotLight);
 }
 
 

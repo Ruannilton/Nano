@@ -177,6 +177,8 @@
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
     <ClInclude Include="Src\Engine\Graphic\Lights\DirectionalLight.h" />
     <ClInclude Include="Src\Engine\Graphic\Lights\Light.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\PointLight.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\SpotLight.h" />
     <ClInclude Include="Src\Engine\Graphic\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />

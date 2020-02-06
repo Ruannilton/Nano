@@ -75,4 +75,16 @@ typedef union {
 	};
 }Vec2;
 
+#define SetVec2(VAR,X,Y)   VAR.x = X; \
+						   VAR.y = Y; 
+						  
+#define SetVec3(VAR,X,Y,Z) VAR.x = X; \
+						   VAR.y = Y; \
+						   VAR.z = Z; 
+
+#define SetVec4(VAR,X,Y,Z,W) VAR.x = X; \
+						     VAR.y = Y; \
+						     VAR.z = Z; \
+							 VAR.w = W;
+
 #endif
