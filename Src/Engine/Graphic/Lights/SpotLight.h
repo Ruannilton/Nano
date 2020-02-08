@@ -48,8 +48,8 @@ inline void SpotLight_Bind(Shader shader, SpotLight* light) {
 	Shader_SetFloat(shader, "spot_light.Constant", light->Constant);
 	Shader_SetFloat(shader, "spot_light.Linear", light->Linear);
 	Shader_SetFloat(shader, "spot_light.Quadratic", light->Quadratic);
-	Shader_SetFloat(shader, "spot_light.cutOff", cos(glm_rad(light->cutOff)));
-	Shader_SetFloat(shader, "spot_light.outerCutOff", cos(glm_rad(light->outerCutOff)));
+	Shader_SetFloat(shader, "spot_light.cutOff", (float)cos(glm_rad(light->cutOff)));
+	Shader_SetFloat(shader, "spot_light.outerCutOff", (float)cos(glm_rad(light->outerCutOff)));
 }
 
 #endif // ! NANO_SPOT_LIGHT

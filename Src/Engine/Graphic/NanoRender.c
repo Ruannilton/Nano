@@ -61,7 +61,7 @@ void RenderScene() {
 	glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, (GLfloat*) currentCamera.projection);
 	glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, (GLfloat*) currentCamera.view);
 	
-	register int i = 0;
+	register uint i = 0;
 	Material* cMat;
 
 	for (; i < render_list_count; i++) {

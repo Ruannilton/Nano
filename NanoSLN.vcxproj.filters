@@ -321,6 +321,9 @@
     <ClInclude Include="Src\Engine\Graphic\Lights\Light.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\StaticScene.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c">
@@ -426,6 +429,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Src\Engine\DataStructures\Vector.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\StaticScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>

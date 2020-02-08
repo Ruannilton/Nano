@@ -7,7 +7,7 @@ extern "C" {
  void Start() {
 
 
-	 mesh_loader_pre_alloc = mbyte(10);
+	 mesh_loader_pre_alloc = MBYTE(10);
 
 	Texture* wood_box = texture_LoadTextureDefault("Assets/Images/wood_box.png");
 	Texture* specular_wood_box = texture_LoadTextureDefault("Assets/Images/specular_wood_box.png");

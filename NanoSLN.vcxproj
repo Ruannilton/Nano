@@ -182,6 +182,7 @@
     <ClInclude Include="Src\Engine\Graphic\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
+    <ClInclude Include="Src\Engine\Graphic\StaticScene.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.h" />
     <ClCompile Include="Src\Engine\Graphic\Shader.c" />
+    <ClCompile Include="Src\Engine\Graphic\StaticScene.c" />
     <ClCompile Include="Src\Engine\Graphic\Texture.c" />
     <ClCompile Include="Src\Engine\Main.cpp" />
   </ItemGroup>
