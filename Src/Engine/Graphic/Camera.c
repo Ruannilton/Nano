@@ -3,12 +3,11 @@
 
 void camera_UpdateView(Camera* cam) {
 	
-
-	cam->front[0] = (float)(cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1])));
-	cam->front[1] = (float)(sin(glm_rad(cam->rotation[1])));
-	cam->front[2] = (float)(sin(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1])));
-	glm_normalize(cam->front);
-	glm_look(cam->position, cam->front, cam->up, cam->view);
+	cam->front.x = (float)(cos(glm_rad(cam->rotation.x)) * cos(glm_rad(cam->rotation.y)));
+	cam->front.y = (float)(sin(glm_rad(cam->rotation.y)));
+	cam->front.z = (float)(sin(glm_rad(cam->rotation.x)) * cos(glm_rad(cam->rotation.y)));
+	glm_normalize(cam->front.arr);
+	glm_look(cam->position.arr, cam->front.arr, cam->up.arr, cam->view);
 }
 
 void camera_Zoom(Camera* cam, double delta) {
@@ -22,59 +21,53 @@ void camera_Zoom(Camera* cam, double delta) {
 	}
 }
 
-void camera_CreateCamera(Camera* cam, vec3 position) {
-	
-	cam->position[0] = position[0];
-	cam->position[1] = position[1];
-	cam->position[2] = position[2];
+void camera_SeekMouse(Camera* cam) {
+	Vec3 mouse_mov = { (float)mouse_delta_x, (float)mouse_delta_y, 0 };
+	camera_Rotate(cam, mouse_mov);
+	if (mouse_delta_scroll_y != 0) {
+		camera_Zoom(cam, mouse_delta_scroll_y);
+	}
+}
 
-	cam->up[0] = 0;
-	cam->up[1] = 1;
-	cam->up[2] = 0;
+void camera_CreateCamera(Camera* cam, Vec3 position) {
 
-	cam->front[0] = 0;
-	cam->front[1] = 0;
-	cam->front[2] = -1;
+    cam->position = position;
+	cam->up = (Vec3){0,1,0};
+	cam->front = (Vec3){ 0,0,-1 };
+	cam->rotation = (Vec3){ 270,0,0 };
 
-
-	cam->rotation[0] = 270;
-	cam->rotation[1] = 0;
-	cam->rotation[2] = 0;
-	
 	cam->max_fov = 70;
 	cam->min_fov = 1;
 	cam->fov = 45;
 	cam->zNear = 0.1f;
-	cam->zNear = 1000.0f;
+	cam->zFar = 1000.0f;
 	cam-> max_y_angle = 89.0f;
 	cam-> min_y_angle = -89.0f;
+	cam->aspectRatio = 800.0f / 600.0f;
 
-	glm_look(cam->position, cam->front, cam->up, cam->view);
+	glm_look(cam->position.arr, cam->front.arr , cam->up.arr, cam->view);
 }
 
-void camera_Translate(Camera* cam, vec3 direction) {
+void camera_Translate(Camera* cam, Vec3 direction) {
 	// Z axis
 	vec3 za;
-	glm_vec3_mul_s(cam->front, direction[2], za);
-	glm_vec3_add(za, cam->position, cam->position);
+	glm_vec3_mul_s(cam->front.arr, direction.y, za);
+	glm_vec3_add(za, cam->position.arr, cam->position.arr);
 
 	// X axis
 	vec3 cross;
-	glm_cross(cam->front, cam->up, cross);
+	glm_cross(cam->front.arr, cam->up.arr, cross);
 	glm_normalize(cross);
-	glm_vec3_mul_s(cross, direction[0], cross);
-	glm_vec3_add(cross, cam->position, cam->position);
+	glm_vec3_mul_s(cross, direction.x, cross);
+	glm_vec3_add(cross, cam->position.arr, cam->position.arr);
 
-	glm_look(cam->position, cam->front, cam->up, cam->view);
+	glm_look(cam->position.arr, cam->front.arr, cam->up.arr, cam->view);
 }
 
 
 
-void camera_Rotate(Camera* cam, vec3 direction) {
-	cam->rotation[0] += direction[0];
-	cam->rotation[1] += direction[1];
-	cam->rotation[2] += direction[2];
-
-	if (cam->rotation[1] > cam->max_y_angle) cam->rotation[1] = cam->max_y_angle;
-	if (cam->rotation[1] < cam->min_y_angle) cam->rotation[1] = cam->min_y_angle;
+void camera_Rotate(Camera* cam, Vec3 direction) {
+	Vec3Sum(cam->rotation, direction);
+	if (cam->rotation.y > cam->max_y_angle) cam->rotation.y = cam->max_y_angle;
+	if (cam->rotation.y < cam->min_y_angle) cam->rotation.y = cam->min_y_angle;
 }

@@ -303,9 +303,6 @@
     <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr_c.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\DataStructures\Vector.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Materials\ColorMaterial.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -321,7 +318,19 @@
     <ClInclude Include="Src\Engine\Graphic\Lights\Light.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Graphic\StaticScene.h">
+    <ClInclude Include="Src\Engine\DataStructures\dynamic_vector.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Architecture\Scene.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\DataStructures\hash_map.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Architecture\RenderData.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Architecture\InstanceList.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
@@ -428,10 +437,25 @@
     <ClCompile Include="Src\Dependencies\include\SOIL2\SOIL2.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Engine\DataStructures\Vector.c">
+    <ClCompile Include="Src\Engine\DataStructures\dynamic_vector.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Engine\Graphic\StaticScene.c">
+    <ClCompile Include="Src\Engine\DataStructures\hash_map.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Architecture\Scene.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Architecture\RenderData.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Architecture\InstanceList.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Materials\TextureMaterial.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\NanoEngine.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>

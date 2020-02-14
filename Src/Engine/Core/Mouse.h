@@ -20,10 +20,15 @@ __inline void initMouse(Nano* nanoApp) {
 }
 
 __inline void MouseClear() {
+		mouse_delta_x = 0;
+		mouse_delta_y = 0;
+		mouse_delta_scroll_x = 0;
+		mouse_delta_scroll_y = 0;
 		REPEAT_1(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
 }
 
-void MouseRestore();
+void MouseUpdate();
+
 void MousePosCallback(GLFWwindow* win, double xpos, double ypos);
 void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void MouseButtonCallback(GLFWwindow* win, int button, int action, int mods);

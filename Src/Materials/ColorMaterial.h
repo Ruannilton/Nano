@@ -3,6 +3,9 @@
 
 #include "..//Engine/Graphic/Material.h"
 #include "..//Engine/Graphic/Texture.h"
+#include "../Engine/Graphic/Color.h"
+#include "../Engine/Graphic/NanoRender.h"
+
 
 
 typedef struct {
@@ -20,10 +23,10 @@ Material_CreateBindFnc(ColorMaterial) {
 	Shader_SetVec3(shader, "material.Specular", specular);
 	Shader_SetFloat(shader, "material.Shininess", 0.3f * 128);
 
-	Shader_SetVec3(shader, "CameraPos", currentCamera.position);
+	Shader_SetVec3(shader, "CameraPos", current_camera.position);
 	Shader_SetVec4(shader, "color", ((ColorMaterial*)data)->color.arr);
 
-	Light_Bind(shader, &SceneLight);
+	
 
 }
 

@@ -1,12 +1,5 @@
 #include "Mouse.h"
 
-void MouseRestore() {
-	mouse_delta_x = 0;
-	mouse_delta_y = 0;
-	mouse_delta_scroll_x = 0;
-	mouse_delta_scroll_y = 0;
-}
-
 void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	mouse_delta_scroll_x = xoffset;
@@ -16,6 +9,12 @@ void MouseButtonCallback(GLFWwindow* win, int button, int action, int mods) {
 	mouseButtons[button] = action + 1;
 	mouseButtonsHold[button] = action;
 }
+
+void MouseUpdate() {
+	
+}
+
+
 void MousePosCallback(GLFWwindow* win, double xpos, double ypos) {
 	if (nano_mouse_first_flag == 0) {
 		nano_mouse_first_flag = 1;

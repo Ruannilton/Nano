@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-void SetKeyWindow(GLFWwindow* win) {
+void BindKeyboardContext(GLFWwindow* win) {
 	window = win;
 }
 void KeyClear() {

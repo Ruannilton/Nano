@@ -1,11 +1,12 @@
 #ifndef NANO_CAMERA
 #define NANO_CAMERA
 
-#include "GL.h"
+#include "../Utils.h"
+#include "../Core/NanoCore.h"
 #include <string.h>
 
 typedef struct {
-	vec3 position, front, up, rotation;
+	Vec3 position, front, up, rotation;
 
 	float max_y_angle;
 	float min_y_angle;
@@ -34,11 +35,12 @@ __inline void camera_SetCameraOrtho(float x0, float y0, float x1, float y1, floa
 	glm_ortho(x0, y0, x1, y1, zNear, zFar, cam->projection);
 }
 
+void camera_SeekMouse(Camera* cam);
 void camera_Zoom(Camera* cam, double delta);
 void camera_UpdateView(Camera* cam);
-void camera_CreateCamera(Camera* cam, vec3 position);
-void camera_Translate(Camera* cam, vec3 direction);
-void camera_Rotate(Camera* cam, vec3 direction);
+void camera_CreateCamera(Camera* cam, Vec3 position);
+void camera_Translate(Camera* cam, Vec3 direction);
+void camera_Rotate(Camera* cam, Vec3 direction);
 
 
 #endif

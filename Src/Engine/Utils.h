@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Graphic/GL.h"
 
 #define ANSI_RED "\x1b[31m"
@@ -89,4 +90,7 @@ typedef union {
 						     VAR.z = Z; \
 							 VAR.w = W;
 
+#define Vec3Sum(a,b) a.x += b.x;\
+					 a.y += b.y;\
+					 a.z += b.z;
 #endif

@@ -7,6 +7,7 @@
 
 typedef struct {
 	GLFWwindow* window;
+	char* title;
 	unsigned int windowWidht, windowHeight;
 	unsigned int run;
 }Nano;

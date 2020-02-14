@@ -165,13 +165,17 @@
     <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr_c.h" />
     <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image.h" />
     <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image_write.h" />
+    <ClInclude Include="Src\Engine\Architecture\InstanceList.h" />
+    <ClInclude Include="Src\Engine\Architecture\RenderData.h" />
+    <ClInclude Include="Src\Engine\Architecture\Scene.h" />
     <ClInclude Include="Src\Engine\Core\Keyboard.h" />
     <ClInclude Include="Src\Engine\Core\Mouse.h" />
     <ClInclude Include="Src\Engine\Core\NanoApp.h" />
     <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
-    <ClInclude Include="Src\Engine\DataStructures\Vector.h" />
+    <ClInclude Include="Src\Engine\DataStructures\dynamic_vector.h" />
+    <ClInclude Include="Src\Engine\DataStructures\hash_map.h" />
     <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
@@ -182,7 +186,6 @@
     <ClInclude Include="Src\Engine\Graphic\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
-    <ClInclude Include="Src\Engine\Graphic\StaticScene.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
@@ -214,20 +217,25 @@
     <ClCompile Include="Src\Dependencies\include\SOIL2\image_DXT.c" />
     <ClCompile Include="Src\Dependencies\include\SOIL2\image_helper.c" />
     <ClCompile Include="Src\Dependencies\include\SOIL2\SOIL2.c" />
+    <ClCompile Include="Src\Engine\Architecture\InstanceList.c" />
+    <ClCompile Include="Src\Engine\Architecture\RenderData.c" />
+    <ClCompile Include="Src\Engine\Architecture\Scene.c" />
     <ClCompile Include="Src\Engine\Core\Keyboard.c" />
     <ClCompile Include="Src\Engine\Core\Mouse.c" />
     <ClCompile Include="Src\Engine\Core\NanoApp.c" />
     <ClCompile Include="Src\Engine\Core\NanoIO.c" />
-    <ClCompile Include="Src\Engine\DataStructures\Vector.c" />
+    <ClCompile Include="Src\Engine\DataStructures\dynamic_vector.c" />
+    <ClCompile Include="Src\Engine\DataStructures\hash_map.c" />
     <ClCompile Include="Src\Engine\Graphic\Camera.c" />
     <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
     <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.h" />
     <ClCompile Include="Src\Engine\Graphic\Shader.c" />
-    <ClCompile Include="Src\Engine\Graphic\StaticScene.c" />
     <ClCompile Include="Src\Engine\Graphic\Texture.c" />
     <ClCompile Include="Src\Engine\Main.cpp" />
+    <ClCompile Include="Src\Engine\NanoEngine.c" />
+    <ClCompile Include="Src\Materials\TextureMaterial.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />

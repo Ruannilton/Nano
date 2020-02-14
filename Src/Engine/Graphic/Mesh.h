@@ -4,7 +4,7 @@
 #include "../Utils.h"
 #include "GL.h"
 #include "../Core/NanoIO.h"
-#include "../DataStructures/Vector.h"
+#include "../DataStructures/dynamic_vector.h"
 
 #define STATIC_FLAG 1
 #define POSITION_FLAG 2

@@ -15,7 +15,7 @@ UNIQUE unsigned int keyboard[257];
 
 
 void KeyClear();
-void SetKeyWindow(GLFWwindow* win);
+void BindKeyboardContext(GLFWwindow* win);
 void keyCallback(GLFWwindow* win, int key, int scancode, int action, int mod);
 
 #endif // !NANO_KEYBOARD
