@@ -22,10 +22,11 @@ void Camera_Zoom(Camera* cam, double delta) {
 }
 
 void Camera_SeekMouse(Camera* cam) {
-	Vec3 mouse_mov = { (float)mouse_delta_x, (float)mouse_delta_y, 0 };
+
+	Vec3 mouse_mov = { input.mouse.position.x,input.mouse.position.y, 0 };
 	Camera_Rotate(cam, mouse_mov);
-	if (mouse_delta_scroll_y != 0) {
-		Camera_Zoom(cam, mouse_delta_scroll_y);
+	if (input.mouse.scroll.y != 0) {
+		Camera_Zoom(cam, input.mouse.scroll.y);
 	}
 }
 

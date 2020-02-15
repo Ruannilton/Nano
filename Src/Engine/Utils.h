@@ -93,4 +93,14 @@ typedef union {
 #define Vec3Sum(a,b) a.x += b.x;\
 					 a.y += b.y;\
 					 a.z += b.z;
+
+#define Vec3Mul(a,b) a.x *= b;\
+					 a.y *= b;\
+					 a.z *= b;
+
+#define Vec2Sum(a,b) a.x += b.x;\
+					 a.y += b.y;
+
+#define Vec2Mul(a,b) a.x *= b;\
+					 a.y *= b;
 #endif

@@ -24,7 +24,7 @@ void SetupOpenGL(Nano* NanoApplication) {
 	glfwSetScrollCallback(NanoApplication->window, Mouse_ScrollCallback);
 	glfwSetMouseButtonCallback(NanoApplication->window, Mouse_ButtonCallback);
 	glfwSetFramebufferSizeCallback(NanoApplication->window, framebufferSizeCallback);
-	Keyboard_BindContext(NanoApplication->window);
+	Input_BindContext(NanoApplication->window);
 }
 
 int main() {
@@ -41,7 +41,7 @@ int main() {
 	
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{
-		if (KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
+		if (Input_KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
 
 		sprintf(NanoApplication->title, "FPS: %f", 1.0 / delta_time);
 		glfwSetWindowTitle(NanoApplication->window, NanoApplication->title);

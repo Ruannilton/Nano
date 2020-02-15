@@ -168,8 +168,6 @@
     <ClInclude Include="Src\Engine\Architecture\InstanceList.h" />
     <ClInclude Include="Src\Engine\Architecture\RenderData.h" />
     <ClInclude Include="Src\Engine\Architecture\Scene.h" />
-    <ClInclude Include="Src\Engine\Core\Keyboard.h" />
-    <ClInclude Include="Src\Engine\Core\Mouse.h" />
     <ClInclude Include="Src\Engine\Core\NanoApp.h" />
     <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
@@ -220,9 +218,8 @@
     <ClCompile Include="Src\Engine\Architecture\InstanceList.c" />
     <ClCompile Include="Src\Engine\Architecture\RenderData.c" />
     <ClCompile Include="Src\Engine\Architecture\Scene.c" />
-    <ClCompile Include="Src\Engine\Core\Keyboard.c" />
-    <ClCompile Include="Src\Engine\Core\Mouse.c" />
     <ClCompile Include="Src\Engine\Core\NanoApp.c" />
+    <ClCompile Include="Src\Engine\Core\NanoInput.c" />
     <ClCompile Include="Src\Engine\Core\NanoIO.c" />
     <ClCompile Include="Src\Engine\DataStructures\dynamic_vector.c" />
     <ClCompile Include="Src\Engine\DataStructures\hash_map.c" />

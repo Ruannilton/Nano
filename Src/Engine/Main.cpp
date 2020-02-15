@@ -54,16 +54,16 @@ extern "C" {
 	 Vec3 foward = { 0,0,5.5f * delta_time };
 	 Vec3 backward = { 0.0f,0,-5.5f * delta_time };
 
-	 if (Key(GLFW_KEY_A)) {
+	 if (Input_Key(GLFW_KEY_A)) {
 		 Camera_Translate(current_camera, left);
 	 }
-	 if (Key(GLFW_KEY_D)) {
+	 if (Input_Key(GLFW_KEY_D)) {
 		 Camera_Translate(current_camera, right);
 	 }
-	 if (Key(GLFW_KEY_W)) {
+	 if (Input_Key(GLFW_KEY_W)) {
 		 Camera_Translate(current_camera, foward);
 	 }
-	 if (Key(GLFW_KEY_S)) {
+	 if (Input_Key(GLFW_KEY_S)) {
 		 Camera_Translate(current_camera, backward);
 	 }
 	 

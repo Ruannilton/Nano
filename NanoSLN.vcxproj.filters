@@ -213,13 +213,7 @@
     <ClInclude Include="Src\Engine\Core\NanoIO.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Core\Keyboard.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Engine\Core\NanoInput.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Engine\Core\Mouse.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h">
@@ -410,13 +404,7 @@
     <ClCompile Include="Src\Engine\Core\NanoIO.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Engine\Core\Keyboard.c">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Engine\Core\NanoApp.c">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Engine\Core\Mouse.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Src\Engine\Graphic\Camera.c">
@@ -456,6 +444,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Src\Engine\NanoEngine.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Core\NanoInput.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
