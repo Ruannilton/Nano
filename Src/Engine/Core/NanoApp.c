@@ -1,6 +1,6 @@
 #include "NanoApp.h"
 
-Nano* CreateNano() {
+Nano* Nano_Create() {
 	if (!glfwInit()) {
 		DEBUG("Error Glfw Init");
 		return NULL;
@@ -30,7 +30,7 @@ Nano* CreateNano() {
 	return nano;
 }
 
-void DeleteNano(Nano* nano) {
+void Nano_Delete(Nano* nano) {
 	if (!nano) return;
 	//glfwTerminate();
 	free(nano);

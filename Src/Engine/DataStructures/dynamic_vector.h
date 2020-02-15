@@ -7,10 +7,10 @@
 typedef unsigned int uint;
 typedef int (*map_fnc)(void *data);
 
-#define vector_push(TYPE, VEC_PTR, INDEX_PTR) (TYPE *)internal_vector_push(VEC_PTR, INDEX_PTR)
-#define vector_create(TYPE, SIZE) internal_create_vector(SIZE, sizeof(TYPE))
-#define vector_get(TYPE, VEC_PTR, INDEX) (TYPE *)internal_vector_get(VEC_PTR, INDEX)
-#define vector_remove(TYPE, VEC_PTR, INDEX) (TYPE *)internal_vector_remove(VEC_PTR, INDEX)
+#define Vector_Push(TYPE, VEC_PTR, INDEX_PTR) (TYPE *)internal_vector_push(VEC_PTR, INDEX_PTR)
+#define Vector_Create(TYPE, SIZE) internal_create_vector(SIZE, sizeof(TYPE))
+#define Vector_Get(TYPE, VEC_PTR, INDEX) (TYPE *)internal_vector_get(VEC_PTR, INDEX)
+#define Vector_Remove(TYPE, VEC_PTR, INDEX) (TYPE *)internal_vector_remove(VEC_PTR, INDEX)
 
 typedef struct
 {
@@ -21,40 +21,40 @@ typedef struct
     float grow_factor;
     void *buffer;
     uint *free_index;
-} dynamic_vector;
+} Vector;
 
 typedef struct
 {
-    dynamic_vector *vec;
+    Vector *vec;
     uint current;
     uint rev_current;
     void *data;
-} iterator;
+} Iterator;
 
-dynamic_vector internal_create_vector(uint size, size_t data_size);
+Vector internal_create_vector(uint size, size_t data_size);
 
-void *internal_vector_push(dynamic_vector *self, uint *index_added);
+void *internal_vector_push(Vector *self, uint *index_added);
 
-void vector_resize(dynamic_vector *self, size_t new_size);
+void vector_resize(Vector *self, size_t new_size);
 
-void *internal_vector_get(dynamic_vector *self, uint index);
+void *internal_vector_get(Vector *self, uint index);
 
-void *internal_vector_remove(dynamic_vector *self, uint index);
+void *internal_vector_remove(Vector *self, uint index);
 
-int vector_join(dynamic_vector *dst, dynamic_vector *other);
+int Vector_Join(Vector *dst, Vector *other);
 
-void vector_clear(dynamic_vector *self);
+void Vector_Clear(Vector *self);
 
-void vector_delete(dynamic_vector *self);
+void Vector_Delete(Vector *self);
 
-iterator get_iterator(dynamic_vector *vec);
+Iterator Iterator_Get(Vector *vec);
 
-int iterator_next(iterator *it);
+int Iterator_Next(Iterator *it);
 
-int iterator_reverse(iterator *it);
+int Iterator_Reverse(Iterator *it);
 
-int iterator_map(iterator *it, map_fnc fnc);
+int Iterator_Map(Iterator *it, map_fnc fnc);
 
-void iterator_restart(iterator *it);
+void Iterator_Restart(Iterator *it);
 
 #endif

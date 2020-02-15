@@ -34,12 +34,12 @@ void Renderer_SetScene(Scene* scn);
 
 
 inline RenderComponent Renderer_AddComponent(uint shader, uint mesh) {
-	return Scene_Add_Render_Component(current_scene, shader, mesh);
+	return Scene_AddRenderComponent(current_scene, shader, mesh);
 }
 
 
 
-void RenderScene();
+void Renderer_RenderScene();
 
 #endif // !NANO_RENDER
 

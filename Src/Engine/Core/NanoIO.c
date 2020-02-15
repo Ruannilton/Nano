@@ -1,7 +1,7 @@
 #include "NanoIO.h"
 
 
-string ReadFile(string path) {
+string IO_ReadFile(string path) {
 
 	FILE* infile;
 	char* buffer;

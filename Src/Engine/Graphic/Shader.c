@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-unsigned int shader_CompileShader(string src, GLenum type) {
+unsigned int Shader_CompileShader(string src, GLenum type) {
 	GLuint id = glCreateShader(type);
 	glShaderSource(id, 1, &src, NULL);
 	glCompileShader(id);
@@ -20,15 +20,15 @@ unsigned int shader_CompileShader(string src, GLenum type) {
 	return id;
 }
 
-Shader shader_CreateShader(string vs, string fs) {
+Shader Shader_CreateShader(string vs, string fs) {
 
 	
 	unsigned int prog = glCreateProgram();
 	unsigned int vsID = 0;
 	unsigned int fsID = 0;
 
-	vsID = shader_CompileShader(ReadFile(vs), GL_VERTEX_SHADER);
-	fsID = shader_CompileShader(ReadFile(fs), GL_FRAGMENT_SHADER);
+	vsID = Shader_CompileShader(IO_ReadFile(vs), GL_VERTEX_SHADER);
+	fsID = Shader_CompileShader(IO_ReadFile(fs), GL_FRAGMENT_SHADER);
 
 	glAttachShader(prog, vsID);
 	glAttachShader(prog, fsID);

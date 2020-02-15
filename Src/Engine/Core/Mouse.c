@@ -1,21 +1,21 @@
 #include "Mouse.h"
 
-void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+void Mouse_ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	mouse_delta_scroll_x = xoffset;
 	mouse_delta_scroll_y = yoffset;
 }
-void MouseButtonCallback(GLFWwindow* win, int button, int action, int mods) {
+void Mouse_ButtonCallback(GLFWwindow* win, int button, int action, int mods) {
 	mouseButtons[button] = action + 1;
 	mouseButtonsHold[button] = action;
 }
 
-void MouseUpdate() {
+void Mouse_Update() {
 	
 }
 
 
-void MousePosCallback(GLFWwindow* win, double xpos, double ypos) {
+void Mouse_PosCallback(GLFWwindow* win, double xpos, double ypos) {
 	if (nano_mouse_first_flag == 0) {
 		nano_mouse_first_flag = 1;
 		mouse_Xpos = xpos;

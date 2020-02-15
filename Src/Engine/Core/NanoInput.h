@@ -4,9 +4,9 @@
 #include"Keyboard.h"
 #include "Mouse.h"
 
-__inline void ClearInputs() {
-	KeyClear();
-	MouseClear();
+__inline void Input_Clear() {
+	Keyboard_Clear();
+	Mouse_Clear();
 }
 
 

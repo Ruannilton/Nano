@@ -15,8 +15,8 @@ void Renderer_SetScene(Scene* scn) {
 
 
 
-void RenderScene() {
-	camera_UpdateView(current_scene->camera_scene);
+void Renderer_RenderScene() {
+	Camera_UpdateView(current_scene->camera_scene);
 	
 	glUniformMatrix4fv(SHADER_PROJ_LOC, 1, GL_FALSE, (GLfloat*) current_camera->projection);
 	glUniformMatrix4fv(SHADER_VIEW_LOC, 1, GL_FALSE, (GLfloat*) current_camera->view);

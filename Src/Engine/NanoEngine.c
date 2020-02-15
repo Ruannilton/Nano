@@ -19,16 +19,16 @@ void SetupOpenGL(Nano* NanoApplication) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glfwSetInputMode(NanoApplication->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetKeyCallback(NanoApplication->window, keyCallback);
-	glfwSetCursorPosCallback(NanoApplication->window, MousePosCallback);
-	glfwSetScrollCallback(NanoApplication->window, MouseScrollCallback);
-	glfwSetMouseButtonCallback(NanoApplication->window, MouseButtonCallback);
+	glfwSetKeyCallback(NanoApplication->window, Keyboard_Callback);
+	glfwSetCursorPosCallback(NanoApplication->window, Mouse_PosCallback);
+	glfwSetScrollCallback(NanoApplication->window, Mouse_ScrollCallback);
+	glfwSetMouseButtonCallback(NanoApplication->window, Mouse_ButtonCallback);
 	glfwSetFramebufferSizeCallback(NanoApplication->window, framebufferSizeCallback);
-	BindKeyboardContext(NanoApplication->window);
+	Keyboard_BindContext(NanoApplication->window);
 }
 
 int main() {
-	NanoApplication = CreateNano();
+	NanoApplication = Nano_Create();
 	delta_time = 1;
 	window_height = NanoApplication->windowHeight;
 	window_widht = NanoApplication->windowWidht;
@@ -53,13 +53,13 @@ int main() {
 
 		glClearColor(current_scene->BackGroundColor.R, current_scene->BackGroundColor.G, current_scene->BackGroundColor.B, current_scene->BackGroundColor.A);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		RenderScene();
+		Renderer_RenderScene();
 		glfwSwapBuffers(NanoApplication->window);
 		
 	
-		ClearInputs();
+		Input_Clear();
 	}
-	DeleteNano(NanoApplication);
+	Nano_Delete(NanoApplication);
 
 	return 0;
 }

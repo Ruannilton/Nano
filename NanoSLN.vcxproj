@@ -242,6 +242,8 @@
     <None Include=".gitignore" />
     <None Include="Assets\Shaders\color.frag" />
     <None Include="Assets\Shaders\color.vert" />
+    <None Include="Assets\Shaders\default.frag" />
+    <None Include="Assets\Shaders\default.vert" />
     <None Include="Program\glew32.dll" />
     <Text Include="Inter\Shaders\default.frag">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -253,6 +255,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </Text>
+    <None Include="README.md" />
     <None Include="Src\Program\glew32.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +269,13 @@
     <Image Include="Assets\Images\example2.jpg">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="Assets\Images\railgun_color.jpg" />
+    <Image Include="Assets\Images\railgun_spec.jpg" />
     <Image Include="Assets\Images\Rat.png">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
+    <Image Include="Assets\Images\specular_wood_box.png" />
+    <Image Include="Assets\Images\wood_box.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj">

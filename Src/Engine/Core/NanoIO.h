@@ -4,7 +4,7 @@
 #include "../Utils.h"
 
 
-string ReadFile(string path);
+string IO_ReadFile(string path);
 
 
 

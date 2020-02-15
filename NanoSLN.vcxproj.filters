@@ -466,6 +466,9 @@
     <None Include=".gitignore" />
     <None Include="Assets\Shaders\color.frag" />
     <None Include="Assets\Shaders\color.vert" />
+    <None Include="Assets\Shaders\default.frag" />
+    <None Include="Assets\Shaders\default.vert" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">
@@ -478,6 +481,18 @@
       <Filter>Arquivos de Recurso</Filter>
     </Image>
     <Image Include="Assets\Images\A_dva.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\railgun_color.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\railgun_spec.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\wood_box.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\specular_wood_box.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

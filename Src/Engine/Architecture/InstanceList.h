@@ -15,9 +15,9 @@ typedef struct {
 
 typedef struct {
 	uint mesh_id;
-	dynamic_vector instances;
+	Vector instances;
 }InstanceList;
 
-InstanceList* instance_list_create(InstanceList* il, uint vao, uint init_size);
+InstanceList* InstanceList_Create(InstanceList* il, uint vao, uint init_size);
 
 #endif

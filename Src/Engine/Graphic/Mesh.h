@@ -47,11 +47,11 @@ typedef struct {
 
 
 
-GLuint mesh_genVAO(Mesh* mesh);
-Mesh* mesh_LoadMesh(string path);
-Mesh* mesh_LoadPrimitive(uint primitive);
+GLuint Mesh_GenVAO(Mesh* mesh);
+Mesh* Mesh_LoadMesh(string path);
+Mesh* Mesh_LoadPrimitive(uint primitive);
 
-void mesh_PrintMesh(Mesh* mesh);
+void Mesh_PrintMesh(Mesh* mesh);
 
 CTR(Mesh) {
 	return self;

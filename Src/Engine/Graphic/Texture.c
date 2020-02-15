@@ -3,7 +3,7 @@
 #include "../Utils.h"
 
 
-Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
+Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
 	Texture* tex = (Texture*)malloc(sizeof(Texture));
 	VERIFY(tex, NULL);
 
@@ -28,6 +28,6 @@ Texture* texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 	return tex;
 }
 
-Texture* texture_LoadTextureDefault(const char* path) {
-	return texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER);
+Texture* Texture_LoadTextureDefault(const char* path) {
+	return Texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER);
 }

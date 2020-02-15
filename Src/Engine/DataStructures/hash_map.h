@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define HashMap(KEY,TYPE) hash_map
-#define hash_map_create(TYPE, SIZE) internal_hash_map_create(SIZE, sizeof(TYPE) * 10)
-#define hash_map_get(TYPE, HASH_MAP, KEY) (TYPE *)internal_hash_map_get(HASH_MAP, KEY)
-#define hash_map_add(TYPE, HASH_MAP, KEY) (TYPE *)internal_hash_map_add(HASH_MAP, KEY)
+#define Dictionary(KEY,TYPE) Dictionary
+#define Dictionary_Create(TYPE, SIZE) internal_hash_map_create(SIZE, sizeof(TYPE) * 10)
+#define Dictionary_Get(TYPE, HASH_MAP, KEY) (TYPE *)internal_hash_map_get(HASH_MAP, KEY)
+#define Dictionary_Add(TYPE, HASH_MAP, KEY) (TYPE *)internal_hash_map_add(HASH_MAP, KEY)
 
 typedef unsigned int uint;
 typedef uint (*hash_fnc)(uint size, void *data);
@@ -21,17 +21,17 @@ typedef struct
     void *data_arr;
     hash_fnc hash;
 
-} hash_map;
+} Dictionary;
 
 uint default_hash(uint size, void *data);
 
-hash_map internal_hash_map_create(uint size, uint data_size);
+Dictionary internal_hash_map_create(uint size, uint data_size);
 
-int hash_map_contains(hash_map *hm, void *key);
+int Dictionary_ContainsKey(Dictionary *hm, void *key);
 
-void *internal_hash_map_get(hash_map *hm, void *key);
+void *internal_hash_map_get(Dictionary *hm, void *key);
 
-void *internal_hash_map_add(hash_map *hm, void *key);
+void *internal_hash_map_add(Dictionary *hm, void *key);
 
-void *get_index(hash_map *hm, uint i);
+void *Dictionary_GetIndex(Dictionary *hm, uint i);
 #endif

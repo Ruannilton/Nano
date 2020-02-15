@@ -20,7 +20,7 @@ typedef union
 	};
 } Color;
 
-#define setColor(R,G,B,A,COLOR) COLOR.Red = R;COLOR.Green = G;COLOR.Blue = B;COLOR.Alpha =A; 
+#define Color_SetColor(R,G,B,A,COLOR) COLOR.Red = R;COLOR.Green = G;COLOR.Blue = B;COLOR.Alpha =A; 
 
 
 

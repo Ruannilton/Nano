@@ -12,8 +12,8 @@ typedef struct {
 	unsigned int run;
 }Nano;
 
-Nano* CreateNano();
-void DeleteNano(Nano* nano);
+Nano* Nano_Create();
+void Nano_Delete(Nano* nano);
 #endif // !NANO_APP
 
 

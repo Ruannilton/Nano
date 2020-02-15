@@ -13,19 +13,19 @@ typedef struct {
 	Camera* camera_scene;
 	Color BackGroundColor;
 	DirectionalLight sun;
-	dynamic_vector static_scene_point_lights;
-	dynamic_vector static_scene_spot_lighs;
+	Vector static_scene_point_lights;
+	Vector static_scene_spot_lighs;
 
-	HashMap(Shader,RenderData) render_data;
+	Dictionary(Shader,RenderData) render_data;
 }Scene;
 
-Scene* Scene_Create(int shader_count);
+Scene* Scene_Create(uint shader_count);
 
-void Scene_Set_Background(Scene* scn,Color color);
-void Scene_Set_Camera(Scene* scn, Camera* cam);
-void Scene_Add_Shader(Scene* scn, Shader shader,uint mesh_count);
-void Scene_Show_Render_Infor(Scene* scn);
+void Scene_SetBackground(Scene* scn,Color color);
+void Scene_SetCamera(Scene* scn, Camera* cam);
+void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count);
+void Scene_ShowRenderInfo(Scene* scn);
 
-RenderComponent Scene_Add_Render_Component(Scene* scene, uint shader, uint mesh_id);
+RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id);
 
 #endif

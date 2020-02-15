@@ -1,10 +1,10 @@
 #include "dynamic_vector.h"
 
-dynamic_vector internal_create_vector(uint size, size_t data_size)
+Vector internal_create_vector(uint size, size_t data_size)
 {
     if (size <= 1)
         size = 2;
-    dynamic_vector v;
+    Vector v;
     v.buffer = malloc(size * data_size);
     v.free_index = (uint *)malloc(size * sizeof(uint));
     v.count = 0;
@@ -15,13 +15,13 @@ dynamic_vector internal_create_vector(uint size, size_t data_size)
     return v;
 }
 
-void *internal_vector_get(dynamic_vector *self, uint index)
+void *internal_vector_get(Vector *self, uint index)
 {
     size_t ptr = (size_t)self->buffer;
     return (void *)(ptr + (index * self->data_size));
 }
 
-void vector_resize(dynamic_vector *self, size_t new_size)
+void vector_resize(Vector *self, size_t new_size)
 {
     void *ptr = self->buffer;
     void *free_ind = self->free_index;
@@ -31,7 +31,7 @@ void vector_resize(dynamic_vector *self, size_t new_size)
     self->free_index = (uint *)realloc(free_ind, new_size * self->data_size);
 }
 
-void *internal_vector_push(dynamic_vector *self, uint *index_added)
+void *internal_vector_push(Vector *self, uint *index_added)
 {
     uint index = self->count;
 
@@ -54,7 +54,7 @@ void *internal_vector_push(dynamic_vector *self, uint *index_added)
     return (void *)(ptr + (index * self->data_size));
 }
 
-int vector_join(dynamic_vector *dst, dynamic_vector *other)
+int Vector_Join(Vector *dst, Vector *other)
 {
     if (dst->data_size != other->data_size)
         return 0;
@@ -65,8 +65,8 @@ int vector_join(dynamic_vector *dst, dynamic_vector *other)
         vector_resize(dst, (other->count - free_space));
     }
 
-    iterator it = get_iterator(other);
-    while (iterator_next(&it))
+    Iterator it = Iterator_Get(other);
+    while (Iterator_Next(&it))
     {
         char *ptr = (char *)internal_vector_push(dst, NULL);
         char *cpy = (char *)it.data;
@@ -79,34 +79,34 @@ int vector_join(dynamic_vector *dst, dynamic_vector *other)
     return 1;
 }
 
-void vector_clear(dynamic_vector *self)
+void Vector_Clear(Vector *self)
 {
     self->count = 0;
 }
 
-void *internal_vector_remove(dynamic_vector *self, uint index)
+void *internal_vector_remove(Vector *self, uint index)
 {
     self->free_index[self->free_ptr++] = index;
     size_t ptr = ((size_t)self->buffer + (self->data_size * index));
     return (void *)ptr;
 }
 
-void vector_delete(dynamic_vector *self)
+void Vector_Delete(Vector *self)
 {
     free(self->buffer);
     free(self);
 }
 
-iterator get_iterator(dynamic_vector *vec)
+Iterator Iterator_Get(Vector *vec)
 {
-    iterator i;
+    Iterator i;
     i.vec = vec;
     i.current = 0;
     i.rev_current = vec->count;
     return i;
 }
 
-int iterator_next(iterator *it)
+int Iterator_Next(Iterator *it)
 {
     if (it->current == it->vec->count)
     {
@@ -120,7 +120,7 @@ int iterator_next(iterator *it)
     } while (it->data == NULL);
     return 1;
 }
-int iterator_reverse(iterator *it)
+int Iterator_Reverse(Iterator *it)
 {
     if (it->rev_current == 0)
         return 0;
@@ -134,7 +134,7 @@ int iterator_reverse(iterator *it)
 
     return 1;
 }
-int iterator_map(iterator *it, map_fnc fnc)
+int Iterator_Map(Iterator *it, map_fnc fnc)
 {
     if (it->current == it->vec->size)
     {
@@ -150,7 +150,7 @@ int iterator_map(iterator *it, map_fnc fnc)
     return 1;
 }
 
-void iterator_restart(iterator *it)
+void Iterator_Restart(Iterator *it)
 {
     it->current = 0;
     it->rev_current = it->vec->count;

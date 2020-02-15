@@ -8,7 +8,7 @@
 #define SHADER_TEX_LOC 2
 #define SHADER_NORM_LOC 3
 
-GLuint mesh_genVAO(Mesh* mesh) {
+GLuint Mesh_GenVAO(Mesh* mesh) {
 	GLuint vbo;
 	GLuint ebo;
 	GLuint vao;
@@ -55,7 +55,7 @@ GLuint mesh_genVAO(Mesh* mesh) {
 	return vao;
 }
 
-Mesh* mesh_LoadMesh(string path) {
+Mesh* Mesh_LoadMesh(string path) {
 	FILE* file;
 	fopen_s(&file, path, "r");
 	char line_readed[LINE_READED_BUFF_SIZE];
@@ -217,13 +217,13 @@ Mesh* mesh_LoadMesh(string path) {
 	free(faceList);
 
 	fclose(file);
-	mesh_genVAO(mesh);
+	Mesh_GenVAO(mesh);
 
 	DEBUG_C(ANSI_LIGHT_GREEN, "Loaded Model: %s", path);
 	return mesh;
 }
 
-Mesh* mesh_LoadPrimitive(uint primitive) {
+Mesh* Mesh_LoadPrimitive(uint primitive) {
 
 	Mesh* mesh = NEW(Mesh);
 	VERIFY(mesh, NULL);
@@ -477,12 +477,12 @@ Mesh* mesh_LoadPrimitive(uint primitive) {
 		mesh->index[5 + index_c] = 1 + vert_c;
 		
 	}
-	mesh_genVAO(mesh);
+	Mesh_GenVAO(mesh);
 
 	return mesh;
 }
 
-void mesh_PrintMesh(Mesh* mesh) {
+void Mesh_PrintMesh(Mesh* mesh) {
 	printf("Index Count: %d\n", mesh->index_count);
 	printf("Vertex Count: %d\n", mesh->vertices_count);
 }

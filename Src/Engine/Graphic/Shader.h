@@ -9,8 +9,8 @@
 typedef GLuint Shader;
 
 
-unsigned int shader_CompileShader(string src, GLenum type);
-Shader shader_CreateShader(string vs, string fs);
+unsigned int Shader_CompileShader(string src, GLenum type);
+Shader Shader_CreateShader(string vs, string fs);
 
 __inline void Shader_SetTexture(uint texID) {
 	glBindTexture(GL_TEXTURE_2D, texID);

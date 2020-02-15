@@ -14,9 +14,9 @@ UNIQUE unsigned int keyboard[257];
 #define KeyHold(Key) keyboard[Key] == GLFW_REPEAT+1
 
 
-void KeyClear();
-void BindKeyboardContext(GLFWwindow* win);
-void keyCallback(GLFWwindow* win, int key, int scancode, int action, int mod);
+void Keyboard_Clear();
+void Keyboard_BindContext(GLFWwindow* win);
+void Keyboard_Callback(GLFWwindow* win, int key, int scancode, int action, int mod);
 
 #endif // !NANO_KEYBOARD
 

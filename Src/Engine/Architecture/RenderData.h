@@ -9,7 +9,7 @@
 uint hash_f(uint size, void* data);
 
 typedef struct {
-	HashMap(Mesh_ID,InstanceList) renderer_lists;
+	Dictionary(Mesh_ID,InstanceList) renderer_lists;
 }RenderData;
 
 
