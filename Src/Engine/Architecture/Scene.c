@@ -10,24 +10,30 @@ void Scene_SetCamera(Scene* scn, Camera* cam) {
 	scn->camera_scene = cam;
 }
 
-Scene* Scene_Create(uint shader_count) {
-	Scene* scn = (Scene*)malloc(sizeof(Scene));
+Scene* Scene_Create(uint shader_count, uint pointLight_count, uint spotLight_count) {
+	Scene* scn = NEW(Scene);
 	VERIFY(scn, NULL);
-	Color_SetColor(0, 1, 1, 1, scn->BackGroundColor);
+	
 	scn->camera_scene = NEW(Camera);
+	scn->render_data = Dictionary_Create(RenderData, shader_count, hash_f);
+	scn->point_lights = Vector_Create(PointLight, pointLight_count);
+	scn->spot_lights = Vector_Create(SpotLight, spotLight_count);
+	
 	Camera_CreateCamera(scn->camera_scene, (Vec3){ 0,0,0 });
-	scn->render_data = Dictionary_Create(RenderData, shader_count);
-	scn->render_data.hash = hash_f;
+	Color_SetColor(0, 1, 1, 1, scn->BackGroundColor);
 	return scn;
 }
 
 void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count) {
 	RenderData* rd = Dictionary_Add(RenderData, &(scn->render_data), (void*)shader);
-	rd->renderer_lists = Dictionary_Create(InstanceList, mesh_count);
-	rd->renderer_lists.hash = hash_f;
+	rd->renderer_lists = Dictionary_Create(InstanceList, mesh_count, hash_f);
+
 }
 
+
+
 RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id) {
+	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
 	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)shader);
 	RenderComponent rc;
 	rc.mesh_id = 0;
@@ -39,6 +45,7 @@ RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id
 		 InstanceList_Create(il, mesh_id, 1);
 		}
 	 Instance* instance = Vector_Push(Instance, &il->instances, NULL);
+	 memcpy(instance->transform, identity, sizeof(identity));
 	 rc.mesh_id = mesh_id;
 	 rc.mat = &instance->material;
 	 rc.transform = &instance->transform;

@@ -29,9 +29,9 @@ typedef struct {
 //	rc->mat->data = data;
 //}
 
-//inline void RenderComponent_SetPosition(RenderComponent* rc, vec3 pos) {
-//	glm_translate(rc->transform, pos);
-//}
+inline void RenderComponent_SetPosition(RenderComponent rc, Vec3 pos) {
+	glm_translate(*rc.transform, pos.arr);
+}
 
 #endif // !NANO_RENDER_COMPONENT
 

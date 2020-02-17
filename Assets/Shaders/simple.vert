@@ -1,4 +1,4 @@
-#version 430 core
+#version 430
 
 layout(std140, binding = 0) uniform Matrices
 {
@@ -14,15 +14,9 @@ layout (location = 3) in vec3 aNormal;
 layout (location = 4) uniform mat4 model;
 
 out vec4 ourColor;
-out vec2 TexCoord;
-out vec3 FragPos;
-out vec3 Normal;
 
 void main()
 {
     gl_Position =projection*view*model*vec4(aPos, 1.0);
-    TexCoord = aTexCoord;
 	ourColor = aColor;
-	FragPos = vec3(model*vec4(aPos, 1.0));
-	Normal = mat3(transpose(inverse(model))) * aNormal;
 }

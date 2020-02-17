@@ -10,14 +10,17 @@ typedef struct {
 	Vec3 Ambient;
 	Vec3 Diffuse;
 	Vec3 Specular;
-	Vec3 Position;
 	Vec3 Direction;
+	Vec3 Position;
 
-	float Constant;
-	float Linear;
-	float Quadratic;
-	float cutOff;
-	float outerCutOff;
+	//Attenuation vec3 on GPU
+	float Constant;		// x
+	float Linear;		// y
+	float Quadratic;	// z
+
+	//cutOff vec2 on GPU
+	float cutOff;		// x
+	float outerCutOff;	// y
 }SpotLight;
 
 

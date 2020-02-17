@@ -34,6 +34,10 @@ UNIQUE Input input;
 __inline void Input_Clear() {
 	REPEAT_1(GLFW_KEY_LAST + 1) input.keys[i] = 0;
 	REPEAT_1(GLFW_MOUSE_BUTTON_LAST + 1) mouseButtons[i] = 0;
+	input.mouse.delta.x = 0;
+	input.mouse.delta.y = 0;
+	input.mouse.scroll.x = 0;
+	input.mouse.scroll.y = 0;
 }
 
 __inline void Input_Init() {

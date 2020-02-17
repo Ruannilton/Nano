@@ -18,16 +18,23 @@ void Camera_Zoom(Camera* cam, double delta) {
 		if (cam->fov > cam->max_fov) cam->fov = cam->max_fov;
 
 		glm_perspective(glm_rad(cam->fov), cam->aspectRatio, cam->zNear, cam->zFar, cam->projection);
+		cam->projection_changed = 1;
 	}
+
 }
 
 void Camera_SeekMouse(Camera* cam) {
 
-	Vec3 mouse_mov = { input.mouse.position.x,input.mouse.position.y, 0 };
+	Vec3 mouse_mov = { input.mouse.delta.x,input.mouse.delta.y, 0 };
 	Camera_Rotate(cam, mouse_mov);
 	if (input.mouse.scroll.y != 0) {
 		Camera_Zoom(cam, input.mouse.scroll.y);
 	}
+}
+
+void Camera_SetPosition(Camera* cam, Vec3 position) {
+	cam->position = position;
+	glm_look(cam->position.arr, cam->front.arr, cam->up.arr, cam->view);
 }
 
 void Camera_CreateCamera(Camera* cam, Vec3 position) {
@@ -47,12 +54,13 @@ void Camera_CreateCamera(Camera* cam, Vec3 position) {
 	cam->aspectRatio = 800.0f / 600.0f;
 
 	glm_look(cam->position.arr, cam->front.arr , cam->up.arr, cam->view);
+	Camera_SetCameraPerspective(cam->fov, cam->aspectRatio, cam->zNear, cam->zFar, cam);
 }
 
 void Camera_Translate(Camera* cam, Vec3 direction) {
 	// Z axis
 	vec3 za;
-	glm_vec3_mul_s(cam->front.arr, direction.y, za);
+	glm_vec3_mul_s(cam->front.arr, direction.z, za);
 	glm_vec3_add(za, cam->position.arr, cam->position.arr);
 
 	// X axis

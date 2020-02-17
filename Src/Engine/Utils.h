@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+//Windows
+#include <direct.h>
+#define GetCurrentDir _getcwd
+
 #include "Graphic/GL.h"
 
 #define ANSI_RED "\x1b[31m"
@@ -50,7 +55,8 @@
 #define UNIQUE __declspec(selectany) 
 #define KBYTE(VALUE) (uint)(1024*VALUE)
 #define MBYTE(VALUE) (uint)(1024*KBYTE(VALUE))
-
+#define true 1
+#define false 0
 
 
 typedef const char* string;

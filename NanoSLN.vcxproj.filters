@@ -33,9 +33,6 @@
     <ClInclude Include="Src\Dependencies\include\GLFW\glfw3native.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Engine\Core\NanoApp.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Engine\Utils.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -404,9 +401,6 @@
     <ClCompile Include="Src\Engine\Core\NanoIO.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Engine\Core\NanoApp.c">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Engine\Graphic\Camera.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -449,6 +443,9 @@
     <ClCompile Include="Src\Engine\Core\NanoInput.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Engine\Core\NanoCore.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Program\glew32.dll" />
@@ -460,6 +457,8 @@
     <None Include="Assets\Shaders\default.frag" />
     <None Include="Assets\Shaders\default.vert" />
     <None Include="README.md" />
+    <None Include="Assets\Shaders\simple.vert" />
+    <None Include="Assets\Shaders\simple.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">

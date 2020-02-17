@@ -11,9 +11,10 @@ typedef struct {
 	Vec3 Specular;
 	Vec3 Position;
 
-	float Constant;
-	float Linear;
-	float Quadratic;
+	//Attenuation vec3 on GPU
+	float Constant;		// x
+	float Linear;		// y
+	float Quadratic;	// z
 }PointLight;
 
 

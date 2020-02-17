@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-unsigned int Shader_CompileShader(string src, GLenum type) {
+unsigned int Shader_CompileShader(string path,string src, GLenum type) {
 	GLuint id = glCreateShader(type);
 	glShaderSource(id, 1, &src, NULL);
 	glCompileShader(id);
@@ -12,7 +12,7 @@ unsigned int Shader_CompileShader(string src, GLenum type) {
 		int len = 256;
 		char log[256];
 		glGetShaderInfoLog(id, len, &len, log);
-		printf("ERROR COMPILE %s SHADER:\n%s", (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT", log);
+		printf("ERROR COMPILE %s SHADER:\nAt: %s\n%s", (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT", path, log);
 		glDeleteShader(id);
 		return 0;
 	}
@@ -27,8 +27,8 @@ Shader Shader_CreateShader(string vs, string fs) {
 	unsigned int vsID = 0;
 	unsigned int fsID = 0;
 
-	vsID = Shader_CompileShader(IO_ReadFile(vs), GL_VERTEX_SHADER);
-	fsID = Shader_CompileShader(IO_ReadFile(fs), GL_FRAGMENT_SHADER);
+	vsID = Shader_CompileShader(vs,IO_ReadFile(vs), GL_VERTEX_SHADER);
+	fsID = Shader_CompileShader(fs,IO_ReadFile(fs), GL_FRAGMENT_SHADER);
 
 	glAttachShader(prog, vsID);
 	glAttachShader(prog, fsID);

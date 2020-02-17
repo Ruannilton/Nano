@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #define Dictionary(KEY,TYPE) Dictionary
-#define Dictionary_Create(TYPE, SIZE) internal_hash_map_create(SIZE, sizeof(TYPE) * 10)
+#define Dictionary_Create(TYPE, SIZE,HASHF) internal_hash_map_create(SIZE, sizeof(TYPE) * 10,HASHF)
 #define Dictionary_Get(TYPE, HASH_MAP, KEY) (TYPE *)internal_hash_map_get(HASH_MAP, KEY)
 #define Dictionary_Add(TYPE, HASH_MAP, KEY) (TYPE *)internal_hash_map_add(HASH_MAP, KEY)
 
@@ -25,7 +25,7 @@ typedef struct
 
 uint default_hash(uint size, void *data);
 
-Dictionary internal_hash_map_create(uint size, uint data_size);
+Dictionary internal_hash_map_create(uint size, uint data_size, hash_fnc hash_f);
 
 int Dictionary_ContainsKey(Dictionary *hm, void *key);
 
