@@ -12,9 +12,6 @@ struct PointLight{
 	vec3 Specular;   
 	vec3 Position;   
 	vec3 Attenuation;
- 
- 
- 
 };
 
 struct DirectionalLight{ 
@@ -117,10 +114,23 @@ vec4 CalculateLighting(vec3 texDiffuse, vec3 texSpec, vec3 norm, vec3 viewDir){
 
 void main()
 {
+ 
     vec3 texDiffuse = vec3(texture(material.diffuse, TexCoord));
 	vec3 texSpec = vec3(texture(material.specular, TexCoord));
 	vec3 norm = normalize(Normal);
 	vec3 viewDir = normalize(CameraPos - FragPos);
 
-    FragColor =  CalculateLighting(texDiffuse,texSpec,norm,viewDir) * ourColor;
+	vec3 lightDir = normalize(-directional_light.Direction);
+	vec3 reflectDir = reflect(-lightDir, norm);  
+	float diff = max(dot(norm,lightDir),0.0);
+	float spec = pow(max(0,dot(viewDir, reflectDir)), material.Shininess);
+	
+
+	vec3 ambient  = directional_light.Ambient  * texDiffuse;
+	vec3 diffuse  = directional_light.Diffuse  * diff * texDiffuse;
+	vec3 specular = directional_light.Specular * spec * texSpec;
+
+		
+
+    FragColor =   texture(ourTexture, TexCoord) * ourColor;
 }

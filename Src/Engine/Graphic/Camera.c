@@ -42,7 +42,7 @@ void Camera_CreateCamera(Camera* cam, Vec3 position) {
     cam->position = position;
 	cam->up = (Vec3){0,1,0};
 	cam->front = (Vec3){ 0,0,-1 };
-	cam->rotation = (Vec3){ 270,0,0 };
+	cam->rotation = (Vec3){ 452,1,0 };
 
 	cam->max_fov = 70;
 	cam->min_fov = 1;

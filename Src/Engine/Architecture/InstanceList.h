@@ -11,6 +11,7 @@
 typedef struct {
 	mat4 transform;
 	Material material;
+	uint index_count;
 }Instance;
 
 typedef struct {

@@ -12,7 +12,7 @@ unsigned int Shader_CompileShader(string path,string src, GLenum type) {
 		int len = 256;
 		char log[256];
 		glGetShaderInfoLog(id, len, &len, log);
-		printf("ERROR COMPILE %s SHADER:\nAt: %s\n%s", (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT", path, log);
+		DEBUG_C(ANSI_RED,"ERROR COMPILE %s SHADER:\nAt: %s\n%s", (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT", path, log);
 		glDeleteShader(id);
 		return 0;
 	}
@@ -37,7 +37,7 @@ Shader Shader_CreateShader(string vs, string fs) {
 
 	glDeleteShader(vsID);
 	glDeleteShader(fsID);
-
+	DEBUG_C(ANSI_LIGHT_GREEN, "SHADER(%d) LOADED", prog);
 	return prog;
 }
 

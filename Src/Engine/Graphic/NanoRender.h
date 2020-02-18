@@ -28,20 +28,20 @@ UNIQUE Camera* current_camera;
 UNIQUE uint matrix_buffer = 0;
 UNIQUE uint lights_buffer = 0;
 
-inline PointLight* Render_AddPointLight(Scene* scn) {
+inline PointLight* Renderer_AddPointLight(Scene* scn) {
 	return  Scene_AddPointLight(current_scene);
 }
 
-inline SpotLight* Render_AddSpotLight(Scene* scn) {
+inline SpotLight* Renderer_AddSpotLight(Scene* scn) {
 	return Scene_AddSpotLight(current_scene);
 }
 
-inline DirectionalLight* Render_GetSun() {
+inline DirectionalLight* Renderer_GetSun() {
 	return &(current_scene->sun);
 }
 
-inline RenderComponent Renderer_AddComponent(uint shader, uint mesh) {
-	return Scene_AddRenderComponent(current_scene, shader, mesh);
+inline RenderComponent Renderer_AddComponent(uint shader, uint mesh,uint index_c) {
+	return Scene_AddRenderComponent(current_scene, shader, mesh, index_c);
 }
 
 void Renderer_Init();

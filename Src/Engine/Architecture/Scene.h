@@ -36,6 +36,6 @@ void Scene_SetCamera(Scene* scn, Camera* cam);
 void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count);
 void Scene_ShowRenderInfo(Scene* scn);
 
-RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id);
+RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id,uint index_c);
 
 #endif

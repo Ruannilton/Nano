@@ -32,7 +32,7 @@ void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count) {
 
 
 
-RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id) {
+RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id,uint index_c) {
 	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
 	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)shader);
 	RenderComponent rc;
@@ -45,6 +45,7 @@ RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id
 		 InstanceList_Create(il, mesh_id, 1);
 		}
 	 Instance* instance = Vector_Push(Instance, &il->instances, NULL);
+	 instance->index_count = index_c;
 	 memcpy(instance->transform, identity, sizeof(identity));
 	 rc.mesh_id = mesh_id;
 	 rc.mat = &instance->material;

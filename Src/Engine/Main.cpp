@@ -13,22 +13,31 @@ void Loader() {
 
  void Start() {
 
-
-	 Scene* myScene = Scene_Create(2,2,2);
+	 mesh_loader_pre_alloc = KBYTE(128);
+	 Scene* myScene = Scene_Create(2,128,128);
 	 Scene_SetBackground(myScene, { 0,1,1,1 });
 	 Camera_SetPosition(myScene->camera_scene, { 0,0,-10 });
      Renderer_SetScene(myScene);
 
-	Texture* wood_box = Texture_LoadTextureDefault("Assets/Images/wood_box.png");
+	 DirectionalLight* dl= Renderer_GetSun();
+	 dl->Ambient = { 0.2f,0.2f,0.2f };
+	 dl->Diffuse = { 0.6f,0.6f,0.6f };
+	 dl->Specular = { 1,1,1 };
+	 dl->Direction = { 0.2f ,-0.5f, 1 };
+
+
+	Texture* wood_box = Texture_LoadTextureDefault("Assets/Images/Cerberus_A.png");
 	Texture* specular_wood_box = Texture_LoadTextureDefault("Assets/Images/specular_wood_box.png");
 	
-	Mesh* cube_mesh = Mesh_LoadPrimitive(PRIMITIVE_CUBE);
-	Shader DefaultShader = Shader_CreateShader("Assets/Shaders/simple.vert", "Assets/Shaders/simple.frag");
+	Mesh* cube_mesh = Mesh_LoadMesh("Assets/models/Cerberus.obj");
+	//Shader SimpleShader = Shader_CreateShader("Assets/Shaders/simple.vert", "Assets/Shaders/simple.frag");
+	Shader DefaultShader = Shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
+
 	Material* color_mat = CNEW(TexturedMaterial, DefaultShader, wood_box, wood_box, specular_wood_box);
 
 	Scene_AddShader(myScene, DefaultShader, 3);
 	
-	RenderComponent rc = Renderer_AddComponent(DefaultShader, cube_mesh->mesh_id);
+	RenderComponent rc = Renderer_AddComponent(DefaultShader, cube_mesh->mesh_id,cube_mesh->index_count);
 	RenderComponent_SetPosition(rc, { 0,0,0 });
 	*rc.mat = *color_mat;
 
