@@ -14,12 +14,13 @@ int main(int argc, char* argv[]) {
 
 	while (!glfwWindowShouldClose(NanoApplication->window))
 	{
-		if (Input_KeyPress(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(NanoApplication->window, 1);
+		glfwPollEvents();
+
+		if (Input_KeyPress(GLFW_KEY_ESCAPE))
+			glfwSetWindowShouldClose(NanoApplication->window, 1);
 
 		sprintf(NanoApplication->title, "FPS: %f", 1.0 / delta_time);
 		glfwSetWindowTitle(NanoApplication->window, NanoApplication->title);
-
-		glfwPollEvents();
 
 		TimeUpdate();
 		Update();

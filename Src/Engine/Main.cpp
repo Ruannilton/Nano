@@ -30,7 +30,6 @@ void Loader() {
 	Texture* specular_wood_box = Texture_LoadTextureDefault("Assets/Images/specular_wood_box.png");
 	
 	Mesh* cube_mesh = Mesh_LoadMesh("Assets/models/Cerberus.obj");
-	//Shader SimpleShader = Shader_CreateShader("Assets/Shaders/simple.vert", "Assets/Shaders/simple.frag");
 	Shader DefaultShader = Shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
 
 	Material* color_mat = CNEW(TexturedMaterial, DefaultShader, wood_box, wood_box, specular_wood_box);
@@ -56,8 +55,7 @@ void Loader() {
 	 Vec3 foward = { 0,0,5.5f * delta_time };
 	 Vec3 backward = { 0.0f,0,-5.5f * delta_time };
 
-	 DEBUG_C(ANSI_MAGENTA, "Camera Pos: %f %f %f \n Camera Look: %f %f %f", current_camera->position.x, current_camera->position.y, current_camera->position.z, current_camera->rotation.x, current_camera->rotation.y, current_camera->rotation.z);
-
+	
 	 if (Input_Key(GLFW_KEY_A)) {
 		 Camera_Translate(current_camera, left);
 	 }

@@ -1,7 +1,7 @@
 #include "NanoRender.h"
 
 #define MAT_SIZE (2 * sizeof(mat4))
-#define LIGHT_SIZE (2 * sizeof(int) + sizeof(DirectionalLight) + 128 * sizeof(SpotLight) + 128 * sizeof(PointLight))
+#define LIGHT_SIZE (sizeof(vec4) + 4*(sizeof(vec4)))
 
 void Renderer_Init() {
 	
@@ -14,8 +14,8 @@ void Renderer_Init() {
 
 	glGenBuffers(1, &lights_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, lights_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, LIGHT_SIZE, 0, GL_STATIC_DRAW);
-	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_LIGHT_LOC, matrix_buffer, 0, LIGHT_SIZE);
+	glBufferData(GL_UNIFORM_BUFFER, LIGHT_SIZE, NULL, GL_STATIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_LIGHT_LOC, lights_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
@@ -28,13 +28,14 @@ void Renderer_SetupProjection() {
 }
 
 void Renderer_SetupLighting() {
-	DEBUG("Size 4vec: %d\nSize Direc: %d", 4 * sizeof(Vec3), sizeof(DirectionalLight));
+	
 	glBindBuffer(GL_UNIFORM_BUFFER, lights_buffer);
-	Vec2 lights_count = { current_scene->point_lights.count,current_scene->spot_lights.count};
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, 2*sizeof(int), lights_count.arr);
-	glBufferSubData(GL_UNIFORM_BUFFER, 12, 4 * sizeof(vec3), &(current_scene->sun));
-	glBufferSubData(GL_UNIFORM_BUFFER, 80,    (size_t)lights_count.x * sizeof(PointLight), current_scene->point_lights.buffer);
-	glBufferSubData(GL_UNIFORM_BUFFER, 10320, (size_t)lights_count.y * sizeof(SpotLight) , current_scene->spot_lights.buffer);
+	float counts[2] = {current_scene->point_lights.count,current_scene->spot_lights.count+2};
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(vec2), counts); //vec2 count 0 - 8
+	glBufferSubData(GL_UNIFORM_BUFFER, 16, sizeof(vec3), current_scene->sun.Ambient.arr); //DiLight.Ambient 16 - 32
+	glBufferSubData(GL_UNIFORM_BUFFER, 32, sizeof(vec3), current_scene->sun.Diffuse.arr); //DiLight.Ambient 32 - 48
+	glBufferSubData(GL_UNIFORM_BUFFER, 48, sizeof(vec3), current_scene->sun.Specular.arr); //DiLight.Ambient 48 - 64
+	glBufferSubData(GL_UNIFORM_BUFFER, 64, sizeof(vec3), current_scene->sun.Direction.arr); //DiLight.Ambient 64 - 80
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
