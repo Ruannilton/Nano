@@ -273,7 +273,9 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
     <Image Include="Assets\Images\specular_wood_box.png" />
+    <Image Include="Assets\Images\white.png" />
     <Image Include="Assets\Images\wood_box.png" />
+    <Image Include="C:\Users\Ruann\OneDrive\Documentos\white.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj">

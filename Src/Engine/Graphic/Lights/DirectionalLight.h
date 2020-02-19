@@ -10,6 +10,7 @@ typedef struct {
 	Vec3 Diffuse;
 	Vec3 Specular;
 	Vec3 Direction;
+	Vec3 Color;
 }DirectionalLight;
 
 inline DirectionalLight* DirectionalLight_CTR(DirectionalLight* self, Vec3 Direction, Vec3 Ambient, Vec3 Diffuse, Vec3 Specular) {

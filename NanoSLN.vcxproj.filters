@@ -485,6 +485,12 @@
     <Image Include="Assets\Images\specular_wood_box.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="C:\Users\Ruann\OneDrive\Documentos\white.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\Images\white.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj" />

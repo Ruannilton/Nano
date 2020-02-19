@@ -1,6 +1,8 @@
 #ifndef NANO_SCENE
 #define NANO_SCENE
 
+#define MAX_LIGHTS 256
+
 #include "../Utils.h"
 #include "../Graphic/Camera.h"
 #include "../DataStructures/dynamic_vector.h"
@@ -16,17 +18,23 @@ typedef struct {
 
 	Vector point_lights;
 	Vector spot_lights;
-
+	uint light_count;
 	Dictionary(Shader,RenderData) render_data;
 }Scene;
 
 
 inline PointLight* Scene_AddPointLight(Scene* scn) {
-	return Vector_Push(PointLight, &scn->point_lights, 0);
+	if (scn->light_count < MAX_LIGHTS) {
+		return Vector_Push(PointLight, &scn->point_lights, 0);
+		scn->light_count++;
+	}
 }
 
 inline SpotLight* Scene_AddSpotLight(Scene* scn) {
-	return Vector_Push(SpotLight, &scn->spot_lights, 0);
+	if (scn->light_count < MAX_LIGHTS) {
+		return Vector_Push(SpotLight, &scn->spot_lights, 0);
+		scn->light_count++;
+	}
 }
 
 Scene* Scene_Create(uint shader_count,uint pointLight_count,uint spotLight_count);

@@ -12,7 +12,7 @@ typedef struct {
 	Vec3 Specular;
 	Vec3 Direction;
 	Vec3 Position;
-
+	Vec3 Color;
 	//Attenuation vec3 on GPU
 	float Constant;		// x
 	float Linear;		// y

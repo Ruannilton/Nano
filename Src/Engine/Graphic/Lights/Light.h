@@ -5,4 +5,6 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 
+#define Light_Val(val) {val,val,val}
+
 #endif

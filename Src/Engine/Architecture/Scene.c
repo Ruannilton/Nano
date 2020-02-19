@@ -18,7 +18,7 @@ Scene* Scene_Create(uint shader_count, uint pointLight_count, uint spotLight_cou
 	scn->render_data = Dictionary_Create(RenderData, shader_count, hash_f);
 	scn->point_lights = Vector_Create(PointLight, pointLight_count);
 	scn->spot_lights = Vector_Create(SpotLight, spotLight_count);
-	
+	scn->light_count = 0;
 	Camera_CreateCamera(scn->camera_scene, (Vec3){ 0,0,0 });
 	Color_SetColor(0, 1, 1, 1, scn->BackGroundColor);
 	return scn;
