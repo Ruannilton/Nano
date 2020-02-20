@@ -22,6 +22,8 @@ typedef struct {
 	Dictionary(Shader,RenderData) render_data;
 }Scene;
 
+UNIQUE uint Default_Scene_PointLight_Prealoc_count = 16;
+UNIQUE uint Default_Scene_SpotLight_Prealoc_count = 16;
 
 inline PointLight* Scene_AddPointLight(Scene* scn) {
 	if (scn->light_count < MAX_LIGHTS) {
@@ -37,13 +39,14 @@ inline SpotLight* Scene_AddSpotLight(Scene* scn) {
 	}
 }
 
-Scene* Scene_Create(uint shader_count,uint pointLight_count,uint spotLight_count);
+Shader Scene_LoadShader(Scene* scn, string vert, string frag);
+Scene* Scene_Create(uint shader_count);
 
 void Scene_SetBackground(Scene* scn,Color color);
 void Scene_SetCamera(Scene* scn, Camera* cam);
 void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count);
 void Scene_ShowRenderInfo(Scene* scn);
 
-RenderComponent Scene_AddRenderComponent(Scene* scene, uint shader, uint mesh_id,uint index_c);
+RenderComponent Scene_AddRenderComponent(Scene* scene, Material* mat, uint mesh_id,uint index_c);
 
 #endif

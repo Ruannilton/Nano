@@ -47,3 +47,31 @@ void *Dictionary_GetIndex(Dictionary *hm, uint i)
 {
     return (void *)((size_t)hm->data_arr + (i * hm->data_size));
 }
+
+Dic_Iterator Dic_Iterator_Get(Dictionary* dic) {
+    Dic_Iterator iter;
+    iter.current = 0;
+    iter.data = 0;
+    iter.key = 0;
+    iter.dic = dic;
+    return iter;
+}
+
+uint Dic_Iterator_Next(Dic_Iterator* iter) {
+    
+    if (iter->current >= iter->dic->count) return 0;
+
+    do {
+        iter->key = *(uint*)((iter->current * sizeof(uint)) + (size_t)iter->dic->key_arr);
+        iter->data = Dictionary_Get(void, iter->dic, iter->key);
+        iter->current++;
+    } while (iter->data == NULL);
+
+    return 1;
+}
+
+void Dic_Iterator_Restar(Dic_Iterator* iter) {
+    iter->current = 0;
+    iter->data = 0;
+    iter->key = 0;
+}

@@ -166,6 +166,7 @@
     <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image.h" />
     <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image_write.h" />
     <ClInclude Include="Src\Engine\Architecture\InstanceList.h" />
+    <ClInclude Include="Src\Engine\Architecture\Monitor.h" />
     <ClInclude Include="Src\Engine\Architecture\RenderData.h" />
     <ClInclude Include="Src\Engine\Architecture\Scene.h" />
     <ClInclude Include="Src\Engine\Core\NanoCore.h" />
@@ -236,6 +237,7 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Assets\ksr29\ksr29_mat.mtl" />
     <None Include="Assets\Shaders\color.frag" />
     <None Include="Assets\Shaders\color.vert" />
     <None Include="Assets\Shaders\default.frag" />
@@ -275,21 +277,40 @@
     <Image Include="Assets\Images\specular_wood_box.png" />
     <Image Include="Assets\Images\white.png" />
     <Image Include="Assets\Images\wood_box.png" />
+    <Image Include="Assets\ksr29\ambient_ocl.jpg" />
+    <Image Include="Assets\ksr29\base_color.jpg" />
+    <Image Include="Assets\ksr29\color.jpg" />
+    <Image Include="Assets\ksr29\normal.jpg" />
+    <Image Include="Assets\ksr29\normal2.jpg" />
+    <Image Include="Assets\ksr29\roughness.jpg" />
+    <Image Include="Assets\ksr29\spec.jpg" />
     <Image Include="C:\Users\Ruann\OneDrive\Documentos\white.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\models\Irex_obj.obj">
+    <Object Include="Assets\models\Irex_obj.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Text>
+    </Object>
   </ItemGroup>
   <ItemGroup>
+    <Object Include="Assets\ksr29\ksr29.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="Assets\models\cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Object>
     <Object Include="Assets\models\Cerberus.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Assets\models\dva.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Assets\models\railgun.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Object>

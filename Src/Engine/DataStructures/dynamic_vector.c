@@ -65,8 +65,8 @@ int Vector_Join(Vector *dst, Vector *other)
         vector_resize(dst, (other->count - free_space));
     }
 
-    Iterator it = Iterator_Get(other);
-    while (Iterator_Next(&it))
+    Vec_Iterator it = Vec_Iterator_Get(other);
+    while (Vec_Iterator_Next(&it))
     {
         char *ptr = (char *)internal_vector_push(dst, NULL);
         char *cpy = (char *)it.data;
@@ -97,18 +97,18 @@ void Vector_Delete(Vector *self)
     free(self);
 }
 
-Iterator Iterator_Get(Vector *vec)
+Vec_Iterator Vec_Iterator_Get(Vector *vec)
 {
-    Iterator i;
+    Vec_Iterator i;
     i.vec = vec;
     i.current = 0;
     i.rev_current = vec->count;
     return i;
 }
 
-int Iterator_Next(Iterator *it)
+int Vec_Iterator_Next(Vec_Iterator *it)
 {
-    if (it->current == it->vec->count)
+    if (it->current >= it->vec->count)
     {
         return 0;
     }
@@ -120,7 +120,7 @@ int Iterator_Next(Iterator *it)
     } while (it->data == NULL);
     return 1;
 }
-int Iterator_Reverse(Iterator *it)
+int Vec_Iterator_Reverse(Vec_Iterator *it)
 {
     if (it->rev_current == 0)
         return 0;
@@ -134,7 +134,7 @@ int Iterator_Reverse(Iterator *it)
 
     return 1;
 }
-int Iterator_Map(Iterator *it, map_fnc fnc)
+int Vec_Iterator_Map(Vec_Iterator *it, map_fnc fnc)
 {
     if (it->current == it->vec->size)
     {
@@ -150,7 +150,7 @@ int Iterator_Map(Iterator *it, map_fnc fnc)
     return 1;
 }
 
-void Iterator_Restart(Iterator *it)
+void Vec_Iterator_Restart(Vec_Iterator *it)
 {
     it->current = 0;
     it->rev_current = it->vec->count;

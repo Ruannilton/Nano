@@ -23,6 +23,13 @@ typedef struct
 
 } Dictionary;
 
+typedef struct {
+    Dictionary* dic;
+    void* data;
+    uint key;
+    uint current;
+}Dic_Iterator;
+
 uint default_hash(uint size, void *data);
 
 Dictionary internal_hash_map_create(uint size, uint data_size, hash_fnc hash_f);
@@ -34,4 +41,11 @@ void *internal_hash_map_get(Dictionary *hm, void *key);
 void *internal_hash_map_add(Dictionary *hm, void *key);
 
 void *Dictionary_GetIndex(Dictionary *hm, uint i);
+
+Dic_Iterator Dic_Iterator_Get(Dictionary* dic);
+
+uint Dic_Iterator_Next(Dic_Iterator* iter);
+
+void Dic_Iterator_Restar(Dic_Iterator* iter);
+
 #endif

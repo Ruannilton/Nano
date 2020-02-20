@@ -28,8 +28,31 @@ UNIQUE Camera* current_camera;
 UNIQUE uint matrix_buffer = 0;
 UNIQUE uint lights_buffer = 0;
 
-inline PointLight* Renderer_AddPointLight(Scene* scn) {
-	return  Scene_AddPointLight(current_scene);
+inline PointLight* Renderer_AddPointLight(Scene* scn,Vec3 pos) {
+
+	PointLight* pl = Scene_AddPointLight(current_scene);
+	pl->Ambient.x =  0.2f;
+	pl->Ambient.y = 0.2f;
+	pl->Ambient.z = 0.2f;
+
+	pl->Diffuse.x = 0.8f;
+	pl->Diffuse.y = 0.8f;
+	pl->Diffuse.z = 0.8f;
+
+	pl->Specular.x = 1.0f;
+	pl->Specular.y = 1.0f;
+	pl->Specular.z = 1.0f;
+
+	pl->Position = pos;
+
+	pl->Color.x = 1;
+	pl->Color.y = 1;
+	pl->Color.z = 1;
+
+	pl->Constant = 1;
+	pl->Linear = 0.07f;
+	pl->Quadratic = 0.017;
+	return pl;
 }
 
 inline SpotLight* Renderer_AddSpotLight(Scene* scn) {
@@ -40,8 +63,10 @@ inline DirectionalLight* Renderer_GetSun() {
 	return &(current_scene->sun);
 }
 
-inline RenderComponent Renderer_AddComponent(uint shader, uint mesh,uint index_c) {
-	return Scene_AddRenderComponent(current_scene, shader, mesh, index_c);
+inline RenderComponent Renderer_AddComponent(Mesh* mesh,Material* mat,Vec3 position) {
+	RenderComponent r = Scene_AddRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count);
+	RenderComponent_SetPosition(r,position);
+	return r;
 }
 
 void Renderer_Init();

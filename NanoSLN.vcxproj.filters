@@ -324,6 +324,9 @@
     <ClInclude Include="Src\Engine\Architecture\InstanceList.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Architecture\Monitor.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c">
@@ -459,6 +462,7 @@
     <None Include="README.md" />
     <None Include="Assets\Shaders\simple.vert" />
     <None Include="Assets\Shaders\simple.frag" />
+    <None Include="Assets\ksr29\ksr29_mat.mtl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">
@@ -491,6 +495,27 @@
     <Image Include="Assets\Images\white.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="Assets\ksr29\ambient_ocl.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\base_color.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\color.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\normal.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\normal2.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\roughness.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\spec.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\models\Irex_obj.obj" />
@@ -498,5 +523,10 @@
     <Object Include="Assets\models\cube.obj" />
     <Text Include="Inter\Shaders\default.frag" />
     <Text Include="Inter\Shaders\default.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Assets\ksr29\ksr29.obj" />
+    <Object Include="Assets\models\dva.obj" />
+    <Object Include="Assets\models\railgun.obj" />
   </ItemGroup>
 </Project>

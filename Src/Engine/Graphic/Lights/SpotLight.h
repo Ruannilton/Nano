@@ -10,14 +10,13 @@ typedef struct {
 	Vec3 Ambient;
 	Vec3 Diffuse;
 	Vec3 Specular;
-	Vec3 Direction;
 	Vec3 Position;
-	Vec3 Color;
 	//Attenuation vec3 on GPU
 	float Constant;		// x
 	float Linear;		// y
 	float Quadratic;	// z
-
+	Vec3 Color;
+	Vec3 Direction;
 	//cutOff vec2 on GPU
 	float cutOff;		// x
 	float outerCutOff;	// y
@@ -41,18 +40,6 @@ inline SpotLight* SpotLight_CTR(SpotLight* self, Vec3 Position, Vec3 Direction, 
 	return self;
 }
 
-inline void SpotLight_Bind(Shader shader, SpotLight* light) {
-	Shader_SetVec3(shader, "spot_light.Position", light->Position.arr);
-	Shader_SetVec3(shader, "spot_light.Direction", light->Direction.arr);
-	Shader_SetVec3(shader, "spot_light.Ambient", light->Ambient.arr);
-	Shader_SetVec3(shader, "spot_light.Diffuse", light->Diffuse.arr);
-	Shader_SetVec3(shader, "spot_light.Specular", light->Specular.arr);
 
-	Shader_SetFloat(shader, "spot_light.Constant", light->Constant);
-	Shader_SetFloat(shader, "spot_light.Linear", light->Linear);
-	Shader_SetFloat(shader, "spot_light.Quadratic", light->Quadratic);
-	Shader_SetFloat(shader, "spot_light.cutOff", (float)cos(glm_rad(light->cutOff)));
-	Shader_SetFloat(shader, "spot_light.outerCutOff", (float)cos(glm_rad(light->outerCutOff)));
-}
 
 #endif // ! NANO_SPOT_LIGHT

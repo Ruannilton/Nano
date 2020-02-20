@@ -29,7 +29,7 @@ typedef struct
     uint current;
     uint rev_current;
     void *data;
-} Iterator;
+} Vec_Iterator;
 
 Vector internal_create_vector(uint size, size_t data_size);
 
@@ -47,14 +47,14 @@ void Vector_Clear(Vector *self);
 
 void Vector_Delete(Vector *self);
 
-Iterator Iterator_Get(Vector *vec);
+Vec_Iterator Vec_Iterator_Get(Vector *vec);
 
-int Iterator_Next(Iterator *it);
+int Vec_Iterator_Next(Vec_Iterator *it);
 
-int Iterator_Reverse(Iterator *it);
+int Vec_Iterator_Reverse(Vec_Iterator *it);
 
-int Iterator_Map(Iterator *it, map_fnc fnc);
+int Vec_Iterator_Map(Vec_Iterator *it, map_fnc fnc);
 
-void Iterator_Restart(Iterator *it);
+void Vec_Iterator_Restart(Vec_Iterator *it);
 
 #endif

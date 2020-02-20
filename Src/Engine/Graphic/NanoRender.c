@@ -4,8 +4,7 @@
 #define LIGHT_SIZE (sizeof(vec4) + 5*(sizeof(vec4)) + 256*128)
 
 void Renderer_Init() {
-	
-	glViewport(0, 0, NanoApplication->windowWidht, NanoApplication->windowHeight);
+
 	glGenBuffers(1, &matrix_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
 	glBufferData(GL_UNIFORM_BUFFER, MAT_SIZE, 0, GL_STATIC_DRAW);
@@ -42,8 +41,8 @@ void Renderer_SetupLighting() {
 	float cuttOff[2] = { 0,0 };
 
 	size_t index = 96;
-	Iterator light_iter = Iterator_Get(&current_scene->point_lights);
-	for (; Iterator_Next(&light_iter); index += 128) {
+	Vec_Iterator light_iter = Vec_Iterator_Get(&current_scene->point_lights);
+	for (; Vec_Iterator_Next(&light_iter); index += 128) {
 
 		PointLight* pl = light_iter.data;
 		attenuation[0] = pl->Constant;
@@ -58,8 +57,8 @@ void Renderer_SetupLighting() {
 		glBufferSubData(GL_UNIFORM_BUFFER, index + 80, sizeof(vec3), pl->Color.arr);
 	}
 
-	light_iter = Iterator_Get(&current_scene->spot_lights);
-	for (; Iterator_Next(&light_iter); index += 128) {
+	light_iter = Vec_Iterator_Get(&current_scene->spot_lights);
+	for (; Vec_Iterator_Next(&light_iter); index += 128) {
 
 		SpotLight* sl = light_iter.data;
 		
@@ -102,44 +101,42 @@ void Renderer_RenderScene() {
 	
 
 	Renderer_SetupLighting();
-	RenderData* rd = Dictionary_Get(RenderData, &(current_scene->render_data), 1);
-	InstanceList* il = Dictionary_Get(InstanceList, &rd->renderer_lists, 1);
-	Instance* instance = Vector_Get(Instance, &il->instances, 0);
-	
-	Shader_SetInt(1, "ourTexture", 0);
-	Shader_SetTextureUnit(1, GL_TEXTURE0);
 
-	Shader_SetInt(1, "material.diffuse", 1);
-	Shader_SetTextureUnit(1, GL_TEXTURE1);
 
-	Shader_SetInt(1, "material.specular", 2);
-	Shader_SetTextureUnit(1, GL_TEXTURE2);
+	Dic_Iterator rd_iter = Dic_Iterator_Get(&(current_scene->render_data));
+	Dic_Iterator il_iter;
+	Vec_Iterator i_iter;
 
-	Shader_SetFloat(1, "material.Shininess", 32.0f);
+	while (Dic_Iterator_Next(&rd_iter)) {
 
-	glBindVertexArray(1);
-	glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE, (GLfloat*) instance->transform);
-	glDrawElements(GL_TRIANGLES, instance->index_count, GL_UNSIGNED_INT, 0);
-
-	/*register uint i = 0;
-	Material* cMat;
-
-	for (; i < render_list_count; i++) {
-		cMat = render_list[i]->mat;
-
-		if (cMat != NULL) {
-			glUseProgram(cMat->shader_id);
-			cMat->fnc(cMat->shader_id, cMat->data);
-		}
-		else {
-			glUseProgram(DefaultShader);
-		}
+		RenderData* rd = rd_iter.data;
+		il_iter  = Dic_Iterator_Get(&(rd->renderer_lists));
 		
-        glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE,(GLfloat*) render_list[i]->transform);
-		glBindVertexArray(render_list[i]->mesh->mesh_id);
-		glDrawElements(GL_TRIANGLES, render_list[i]->mesh->index_count, GL_UNSIGNED_INT, 0);
+		while (Dic_Iterator_Next(&il_iter)) {
+			InstanceList* il = il_iter.data;
+			i_iter = Vec_Iterator_Get(&(il->instances));
+			
+			while (Vec_Iterator_Next(&i_iter)) {
+
+			Instance* instance = i_iter.data;
+
+
+			Shader_SetInt(1, "material.diffuse", 0);
+			Shader_SetTextureUnit(1, GL_TEXTURE0);
+
+			Shader_SetInt(1, "material.specular", 1);
+			Shader_SetTextureUnit(3, GL_TEXTURE1);
+
+			Shader_SetFloat(1, "material.Shininess", 32.0f);
+
+			glBindVertexArray(il->mesh_id);
+			glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE, (GLfloat*)instance->transform);
+			glDrawElements(GL_TRIANGLES, instance->index_count, GL_UNSIGNED_INT, 0);
+
+			}
+		}
+	}
 	
-	}*/
 	
 	glBindVertexArray(0);
 }

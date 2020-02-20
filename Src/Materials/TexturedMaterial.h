@@ -8,15 +8,13 @@
 
 
 typedef struct {
-	Texture* texture;
 	Texture* difffuse;
 	Texture* specular;
 }TexturedMaterial;
 
 Material_CreateBindFnc(TexturedMaterial);
 
-inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, Texture* texture, Texture* diffuse, Texture* specular) {
-	self->texture = texture;
+inline Material* TexturedMaterial_CTR(TexturedMaterial* self,Shader shader, Texture* diffuse, Texture* specular) {
 	self->difffuse = diffuse;
 	self->specular = specular;
 	Material* mat = CNEW(Material, shader, TexturedMaterialbndFnc,self);

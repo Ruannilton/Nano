@@ -8,7 +8,7 @@ Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 	VERIFY(tex, NULL);
 
 	tex->id = SOIL_load_OGL_texture(path, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS);
-
+	
 	if (tex->id == 0)
 	{
 		DEBUG_C(ANSI_RED, "%s", "Failed to load texture");
@@ -16,12 +16,13 @@ Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 		return NULL;
 	}
 
-	glBindTexture(GL_TEXTURE_2D, tex->id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, tex->id);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, nano->multisamples_level, GL_RGB, 4096, 4096, GL_TRUE);
+	glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_S, wrapMode);
+	glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_T, wrapMode);
+	glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MIN_FILTER, minFilter);
+	glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAG_FILTER, magFilter);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 
 	DEBUG_C(ANSI_LIGHT_GREEN, "Loaded Texture(%d): %s",tex->id, path);
 	
