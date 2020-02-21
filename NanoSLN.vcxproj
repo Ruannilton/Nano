@@ -284,7 +284,6 @@
     <Image Include="Assets\ksr29\normal2.jpg" />
     <Image Include="Assets\ksr29\roughness.jpg" />
     <Image Include="Assets\ksr29\spec.jpg" />
-    <Image Include="C:\Users\Ruann\OneDrive\Documentos\white.png" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Assets\models\Irex_obj.obj">

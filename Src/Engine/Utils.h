@@ -109,4 +109,8 @@ typedef union {
 
 #define Vec2Mul(a,b) a.x *= b;\
 					 a.y *= b;
+
+UNIQUE float X_Axis[3] = { 1,0,0 };
+UNIQUE float Y_Axis[3] = { 0,1,0 };
+UNIQUE float Z_Axis[3] = { 0,0,1 };
 #endif

@@ -59,7 +59,7 @@ Dic_Iterator Dic_Iterator_Get(Dictionary* dic) {
 
 uint Dic_Iterator_Next(Dic_Iterator* iter) {
     
-    if (iter->current >= iter->dic->count) return 0;
+    if (iter->current > iter->dic->count) return 0;
 
     do {
         iter->key = *(uint*)((iter->current * sizeof(uint)) + (size_t)iter->dic->key_arr);

@@ -8,17 +8,22 @@
 #include "../DataStructures/hash_map.h"
 #include "../Graphic/RenderComponent.h"
 
-typedef struct {
-	mat4 transform;
-	Material material;
-	uint index_count;
-}Instance;
 
 typedef struct {
 	uint mesh_id;
+	uint index_count;
 	Vector instances;
 }InstanceList;
 
+typedef struct {
+	uint mesh_id;
+	uint index_count;
+	Material material;
+	Vector instances;
+}MultipleInstanceList;
+
 InstanceList* InstanceList_Create(InstanceList* il, uint vao, uint init_size);
+
+MultipleInstanceList* MultipleInstanceList_Create(MultipleInstanceList* il, uint vao,Material* mat, uint init_size);
 
 #endif

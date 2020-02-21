@@ -2,19 +2,26 @@
 
 #define MAT_SIZE (2 * sizeof(mat4))
 #define LIGHT_SIZE (sizeof(vec4) + 5*(sizeof(vec4)) + 256*128)
+#define MODEL_SIZE (1024*sizeof(mat4))
 
 void Renderer_Init() {
 
 	glGenBuffers(1, &matrix_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, MAT_SIZE, 0, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, MAT_SIZE, 0, GL_DYNAMIC_DRAW);
 	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, matrix_buffer, 0, MAT_SIZE);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	glGenBuffers(1, &lights_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, lights_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, LIGHT_SIZE, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, LIGHT_SIZE, NULL, GL_DYNAMIC_DRAW);
 	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_LIGHT_LOC, lights_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	glGenBuffers(1, &models_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
+	glBufferData(GL_UNIFORM_BUFFER, MODEL_SIZE, NULL, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
@@ -96,7 +103,6 @@ void Renderer_RenderScene() {
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), current_camera->projection);
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4), sizeof(mat4), current_camera->view);
 	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, matrix_buffer, 0, 2 * sizeof(mat4));
-	glUseProgram(1);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	
 
@@ -110,28 +116,26 @@ void Renderer_RenderScene() {
 	while (Dic_Iterator_Next(&rd_iter)) {
 
 		RenderData* rd = rd_iter.data;
+		glUseProgram(rd_iter.key);
 		il_iter  = Dic_Iterator_Get(&(rd->renderer_lists));
+
 		
 		while (Dic_Iterator_Next(&il_iter)) {
 			InstanceList* il = il_iter.data;
 			i_iter = Vec_Iterator_Get(&(il->instances));
-			
+			glBindVertexArray(il->mesh_id);
+
 			while (Vec_Iterator_Next(&i_iter)) {
 
-			Instance* instance = i_iter.data;
+			RenderComponent* rc = i_iter.data;
+			rc->mat.fnc(rc->mat.shader_id, rc->mat.data);
 
+			glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), rc->transform);
+			glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer, 0,  sizeof(mat4));
+			glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-			Shader_SetInt(1, "material.diffuse", 0);
-			Shader_SetTextureUnit(1, GL_TEXTURE0);
-
-			Shader_SetInt(1, "material.specular", 1);
-			Shader_SetTextureUnit(3, GL_TEXTURE1);
-
-			Shader_SetFloat(1, "material.Shininess", 32.0f);
-
-			glBindVertexArray(il->mesh_id);
-			glUniformMatrix4fv(SHADER_MODEL_LOC, 1, GL_FALSE, (GLfloat*)instance->transform);
-			glDrawElements(GL_TRIANGLES, instance->index_count, GL_UNSIGNED_INT, 0);
+			glDrawElementsInstanced(GL_TRIANGLES, il->index_count, GL_UNSIGNED_INT, 0,1);
 
 			}
 		}

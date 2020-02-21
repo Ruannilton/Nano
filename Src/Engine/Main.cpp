@@ -20,24 +20,38 @@ void Loader() {
 	 Camera_SetPosition(myScene->camera_scene, { 0,0,-10 });
      Renderer_SetScene(myScene);
 
-	 PointLight* pl = Renderer_AddPointLight(myScene, {0,4,-5});
+	 PointLight* pl = Renderer_AddPointLight(myScene, {3,2,-3});
 	 pl->Color = { 0.02f,0,1 };
 
-	 PointLight* pl2 = Renderer_AddPointLight(myScene, { 0,4, 5 });
+	 PointLight* pl2 = Renderer_AddPointLight(myScene, { 2,4, 5 });
 	 pl2->Color = { 1,0,0.02f };
 
 	 Mesh* ksr29 = Mesh_LoadMesh("Assets/ksr29/ksr29.obj");
-	 Texture* texture_color = Texture_LoadTextureDefault("Assets/ksr29/color.jpg");
-	 Texture* texture_specular = Texture_LoadTextureDefault("Assets/ksr29/spec.jpg");
+	 Mesh* cerberus = Mesh_LoadMesh("Assets/models/Cerberus.obj");
+
+	 Texture* ksr_color = Texture_LoadTextureDefault("Assets/ksr29/color.jpg");
+	 Texture* ksr_specular = Texture_LoadTextureDefault("Assets/ksr29/spec.jpg");
+	 Texture* cerbers_color = Texture_LoadTextureDefault("Assets/Images/Cerberus_A.png");
+
 	 Shader Default = Scene_LoadShader(myScene,"Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
-	 Material* mat = CNEW(TexturedMaterial, Default, texture_color, texture_specular);
+	 
+	 Material* ksr_mat = CNEW(TexturedMaterial, Default, ksr_color, ksr_specular);
+	 Material* cerberus_mat = CNEW(TexturedMaterial, Default, cerbers_color, cerbers_color);
 
 	 int i = -3;
 	 for (; i < 3; i++) {
-		 RenderComponent rc = Renderer_AddComponent(ksr29, mat, { 0,0, i*2.0f });
+		 RenderComponent* rc = Renderer_AddComponent(ksr29, ksr_mat, { 0,0, i*2.0f });
+	 }
+
+	 i = -3;
+	 for (; i < 3; i++) {
+		 RenderComponent* rc = Renderer_AddComponent(cerberus, cerberus_mat, { 12,0, i * 2.0f });
+		 RenderComponent_Scale(rc, { 2.5,2.5,2.5 });
+		 RenderComponent_Rotate(rc, { 0,90,0 });
+		 
 	 }
 	 
-
+	 
 
 	//Scene_ShowRenderInfo(current_scene);
 }

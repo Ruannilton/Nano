@@ -489,9 +489,6 @@
     <Image Include="Assets\Images\specular_wood_box.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
-    <Image Include="C:\Users\Ruann\OneDrive\Documentos\white.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
     <Image Include="Assets\Images\white.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
@@ -518,7 +515,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\models\Irex_obj.obj" />
     <Object Include="Assets\models\Cerberus.obj" />
     <Object Include="Assets\models\cube.obj" />
     <Text Include="Inter\Shaders\default.frag" />
@@ -528,5 +524,6 @@
     <Object Include="Assets\ksr29\ksr29.obj" />
     <Object Include="Assets\models\dva.obj" />
     <Object Include="Assets\models\railgun.obj" />
+    <Object Include="Assets\models\Irex_obj.obj" />
   </ItemGroup>
 </Project>

@@ -21,12 +21,14 @@
 
 #define SHADER_UNIFORM_MATRIX_LOC 0
 #define SHADER_UNIFORM_LIGHT_LOC 1
+#define SHADER_UNIFORM_MODEL_LOC 2
 
 UNIQUE Scene* current_scene;
 UNIQUE Camera* current_camera;
 
 UNIQUE uint matrix_buffer = 0;
 UNIQUE uint lights_buffer = 0;
+UNIQUE uint models_buffer = 0;
 
 inline PointLight* Renderer_AddPointLight(Scene* scn,Vec3 pos) {
 
@@ -63,10 +65,25 @@ inline DirectionalLight* Renderer_GetSun() {
 	return &(current_scene->sun);
 }
 
-inline RenderComponent Renderer_AddComponent(Mesh* mesh,Material* mat,Vec3 position) {
-	RenderComponent r = Scene_AddRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count);
+inline RenderComponent* Renderer_AddComponent(Mesh* mesh,Material* mat,Vec3 position) {
+	RenderComponent* r = Scene_AddRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count);
 	RenderComponent_SetPosition(r,position);
 	return r;
+}
+
+inline SharedRenderComponent* Renderer_AddSharedRenderComponent(Mesh* mesh, Material* mat, Vector* positions) {
+
+	SharedRenderComponent* src;
+
+	if (positions) {
+		src = Scene_AddSharedRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count, positions->count);
+		Vector_Join(src->transforms, positions);
+	}
+	else {
+	    src = Scene_AddSharedRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count, 1);
+	}
+	
+	return src;
 }
 
 void Renderer_Init();

@@ -58,27 +58,48 @@ Shader Scene_LoadShader(Scene* scn, string vert, string frag) {
 }
 
 
-RenderComponent Scene_AddRenderComponent(Scene* scene, Material* mat, uint mesh_id,uint index_c) {
+RenderComponent* Scene_AddRenderComponent(Scene* scene, Material* mat, uint mesh_id,uint index_c) {
 	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
 	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)mat->shader_id);
-	RenderComponent rc;
-	rc.mat = mat;
-	rc.mesh_id = 0;
+	RenderComponent* rc = NULL;
+	
 
 	if (rd) {
 		InstanceList* il = Dictionary_Get(InstanceList, &rd->renderer_lists, mesh_id);
+		
 		if (!il) {
-		 il= Dictionary_Add(InstanceList, &rd->renderer_lists, mesh_id);
-		 InstanceList_Create(il, mesh_id, 1);
+			il= Dictionary_Add(InstanceList, &rd->renderer_lists, mesh_id);
+			InstanceList_Create(il, mesh_id, 1);
 		}
-	 Instance* instance = Vector_Push(Instance, &il->instances, NULL);
-	 instance->index_count = index_c;
-	 memcpy(instance->transform, identity, sizeof(identity));
-	 rc.mesh_id = mesh_id;
-	 rc.mat = &instance->material;
-	 rc.transform = &instance->transform;
+
+		rc = Vector_Push(RenderComponent, &il->instances, NULL);
+		il->index_count = index_c;
+		memcpy(rc->transform, identity, sizeof(identity));
+		memcpy(&(rc->mat), mat, sizeof(Material));
+
 	}
 
+	return rc;
+}
+
+SharedRenderComponent* Scene_AddSharedRenderComponent(Scene* scene, Material* mat, uint mesh_id, uint index_c, uint count) {
+	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
+	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)mat->shader_id);
+	SharedRenderComponent* rc = NULL;
+
+	if (rd) {
+		MultipleInstanceList* mil = Dictionary_Get(MultipleInstanceList, &rd->multiple_renderer_lists, mesh_id);
+		if (!mil) {
+			mil = Dictionary_Add(MultipleInstanceList, &rd->multiple_renderer_lists, mesh_id);
+			MultipleInstanceList_Create(mil, mesh_id, mat, count);
+			mil->index_count = index_c;
+		}
+		rc = NEW(SharedRenderComponent);
+		if (rc) {
+			rc->mat = &mil->material;
+			rc->transforms = &mil->instances;
+		}
+	}
 	return rc;
 }
 
@@ -104,8 +125,8 @@ void Scene_ShowRenderInfo(Scene* scn) {
 						{
 							if (it.data) {
 
-							Instance* instance = it.data;
-							TexturedMaterial* cm = instance->material.data;
+							RenderComponent* instance = it.data;
+							TexturedMaterial* cm = instance->mat.data;
 							DEBUG_C(ANSI_LIGHT_BLUE, "\t\t\tTexture: %d", cm->difffuse->id);
 							}
 						}
