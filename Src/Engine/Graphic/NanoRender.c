@@ -97,7 +97,8 @@ void Renderer_SetScene(Scene* scn) {
 
 void Renderer_RenderScene() {
 	Camera_UpdateView(current_camera);
-	
+	int draw_call = 0;
+	double time = glfwGetTime();
 	
 	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), current_camera->projection);
@@ -110,24 +111,24 @@ void Renderer_RenderScene() {
 
 
 	Dic_Iterator rd_iter = Dic_Iterator_Get(&(current_scene->render_data));
-	Dic_Iterator il_iter;
-	Vec_Iterator i_iter;
+	Dic_Iterator dic_iter;
+	Vec_Iterator vec_iter;
 
 	while (Dic_Iterator_Next(&rd_iter)) {
 
 		RenderData* rd = rd_iter.data;
-		glUseProgram(rd_iter.key);
-		il_iter  = Dic_Iterator_Get(&(rd->renderer_lists));
-
 		
-		while (Dic_Iterator_Next(&il_iter)) {
-			InstanceList* il = il_iter.data;
-			i_iter = Vec_Iterator_Get(&(il->instances));
+		glUseProgram(rd_iter.key);
+
+		dic_iter  = Dic_Iterator_Get(&(rd->renderer_lists));
+		while (Dic_Iterator_Next(&dic_iter)) {
+			InstanceList* il = dic_iter.data;
+			vec_iter = Vec_Iterator_Get(&(il->instances));
 			glBindVertexArray(il->mesh_id);
 
-			while (Vec_Iterator_Next(&i_iter)) {
+			while (Vec_Iterator_Next(&vec_iter)) {
 
-			RenderComponent* rc = i_iter.data;
+			RenderComponent* rc = vec_iter.data;
 			rc->mat.fnc(rc->mat.shader_id, rc->mat.data);
 
 			glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
@@ -136,12 +137,29 @@ void Renderer_RenderScene() {
 			glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 			glDrawElementsInstanced(GL_TRIANGLES, il->index_count, GL_UNSIGNED_INT, 0,1);
-
+			draw_call++;
 			}
+		}
+
+		dic_iter = Dic_Iterator_Get(&(rd->multiple_renderer_lists));
+		while (Dic_Iterator_Next(&dic_iter)) {
+			MultipleInstanceList* mil = dic_iter.data;
+			vec_iter = Vec_Iterator_Get(&(mil->instances));
+			
+			glBindVertexArray(mil->mesh_id);
+			mil->material.fnc(mil->material.shader_id, mil->material.data);
+
+			glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, mil->instances.count * sizeof(mat4), mil->instances.buffer);
+			glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer, 0, mil->instances.count * sizeof(mat4));
+			glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+			glDrawElementsInstanced(GL_TRIANGLES, mil->index_count, GL_UNSIGNED_INT, 0, mil->instances.count);
+			draw_call++;
 		}
 	}
 	
-	
+	DEBUG_C(ANSI_MAGENTA, "Draw Calls: %d  Fps: %f", draw_call, 1.0/(glfwGetTime() - time));
 	glBindVertexArray(0);
 }
 

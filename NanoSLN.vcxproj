@@ -244,6 +244,7 @@
     <None Include="Assets\Shaders\default.vert" />
     <None Include="Assets\Shaders\simple.frag" />
     <None Include="Assets\Shaders\simple.vert" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Program\glew32.dll" />
     <Text Include="Inter\Shaders\default.frag">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

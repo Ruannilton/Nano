@@ -46,20 +46,23 @@ Scene* Scene_Create(uint shader_count) {
 }
 
 void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count) {
-	RenderData* rd = Dictionary_Add(RenderData, &(scn->render_data), (void*)shader);
-	rd->renderer_lists = Dictionary_Create(InstanceList, mesh_count, hash_f);
 
+	RenderData* rd = Dictionary_Add(RenderData, &(scn->render_data), (void*)shader);
+
+
+	rd->renderer_lists = Dictionary_Create(InstanceList, mesh_count, hash_f);
+	rd->multiple_renderer_lists = Dictionary_Create(MultipleInstanceList, mesh_count, hash_f);
 }
 
 Shader Scene_LoadShader(Scene* scn, string vert, string frag) {
 	Shader s = Shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
-	Scene_AddShader(scn, s, 10);
+	Scene_AddShader(scn, s, 4);
 	return s;
 }
 
 
 RenderComponent* Scene_AddRenderComponent(Scene* scene, Material* mat, uint mesh_id,uint index_c) {
-	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
+	
 	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)mat->shader_id);
 	RenderComponent* rc = NULL;
 	
@@ -82,23 +85,31 @@ RenderComponent* Scene_AddRenderComponent(Scene* scene, Material* mat, uint mesh
 	return rc;
 }
 
-SharedRenderComponent* Scene_AddSharedRenderComponent(Scene* scene, Material* mat, uint mesh_id, uint index_c, uint count) {
-	static mat4 identity = GLM_MAT4_IDENTITY_INIT;
+SharedRenderComponent Scene_AddSharedRenderComponent(Scene* scene, Material* mat, uint mesh_id, uint index_c, uint count) {
+	
 	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)mat->shader_id);
-	SharedRenderComponent* rc = NULL;
+	SharedRenderComponent rc;
 
 	if (rd) {
 		MultipleInstanceList* mil = Dictionary_Get(MultipleInstanceList, &rd->multiple_renderer_lists, mesh_id);
+		
 		if (!mil) {
 			mil = Dictionary_Add(MultipleInstanceList, &rd->multiple_renderer_lists, mesh_id);
-			MultipleInstanceList_Create(mil, mesh_id, mat, count);
-			mil->index_count = index_c;
 		}
-		rc = NEW(SharedRenderComponent);
-		if (rc) {
-			rc->mat = &mil->material;
-			rc->transforms = &mil->instances;
+		memcpy(&mil->material, mat, sizeof(Material));
+		mil->mesh_id = mesh_id;
+		mil->index_count = index_c;
+		mil->instances = Vector_Create(mat4, count);
+		
+		uint i = 0;
+		for (; i < count;i++) {
+			mat4* m = Vector_Push(mat4, &mil->instances, NULL);
+			memcpy(m, identity, sizeof(mat4));
 		}
+		
+		rc.mat = &mil->material;
+		rc.transforms = &mil->instances;
+		
 	}
 	return rc;
 }

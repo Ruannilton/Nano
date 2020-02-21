@@ -38,19 +38,25 @@ void Loader() {
 	 Material* ksr_mat = CNEW(TexturedMaterial, Default, ksr_color, ksr_specular);
 	 Material* cerberus_mat = CNEW(TexturedMaterial, Default, cerbers_color, cerbers_color);
 
-	 int i = -3;
-	 for (; i < 3; i++) {
-		 RenderComponent* rc = Renderer_AddComponent(ksr29, ksr_mat, { 0,0, i*2.0f });
+	
+	 
+	 int s = 1024;
+
+	 SharedRenderComponent ksrs = Renderer_AddSharedRenderComponent(ksr29, ksr_mat, s);
+
+	 Vec_Iterator vec_iter = Vec_Iterator_Get(ksrs.transforms);
+	 int i = 0;
+	 while (Vec_Iterator_Next(&vec_iter)) {
+		 mat4* p = (mat4*)vec_iter.data;
+		 vec3 v = { 0,0, i * 2.0f };
+		 glm_translate(*p, v);
+		 i++;
 	 }
 
-	 i = -3;
-	 for (; i < 3; i++) {
-		 RenderComponent* rc = Renderer_AddComponent(cerberus, cerberus_mat, { 12,0, i * 2.0f });
-		 RenderComponent_Scale(rc, { 2.5,2.5,2.5 });
-		 RenderComponent_Rotate(rc, { 0,90,0 });
-		 
+	/* for (int i= 0; i < s; i++) {
+		 RenderComponent* rc = Renderer_AddComponent(ksr29, ksr_mat, {0 ,0, i * 2.0f });
 	 }
-	 
+	 */
 	 
 
 	//Scene_ShowRenderInfo(current_scene);

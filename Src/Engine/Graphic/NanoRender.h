@@ -31,8 +31,9 @@ UNIQUE uint lights_buffer = 0;
 UNIQUE uint models_buffer = 0;
 
 inline PointLight* Renderer_AddPointLight(Scene* scn,Vec3 pos) {
-
-	PointLight* pl = Scene_AddPointLight(current_scene);
+	PointLight* pl = 0;
+	pl = Scene_AddPointLight(current_scene);
+if (pl) {
 	pl->Ambient.x =  0.2f;
 	pl->Ambient.y = 0.2f;
 	pl->Ambient.z = 0.2f;
@@ -54,6 +55,7 @@ inline PointLight* Renderer_AddPointLight(Scene* scn,Vec3 pos) {
 	pl->Constant = 1;
 	pl->Linear = 0.07f;
 	pl->Quadratic = 0.017;
+	}
 	return pl;
 }
 
@@ -71,19 +73,8 @@ inline RenderComponent* Renderer_AddComponent(Mesh* mesh,Material* mat,Vec3 posi
 	return r;
 }
 
-inline SharedRenderComponent* Renderer_AddSharedRenderComponent(Mesh* mesh, Material* mat, Vector* positions) {
-
-	SharedRenderComponent* src;
-
-	if (positions) {
-		src = Scene_AddSharedRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count, positions->count);
-		Vector_Join(src->transforms, positions);
-	}
-	else {
-	    src = Scene_AddSharedRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count, 1);
-	}
-	
-	return src;
+inline SharedRenderComponent Renderer_AddSharedRenderComponent(Mesh* mesh, Material* mat, uint count) {
+	 return Scene_AddSharedRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count, count);
 }
 
 void Renderer_Init();

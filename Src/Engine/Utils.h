@@ -113,4 +113,6 @@ typedef union {
 UNIQUE float X_Axis[3] = { 1,0,0 };
 UNIQUE float Y_Axis[3] = { 0,1,0 };
 UNIQUE float Z_Axis[3] = { 0,0,1 };
+
+UNIQUE mat4 identity = GLM_MAT4_IDENTITY_INIT;
 #endif

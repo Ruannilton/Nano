@@ -463,6 +463,7 @@
     <None Include="Assets\Shaders\simple.vert" />
     <None Include="Assets\Shaders\simple.frag" />
     <None Include="Assets\ksr29\ksr29_mat.mtl" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">
