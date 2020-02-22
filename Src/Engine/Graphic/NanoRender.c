@@ -18,11 +18,13 @@ void Renderer_Init() {
 	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_LIGHT_LOC, lights_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-	glGenBuffers(1, &models_buffer);
+	
+	glGenBuffers(1, &model_buffer);
+	/*glGenBuffers(1, &models_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
 	glBufferData(GL_UNIFORM_BUFFER, MODEL_SIZE, NULL, GL_DYNAMIC_DRAW);
 	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);*/
 }
 
 void Renderer_SetupProjection() {
@@ -95,11 +97,28 @@ void Renderer_SetScene(Scene* scn) {
 	Renderer_SetupProjection();
 }
 
+void SetModels(uint count, mat4* models) {
+	glBindBuffer(GL_ARRAY_BUFFER, model_buffer);
+	glBufferData(GL_ARRAY_BUFFER, count*sizeof(mat4), models, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)0);
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)sizeof(vec4));
+	glEnableVertexAttribArray(6);
+	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(2 * sizeof(vec4)));
+	glEnableVertexAttribArray(7);
+	glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(3 * sizeof(vec4)));
+
+	glVertexAttribDivisor(4, 1);
+	glVertexAttribDivisor(5, 1);
+	glVertexAttribDivisor(6, 1);
+	glVertexAttribDivisor(7, 1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void Renderer_RenderScene() {
 	Camera_UpdateView(current_camera);
-	int draw_call = 0;
-	double time = glfwGetTime();
-	
+
 	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), current_camera->projection);
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4), sizeof(mat4), current_camera->view);
@@ -113,6 +132,9 @@ void Renderer_RenderScene() {
 	Dic_Iterator rd_iter = Dic_Iterator_Get(&(current_scene->render_data));
 	Dic_Iterator dic_iter;
 	Vec_Iterator vec_iter;
+
+	
+	
 
 	while (Dic_Iterator_Next(&rd_iter)) {
 
@@ -131,13 +153,8 @@ void Renderer_RenderScene() {
 			RenderComponent* rc = vec_iter.data;
 			rc->mat.fnc(rc->mat.shader_id, rc->mat.data);
 
-			glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
-			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), rc->transform);
-			glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer, 0,  sizeof(mat4));
-			glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
+			SetModels(1, rc->transform);
 			glDrawElementsInstanced(GL_TRIANGLES, il->index_count, GL_UNSIGNED_INT, 0,1);
-			draw_call++;
 			}
 		}
 
@@ -149,17 +166,13 @@ void Renderer_RenderScene() {
 			glBindVertexArray(mil->mesh_id);
 			mil->material.fnc(mil->material.shader_id, mil->material.data);
 
-			glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
-			glBufferSubData(GL_UNIFORM_BUFFER, 0, mil->instances.count * sizeof(mat4), mil->instances.buffer);
-			glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer, 0, mil->instances.count * sizeof(mat4));
-			glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
+			SetModels(mil->instances.count, mil->instances.buffer);
+		
 			glDrawElementsInstanced(GL_TRIANGLES, mil->index_count, GL_UNSIGNED_INT, 0, mil->instances.count);
-			draw_call++;
 		}
 	}
 	
-	DEBUG_C(ANSI_MAGENTA, "Draw Calls: %d  Fps: %f", draw_call, 1.0/(glfwGetTime() - time));
+
 	glBindVertexArray(0);
 }
 

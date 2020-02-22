@@ -5,7 +5,7 @@ extern "C" {
 
 void Setup() {
 	Input_SetMouse(GLFW_MOUSE_BUTTON_LAST + 1, 0.025);
-	nano->multisamples_level = 8;
+	nano->multisamples_level = 16;
 	Nano_SetWindowSize(800, 600);
 }
 
@@ -42,7 +42,7 @@ void Loader() {
 	 
 	 int s = 1024;
 
-	 SharedRenderComponent ksrs = Renderer_AddSharedRenderComponent(ksr29, ksr_mat, s);
+	SharedRenderComponent ksrs = Renderer_AddSharedRenderComponent(ksr29, ksr_mat, s);
 
 	 Vec_Iterator vec_iter = Vec_Iterator_Get(ksrs.transforms);
 	 int i = 0;
@@ -51,13 +51,7 @@ void Loader() {
 		 vec3 v = { 0,0, i * 2.0f };
 		 glm_translate(*p, v);
 		 i++;
-	 }
-
-	/* for (int i= 0; i < s; i++) {
-		 RenderComponent* rc = Renderer_AddComponent(ksr29, ksr_mat, {0 ,0, i * 2.0f });
-	 }
-	 */
-	 
+	 } 
 
 	//Scene_ShowRenderInfo(current_scene);
 }
@@ -66,11 +60,11 @@ void Loader() {
 
 	
 	 Camera_SeekMouse(current_camera);
-	 
-	 Vec3 left = { -5.5f*delta_time,0,0 };
-	 Vec3 right = {  5.5f * delta_time,0,0 };
-	 Vec3 foward = { 0,0,5.5f * delta_time };
-	 Vec3 backward = { 0.0f,0,-5.5f * delta_time };
+	 float vel = 15.0f;
+	 Vec3 left = { -vel *delta_time,0,0 };
+	 Vec3 right = { vel * delta_time,0,0 };
+	 Vec3 foward = { 0,0,vel * delta_time };
+	 Vec3 backward = { 0.0f,0,-vel * delta_time };
 
 	
 	 if (Input_Key(GLFW_KEY_A)) {

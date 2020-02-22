@@ -51,8 +51,8 @@ void Nano_CreateWindow() {
 	glfwWindowHint(GLFW_RED_BITS, nano->main_monitor->current_mode.redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, nano->main_monitor->current_mode.greenBits);
 	glfwWindowHint(GLFW_BLUE_BITS, nano->main_monitor->current_mode.blueBits);
-	glfwWindowHint(GLFW_REFRESH_RATE, nano->main_monitor->current_mode.refreshRate);
-	glfwSwapInterval(1);
+	//glfwWindowHint(GLFW_REFRESH_RATE, nano->main_monitor->current_mode.refreshRate);
+	//glfwSwapInterval(1);
 
 	nano->window = glfwCreateWindow(nano->window_widht, nano->window_height, nano->title, NULL, NULL);
 	glViewport(0, 0, nano->window_widht, nano->window_height);
@@ -133,7 +133,7 @@ void Nano_SetupOpenGL() {
 void Show_Info() {
 	string vendor = glGetString(GL_VENDOR);
 	string renderer = glGetString(GL_RENDERER);
-	
+
 	DEBUG_C(ANSI_BLUE,"Program path: %s\n", nano->progam_path);
 	DEBUG_C(ANSI_BLUE, "%s %s", vendor, renderer);
 	DEBUG_C(ANSI_BLUE, "\nMonitors:");

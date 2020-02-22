@@ -29,6 +29,7 @@ UNIQUE Camera* current_camera;
 UNIQUE uint matrix_buffer = 0;
 UNIQUE uint lights_buffer = 0;
 UNIQUE uint models_buffer = 0;
+UNIQUE uint model_buffer  = 0;
 
 inline PointLight* Renderer_AddPointLight(Scene* scn,Vec3 pos) {
 	PointLight* pl = 0;
