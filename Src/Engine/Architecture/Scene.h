@@ -10,10 +10,12 @@
 #include "../Graphic/Lights/Light.h"
 #include "../Graphic/Color.h"
 #include "RenderData.h"
+#include "../Graphic/Skybox.h"
 
 typedef struct {
 	Camera* camera_scene;
 	Color BackGroundColor;
+	Skybox sky;
 	DirectionalLight sun;
 
 	Vector point_lights;
@@ -37,6 +39,10 @@ inline SpotLight* Scene_AddSpotLight(Scene* scn) {
 		return Vector_Push(SpotLight, &scn->spot_lights, 0);
 		scn->light_count++;
 	}
+}
+
+inline void Scene_SetSkybox(Scene* scn,Skybox sky) {
+	scn->sky = sky;
 }
 
 Shader Scene_LoadShader(Scene* scn, string vert, string frag);

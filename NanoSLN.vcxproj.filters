@@ -327,6 +327,12 @@
     <ClInclude Include="Src\Engine\Architecture\Monitor.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\CubeMap.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Engine\Graphic\Skybox.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c">
@@ -449,21 +455,25 @@
     <ClCompile Include="Src\Engine\Core\NanoCore.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\CubeMap.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Engine\Graphic\Skybox.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Program\glew32.dll" />
     <None Include="Program\glew32.dll" />
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="Assets\Shaders\color.frag" />
-    <None Include="Assets\Shaders\color.vert" />
     <None Include="Assets\Shaders\default.frag" />
     <None Include="Assets\Shaders\default.vert" />
     <None Include="README.md" />
-    <None Include="Assets\Shaders\simple.vert" />
-    <None Include="Assets\Shaders\simple.frag" />
     <None Include="Assets\ksr29\ksr29_mat.mtl" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="Assets\Shaders\skybox.vert" />
+    <None Include="Assets\Shaders\skybox.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Rat.png">

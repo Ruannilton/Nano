@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "RenderComponent.h"
+#include "CubeMap.h"
 #include "Lights/Light.h"
 #include "../Architecture/Scene.h"
 

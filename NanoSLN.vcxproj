@@ -174,6 +174,7 @@
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
     <ClInclude Include="Src\Engine\DataStructures\dynamic_vector.h" />
     <ClInclude Include="Src\Engine\DataStructures\hash_map.h" />
+    <ClInclude Include="Src\Engine\Graphic\CubeMap.h" />
     <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
+    <ClInclude Include="Src\Engine\Graphic\Skybox.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
@@ -224,11 +226,13 @@
     <ClCompile Include="Src\Engine\DataStructures\dynamic_vector.c" />
     <ClCompile Include="Src\Engine\DataStructures\hash_map.c" />
     <ClCompile Include="Src\Engine\Graphic\Camera.c" />
+    <ClCompile Include="Src\Engine\Graphic\CubeMap.c" />
     <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
     <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />
     <ClCompile Include="Src\Engine\Graphic\RenderComponent.h" />
     <ClCompile Include="Src\Engine\Graphic\Shader.c" />
+    <ClCompile Include="Src\Engine\Graphic\Skybox.c" />
     <ClCompile Include="Src\Engine\Graphic\Texture.c" />
     <ClCompile Include="Src\Engine\Main.cpp" />
     <ClCompile Include="Src\Engine\NanoEngine.c" />
@@ -238,12 +242,10 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="Assets\ksr29\ksr29_mat.mtl" />
-    <None Include="Assets\Shaders\color.frag" />
-    <None Include="Assets\Shaders\color.vert" />
     <None Include="Assets\Shaders\default.frag" />
     <None Include="Assets\Shaders\default.vert" />
-    <None Include="Assets\Shaders\simple.frag" />
-    <None Include="Assets\Shaders\simple.vert" />
+    <None Include="Assets\Shaders\skybox.frag" />
+    <None Include="Assets\Shaders\skybox.vert" />
     <None Include="ClassDiagram1.cd" />
     <None Include="Program\glew32.dll" />
     <Text Include="Inter\Shaders\default.frag">
