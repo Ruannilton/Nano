@@ -1,65 +1,48 @@
 #ifndef NANO_SHADER
-#define NANO_SHDAER
+#define NANO_SHADER
 
-#include "../GL.h"
+#include "GL.h"
 #include "../Utils.h"
 #include <string.h>
+#include "../Core/NanoIO.h"
 
-typedef struct 
-{
-	GLuint ID;
-	GLuint modelLoc;
-	GLuint viewLoc;
-	GLuint projectionLoc;
-} Shader;
+typedef GLuint Shader;
 
-unsigned int shader_CompileShader(string src, GLenum type) {
-	GLuint id = glCreateShader(type);
-	glShaderSource(id, 1, &src, NULL );
-	glCompileShader(id);
 
-	int res;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &res);
+unsigned int Shader_CompileShader(string src, GLenum type);
+Shader Shader_CreateShader(string vs, string fs);
 
-	if (!res) {
-		int len = 256;
-		char log[256];
-		glGetShaderInfoLog(id, len, &len, log);
-		printf("ERROR COMPILE %s SHADER:\n%s", (type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT", log);
-		glDeleteShader(id);
-		return 0;
-	}
-
-	return id;
+__inline void Shader_SetTexture(uint texID) {
+	glBindTexture(GL_TEXTURE_2D, texID);
 }
 
-Shader shader_CreateShader(string vs, string fs) {
-	
-	Shader s;
-	unsigned int prog = glCreateProgram();
-	unsigned int vsID = 0;
-	unsigned int fsID = 0;
-
-	vsID = shader_CompileShader(vs,GL_VERTEX_SHADER);
-	fsID = shader_CompileShader(fs,GL_FRAGMENT_SHADER);
-	
-	glAttachShader(prog, vsID);
-	glAttachShader(prog, fsID);
-	glLinkProgram(prog);
-	glValidateProgram(prog);
-
-	glDeleteShader(vsID);
-	glDeleteShader(fsID);
-
-	s.ID = prog;
-	glUseProgram(prog);
-	s.projectionLoc = glGetUniformLocation(prog, "projection");
-	s.modelLoc = glGetUniformLocation(prog, "model");
-	s.viewLoc = glGetUniformLocation(prog, "view");
-	glUseProgram(0);
-
-	return s;
+__inline void Shader_SetTextureUnit(uint texID, GLenum unit) {
+	glActiveTexture(unit);
+	glBindTexture(GL_TEXTURE_2D, texID);
 }
 
+__inline void Shader_SetInt(Shader shader, string local, int value) {
+	glUniform1i(glGetUniformLocation(shader, local), value);
+}
+
+__inline void Shader_SetFloat(Shader shader,string local, float value) {
+	glUniform1f(glGetUniformLocation(shader, local), value);
+}
+
+__inline void Shader_SetVec2(Shader shader, string local, float* value) {
+	glUniform2fv(glGetUniformLocation(shader, local), 1,value);
+}
+
+__inline void Shader_SetVec3(Shader shader, string local, float* value) {
+	glUniform3fv(glGetUniformLocation(shader, local), 1, value);
+}
+
+__inline void Shader_SetVec4(Shader shader, string local, float* value) {
+	glUniform4fv(glGetUniformLocation(shader, local), 1, value);
+}
 #endif // !NANO_SHADER
+
+
+
+
 

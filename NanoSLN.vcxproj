@@ -46,7 +46,7 @@
     <OutDir>.\Program$(Plataform)</OutDir>
     <IntDir>.\Inter$(Plataform)</IntDir>
     <IncludePath>$(ProjectDir)Src\Dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Src\Dependencies\bin\GLFW;$(ProjectDir)Src\Dependencies\bin\GLEW;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)Src\Dependencies\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>.\Program$(Plataform)</OutDir>
@@ -60,11 +60,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Src\Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;soil2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -76,12 +77,13 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;soil2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -146,43 +148,51 @@
     <ClInclude Include="Src\Dependencies\include\GLEW\GL\wglew.h" />
     <ClInclude Include="Src\Dependencies\include\GLFW\glfw3.h" />
     <ClInclude Include="Src\Dependencies\include\GLFW\glfw3native.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_connected_components.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_c_lexer.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_divide.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_dxt.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_easy_font.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_herringbone_wang_tile.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_image.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_image_resize.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_image_write.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_leakcheck.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_perlin.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_rect_pack.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_sprintf.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_textedit.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_tilemap_editor.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_truetype.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stb_voxel_render.h" />
-    <ClInclude Include="Src\Dependencies\include\STB\stretchy_buffer.h" />
-    <ClInclude Include="Src\Engine\Core\Keyboard.h" />
-    <ClInclude Include="Src\Engine\Core\Mouse.h" />
-    <ClInclude Include="Src\Engine\Core\NanoApp.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\etc1_utils.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\image_DXT.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\image_helper.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\jo_jpeg.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\pkm_helper.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\pvr_helper.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\SOIL2.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_DDS.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_DDS_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_ext.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_ext_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pkm.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pkm_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stbi_pvr_c.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image.h" />
+    <ClInclude Include="Src\Dependencies\include\SOIL2\stb_image_write.h" />
+    <ClInclude Include="Src\Engine\Architecture\InstanceList.h" />
+    <ClInclude Include="Src\Engine\Architecture\Monitor.h" />
+    <ClInclude Include="Src\Engine\Architecture\RenderData.h" />
+    <ClInclude Include="Src\Engine\Architecture\Scene.h" />
+    <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
     <ClInclude Include="Src\Engine\Core\NanoIO.h" />
-    <ClInclude Include="Src\Engine\GL.h" />
+    <ClInclude Include="Src\Engine\DataStructures\dynamic_vector.h" />
+    <ClInclude Include="Src\Engine\DataStructures\hash_map.h" />
+    <ClInclude Include="Src\Engine\Graphic\CubeMap.h" />
+    <ClInclude Include="Src\Engine\Graphic\GL.h" />
     <ClInclude Include="Src\Engine\Graphic\Camera.h" />
     <ClInclude Include="Src\Engine\Graphic\Color.h" />
-    <ClInclude Include="Src\Engine\Graphic\Rendering\Material.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\DirectionalLight.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\Light.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\PointLight.h" />
+    <ClInclude Include="Src\Engine\Graphic\Lights\SpotLight.h" />
+    <ClInclude Include="Src\Engine\Graphic\Material.h" />
     <ClInclude Include="Src\Engine\Graphic\Mesh.h" />
     <ClInclude Include="Src\Engine\Graphic\NanoRender.h" />
-    <ClInclude Include="Src\Engine\Graphic\RenderTree.h" />
     <ClInclude Include="Src\Engine\Graphic\Shader.h" />
+    <ClInclude Include="Src\Engine\Graphic\Skybox.h" />
     <ClInclude Include="Src\Engine\Graphic\Texture.h" />
     <ClInclude Include="Src\Engine\NanoEngine.h" />
     <ClInclude Include="Src\Engine\Storage\LinearMemory.h" />
-    <ClInclude Include="Src\Engine\Structures\RenderSystem.h" />
     <ClInclude Include="Src\Engine\Utils.h" />
+    <ClInclude Include="Src\Materials\ColorMaterial.h" />
+    <ClInclude Include="Src\Materials\TexturedMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c" />
@@ -203,42 +213,106 @@
     <ClCompile Include="Src\Dependencies\include\CGLM\src\sphere.c" />
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec3.c" />
     <ClCompile Include="Src\Dependencies\include\CGLM\src\vec4.c" />
-    <ClCompile Include="Src\Dependencies\include\STB\stb_vorbis.c" />
-    <ClCompile Include="Src\Engine\Components\RenderComponent.h" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\etc1_utils.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\image_DXT.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\image_helper.c" />
+    <ClCompile Include="Src\Dependencies\include\SOIL2\SOIL2.c" />
+    <ClCompile Include="Src\Engine\Architecture\InstanceList.c" />
+    <ClCompile Include="Src\Engine\Architecture\RenderData.c" />
+    <ClCompile Include="Src\Engine\Architecture\Scene.c" />
+    <ClCompile Include="Src\Engine\Core\NanoCore.c" />
+    <ClCompile Include="Src\Engine\Core\NanoInput.c" />
+    <ClCompile Include="Src\Engine\Core\NanoIO.c" />
+    <ClCompile Include="Src\Engine\DataStructures\dynamic_vector.c" />
+    <ClCompile Include="Src\Engine\DataStructures\hash_map.c" />
+    <ClCompile Include="Src\Engine\Graphic\Camera.c" />
+    <ClCompile Include="Src\Engine\Graphic\CubeMap.c" />
+    <ClCompile Include="Src\Engine\Graphic\Mesh.c" />
+    <ClCompile Include="Src\Engine\Graphic\NanoRender.c" />
+    <ClCompile Include="Src\Engine\Graphic\RenderComponent.c" />
+    <ClCompile Include="Src\Engine\Graphic\RenderComponent.h" />
+    <ClCompile Include="Src\Engine\Graphic\Shader.c" />
+    <ClCompile Include="Src\Engine\Graphic\Skybox.c" />
+    <ClCompile Include="Src\Engine\Graphic\Texture.c" />
     <ClCompile Include="Src\Engine\Main.cpp" />
+    <ClCompile Include="Src\Engine\NanoEngine.c" />
+    <ClCompile Include="Src\Materials\TextureMaterial.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Assets\ksr29\ksr29_mat.mtl" />
+    <None Include="Assets\Shaders\default.frag" />
+    <None Include="Assets\Shaders\default.vert" />
+    <None Include="Assets\Shaders\skybox.frag" />
+    <None Include="Assets\Shaders\skybox.vert" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Program\glew32.dll" />
-    <None Include="Assets\Shaders\default.fs" />
-    <None Include="Assets\Shaders\default.vs" />
+    <Text Include="Inter\Shaders\default.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </Text>
+    <Text Include="Inter\Shaders\default.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </Text>
+    <None Include="README.md" />
     <None Include="Src\Program\glew32.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\Cerberus_A.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
+    <Image Include="Assets\Images\A_dva.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\Images\example2.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="Assets\Images\railgun_color.jpg" />
+    <Image Include="Assets\Images\railgun_spec.jpg" />
     <Image Include="Assets\Images\Rat.png">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
+    <Image Include="Assets\Images\specular_wood_box.png" />
+    <Image Include="Assets\Images\white.png" />
+    <Image Include="Assets\Images\wood_box.png" />
+    <Image Include="Assets\ksr29\ambient_ocl.jpg" />
+    <Image Include="Assets\ksr29\base_color.jpg" />
+    <Image Include="Assets\ksr29\color.jpg" />
+    <Image Include="Assets\ksr29\normal.jpg" />
+    <Image Include="Assets\ksr29\normal2.jpg" />
+    <Image Include="Assets\ksr29\roughness.jpg" />
+    <Image Include="Assets\ksr29\spec.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\models\Irex_obj.obj">
+    <Object Include="Assets\models\Irex_obj.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Text>
+    </Object>
   </ItemGroup>
   <ItemGroup>
+    <Object Include="Assets\ksr29\ksr29.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="Assets\models\cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Object>
     <Object Include="Assets\models\Cerberus.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Assets\models\dva.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Assets\models\railgun.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Object>

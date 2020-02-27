@@ -1,48 +1,50 @@
 #ifndef NANO_CAMERA
 #define NANO_CAMERA
 
-#include "../GL.h"
+#include "../Utils.h"
+#include "../Core/NanoCore.h"
 #include <string.h>
 
-typedef struct {
-	vec3 position,rotation,front, up;
+typedef struct
+{
+	Vec3 position, front, up, rotation;
+
+	float max_y_angle;
+	float min_y_angle;
+	float max_fov;
+	float min_fov;
+	float fov;
+	float aspectRatio;
+	float zNear;
+	float zFar;
+
 	mat4 projection;
-}Camera;
+	mat4 view;
+	uint projection_changed;
+} Camera;
 
-void camera_CreateCamera(Camera* cam, vec3 position) {	
-	cam->position[0] = position[0];
-	cam->position[1] = position[1];
-	cam->position[2] = position[2];
-	cam->rotation[0] = 80;
-	cam->rotation[1] = 15;
-	cam->rotation[2] = 0;
-	cam->up[0] = 0;
-	cam->up[1] = 1;
-	cam->up[2] = 0;
-	cam->front[0] = 0;
-	cam->front[1] = 0;
-	cam->front[2] = -1;
+__inline void Camera_SetCameraPerspective(float fov, float aspectRatio, float zNear, float zFar, Camera *cam)
+{
+	cam->fov = fov;
+	cam->aspectRatio = aspectRatio;
+	cam->zNear = zNear;
+	cam->zFar = zFar;
+	cam->projection_changed = 1;
+	glm_perspective(glm_rad(fov), aspectRatio, zNear, zFar, cam->projection);
 }
 
-__inline void camera_SetCameraPerspective(float fov, float aspectRation,float zNear, float zFar,Camera* cam) {
-	glm_perspective(fov, aspectRation, zNear, zFar, cam->projection);
-}
-
-__inline void camera_SetCameraOrtho(float x0, float y0, float x1, float y1, float zNear, float zFar, Camera* cam) {
+__inline void Camera_SetCameraOrtho(float x0, float y0, float x1, float y1, float zNear, float zFar, Camera *cam)
+{
 	glm_ortho(x0, y0, x1, y1, zNear, zFar, cam->projection);
+	cam->projection_changed = 1;
 }
 
-void camera_ViewProjection(Camera* cam,mat4* view) {
-	 static vec3 pos;
+void Camera_SeekMouse(Camera *cam);
+void Camera_Zoom(Camera *cam, double delta);
+void Camera_UpdateView(Camera *cam);
+void Camera_CreateCamera(Camera *cam, Vec3 position);
+void Camera_SetPosition(Camera *cam, Vec3 position);
+void Camera_Translate(Camera *cam, Vec3 direction);
+void Camera_Rotate(Camera *cam, Vec3 direction);
 
-	 cam->front[0] = (float)(cos(glm_rad(cam->rotation[0])) * cos(glm_rad(cam->rotation[1])));
-	 cam->front[1] = (float)(sin(glm_rad(cam->rotation[0])));
-	 cam->front[2] = (float)(cos(glm_rad(cam->rotation[0])) * sin(glm_rad(cam->rotation[1])));
-	 glm_normalize(cam->front);
-	 
-	 
-
-	 glm_look(cam->position, cam->front, cam->up, *view);
-	
-}
-#endif // !NANO_CAMERA
+#endif

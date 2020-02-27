@@ -85,6 +85,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.tlog
+*.idb
 
 # Chutzpah Test files
 _Chutzpah*
@@ -332,3 +334,17 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+*.tlog
+*.tlog
+*.idb
+Inter/NanoSLN.tlog/CL.read.1.tlog
+Inter/NanoSLN.tlog/CL.write.1.tlog
+Inter/NanoSLN.tlog/NanoSLN.write.1u.tlog
+Inter/vc142.idb
+Inter/NanoSLN.tlog/NanoSLN.write.1u.tlog
+Inter/NanoSLN.tlog/link.write.1.tlog
+Inter/NanoSLN.tlog/link.read.1.tlog
+Inter/NanoSLN.tlog/CL.write.1.tlog
+Inter/NanoSLN.tlog/CL.command.1.tlog
+Inter/vc142.idb
+Program/NanoSLN.exe
