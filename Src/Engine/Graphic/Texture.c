@@ -3,11 +3,11 @@
 #include "../Utils.h"
 
 
-Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter) {
+Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter,GLenum flags) {
 	Texture* tex = (Texture*)malloc(sizeof(Texture));
 	VERIFY(tex, NULL);
 
-	tex->id = SOIL_load_OGL_texture(path, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS);
+	tex->id = SOIL_load_OGL_texture(path, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, flags);
 	
 	if (tex->id == 0)
 	{
@@ -30,5 +30,9 @@ Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter
 }
 
 Texture* Texture_LoadTextureDefault(const char* path) {
-	return Texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER);
+	return Texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER, SOIL_FLAG_SRGB_COLOR_SPACE | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS);
+}
+
+Texture* Texture_LoadTextureDefaultFlags(const char* path, GLenum flags) {
+	return Texture_LoadTexture(path, DEFAULT_WRAP, DEFAULT_MIN_FILTER, DEFAULT_MAG_FILTER, flags | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS);
 }

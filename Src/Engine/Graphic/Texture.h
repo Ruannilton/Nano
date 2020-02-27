@@ -20,7 +20,8 @@ typedef struct {
 	int channels;
 }Texture;
 
-Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter);
+Texture* Texture_LoadTexture(const char* path, GLenum wrapMode, GLenum minFilter, GLenum magFilter, GLenum flags);
 Texture* Texture_LoadTextureDefault(const char* path);
+Texture* Texture_LoadTextureDefaultFlags(const char* path, GLenum flags);
 
 #endif // !NANO_TEXTURE

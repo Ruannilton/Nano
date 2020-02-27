@@ -58,10 +58,10 @@ vec4 CalculateLighting(vec3 texDiffuse, vec3 texSpec, vec3 norm, vec3 viewDir){
 	for(int i=0;i<point_light_count;i++){
 
 		vec3 lightDir = normalize(lights[i].Position - FragPos);
-		vec3 reflectDir = reflect(-lightDir, norm);  
-
+		  
+		vec3 halfwayDir = normalize(lightDir + viewDir);
 		float diff = max(dot(norm,lightDir),0.0);
-		float spec = pow(max(0,dot(viewDir, reflectDir)), material.Shininess);
+		float spec = pow(max(0,dot(viewDir, halfwayDir)), material.Shininess);
 		float dist = distance(lights[i].Position,FragPos);
 		float attenuation = 1.0/(lights[i].Attenuation.x + (lights[i].Attenuation.y * dist) + (lights[i].Attenuation.z * dist * dist));
 	
@@ -119,8 +119,8 @@ void main()
         
 		vec4 light = CalculateLighting(texDiffuse,texSpec,norm,viewDir);
 		
-		
-			FragColor = light  * ourColor;
-		
+		float gamma = 2.2;
+		FragColor = light  * ourColor;
+		FragColor.rgb = pow(FragColor.rgb,vec3(1.0/gamma));
 		
 }

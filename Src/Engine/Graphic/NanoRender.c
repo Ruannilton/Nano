@@ -125,10 +125,10 @@ void Renderer_RenderScene() {
 	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, matrix_buffer, 0, 2 * sizeof(mat4));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	
-	Skybox_Use(&current_scene->sky);
 	
 	Renderer_SetupLighting();
 
+	Skybox_Use(&current_scene->sky);
 
 	Dic_Iterator rd_iter = Dic_Iterator_Get(&(current_scene->render_data));
 	Dic_Iterator dic_iter;

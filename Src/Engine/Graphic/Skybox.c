@@ -67,6 +67,7 @@ Skybox* Skybox_Create(Shader shader, CubeMap texture) {
 }
 
 void Skybox_Use(Skybox* sky) {
+   // glDepthFunc(GL_EQUAL);
     glDepthMask(GL_FALSE);
     glUseProgram(sky->shader);
     glBindVertexArray(skybox_vao);
@@ -75,4 +76,5 @@ void Skybox_Use(Skybox* sky) {
     glBindTexture(GL_TEXTURE_CUBE_MAP, sky->texture.id);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glDepthMask(GL_TRUE);
+ //   glDepthFunc(GL_LESS);
 }
