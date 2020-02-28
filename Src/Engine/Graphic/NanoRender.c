@@ -19,12 +19,7 @@ void Renderer_Init() {
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	
-	glGenBuffers(1, &model_buffer);
-	/*glGenBuffers(1, &models_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, MODEL_SIZE, NULL, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);*/
+
 }
 
 void Renderer_SetupProjection() {
