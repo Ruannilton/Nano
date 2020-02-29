@@ -356,3 +356,6 @@ Program/NanoSLN.exe
 Inter/NanoSLN.tlog/CL.command.1.tlog
 Inter/NanoSLN.tlog/CL.write.1.tlog
 *.tlog
+*.tlog
+Program/NanoSLN.exe
+*.exe
