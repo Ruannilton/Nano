@@ -476,33 +476,6 @@
     <None Include="Assets\Shaders\skybox.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Images\Rat.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\Cerberus_A.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\example2.jpg">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\A_dva.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\railgun_color.jpg">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\railgun_spec.jpg">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\wood_box.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\specular_wood_box.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="Assets\Images\white.png">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
     <Image Include="Assets\ksr29\ambient_ocl.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
@@ -524,6 +497,12 @@
     <Image Include="Assets\ksr29\spec.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="Assets\ksr29\railgun_color.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Assets\ksr29\railgun_spec.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Object Include="Assets\models\Cerberus.obj" />
@@ -535,6 +514,5 @@
     <Object Include="Assets\ksr29\ksr29.obj" />
     <Object Include="Assets\models\dva.obj" />
     <Object Include="Assets\models\railgun.obj" />
-    <Object Include="Assets\models\Irex_obj.obj" />
   </ItemGroup>
 </Project>
