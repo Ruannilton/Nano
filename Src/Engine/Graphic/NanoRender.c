@@ -116,7 +116,10 @@ void SetModels(uint count, mat4* models) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Renderer_RenderScene() {
+void Renderer_RenderShadows() {
+
+}
+void Renderer_RenderObjects() {
 	Camera_UpdateView(current_camera);
 
 	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
@@ -124,9 +127,6 @@ void Renderer_RenderScene() {
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4), sizeof(mat4), current_camera->view);
 	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, matrix_buffer, 0, 2 * sizeof(mat4));
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	
-	
-	Renderer_SetupLighting();
 
 	Skybox_Use(&current_scene->sky);
 
@@ -134,16 +134,13 @@ void Renderer_RenderScene() {
 	Dic_Iterator dic_iter;
 	Vec_Iterator vec_iter;
 
-	
-	
-
 	while (Dic_Iterator_Next(&rd_iter)) {
 
 		RenderData* rd = rd_iter.data;
-		
+
 		glUseProgram(rd_iter.key);
 
-		dic_iter  = Dic_Iterator_Get(&(rd->renderer_lists));
+		dic_iter = Dic_Iterator_Get(&(rd->renderer_lists));
 		while (Dic_Iterator_Next(&dic_iter)) {
 			InstanceList* il = dic_iter.data;
 			vec_iter = Vec_Iterator_Get(&(il->instances));
@@ -151,11 +148,11 @@ void Renderer_RenderScene() {
 
 			while (Vec_Iterator_Next(&vec_iter)) {
 
-			RenderComponent* rc = vec_iter.data;
-			rc->mat.fnc(rc->mat.shader_id, rc->mat.data);
+				RenderComponent* rc = vec_iter.data;
+				rc->mat.fnc(rc->mat.shader_id, rc->mat.data);
 
-			SetModels(1, rc->transform);
-			glDrawElementsInstanced(GL_TRIANGLES, il->index_count, GL_UNSIGNED_INT, 0,1);
+				SetModels(1, rc->transform);
+				glDrawElementsInstanced(GL_TRIANGLES, il->index_count, GL_UNSIGNED_INT, 0, 1);
 			}
 		}
 
@@ -163,17 +160,22 @@ void Renderer_RenderScene() {
 		while (Dic_Iterator_Next(&dic_iter)) {
 			MultipleInstanceList* mil = dic_iter.data;
 			vec_iter = Vec_Iterator_Get(&(mil->instances));
-			
+
 			glBindVertexArray(mil->mesh_id);
 			mil->material.fnc(mil->material.shader_id, mil->material.data);
 
 			SetModels(mil->instances.count, mil->instances.buffer);
-		
+
 			glDrawElementsInstanced(GL_TRIANGLES, mil->index_count, GL_UNSIGNED_INT, 0, mil->instances.count);
 		}
 	}
-	
 
-	glBindVertexArray(0);
+}
+
+void Renderer_RenderScene() {
+	
+	Renderer_SetupLighting();
+	Renderer_RenderShadows();
+	Renderer_RenderObjects();
 }
 

@@ -21,7 +21,7 @@ void Start() {
 	Renderer_SetScene(myScene);
 
 	DirectionalLight* sun = Renderer_GetSun();
-	sun->Direction = { 1,0.5,0.2f };
+	sun->Direction = { 0,-0.5,0.2f };
 	sun->Ambient = { 0,0,0 };
 
 	//PointLight* pl = Renderer_AddPointLight(myScene, { 3,2,-3 });
