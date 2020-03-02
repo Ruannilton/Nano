@@ -11,7 +11,7 @@ Dictionary internal_hash_map_create(uint size, uint data_size , hash_fnc hash_f)
 {
     size++; 
     if (!hash_f) hash_f = default_hash;
-    Dictionary h = {data_size, 0, size, (uint *)malloc(sizeof(uint) * size), malloc(data_size * size), hash_f };
+    Dictionary h = {data_size, 0, size, (uint *)malloc(sizeof(uint) * (size_t)size), malloc((size_t)data_size * (size_t)size), hash_f };
     int i = 0;
     for (; i < size; i++)
         h.key_arr[i] = 0;
@@ -43,7 +43,7 @@ void *internal_hash_map_add(Dictionary *hm, void *key)
     return Dictionary_GetIndex(hm, k);
 }
 
-void *Dictionary_GetIndex(Dictionary *hm, uint i)
+void *Dictionary_GetIndex(Dictionary *hm, size_t i)
 {
     return (void *)((size_t)hm->data_arr + (i * hm->data_size));
 }

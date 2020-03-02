@@ -23,7 +23,7 @@ Material_CreateBindFnc(ColorMaterial) {
 	Shader_SetVec3(shader, "material.Specular", specular);
 	Shader_SetFloat(shader, "material.Shininess", 0.3f * 128);
 
-	Shader_SetVec3(shader, "CameraPos", current_camera.position);
+	Shader_SetVec3(shader, "CameraPos", current_scene->camera_scene->position.arr);
 	Shader_SetVec4(shader, "color", ((ColorMaterial*)data)->color.arr);
 
 	

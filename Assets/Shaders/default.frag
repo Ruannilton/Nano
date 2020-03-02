@@ -42,19 +42,22 @@ in vec2 TexCoord;
 in vec4 ourColor;
 in vec3 FragPos;
 in vec3 Normal;
+in vec4 FragLightPos;
 
 uniform vec3 CameraPos;
 uniform Material material;
-
+uniform sampler2D ShadowMap;
 out vec4 FragColor;
 
-
+float ShadowCalculation(vec4 fragPosLightSpace);
 vec4 CalculateLighting(vec3 texDiffuse, vec3 texSpec, vec3 norm, vec3 viewDir){
 
    int point_light_count = int(light_count.x);
    int spot_light_count = int(light_count.y);
    vec3 res = vec3(0);
-
+   
+   float shadow =  ShadowCalculation(FragLightPos);
+ 
 	for(int i=0;i<point_light_count;i++){
 
 		vec3 lightDir = normalize(lights[i].Position - FragPos);
@@ -103,12 +106,20 @@ vec4 CalculateLighting(vec3 texDiffuse, vec3 texSpec, vec3 norm, vec3 viewDir){
 		vec3 ambient  = directional_light.Ambient  * texDiffuse;
 		vec3 diffuse  = directional_light.Diffuse  * diff * texDiffuse;
 		vec3 specular = directional_light.Specular * spec * texSpec;
-
-		res += directional_light.Color*(ambient + diffuse + specular);
-
+		if(shadow == 1) return vec4(directional_light.Color*ambient*0.1,1);
+		res += directional_light.Color*(ambient + (diffuse + specular)*(1-shadow));
+		
 		return vec4(res,1.0);
 }
 
+float ShadowCalculation(vec4 fragPosLightSpace){
+   vec3 projCoords = (fragPosLightSpace.xyz / fragPosLightSpace.w)* 0.5 + 0.5;
+   float bias = 0.005;
+   float closestDepth = texture(ShadowMap, projCoords.xy).r; 
+   float currentDepth = projCoords.z;
+   float shadow = currentDepth-bias < closestDepth  ? 0.0 : 1.0;
+   return shadow;
+}
 
 void main()
 {
@@ -116,7 +127,8 @@ void main()
 		vec3 texSpec = vec3(texture(material.specular, TexCoord));
 		vec3 norm = normalize(Normal);
 		vec3 viewDir = normalize(CameraPos - FragPos);
-        
+    
+
 		vec4 light = CalculateLighting(texDiffuse,texSpec,norm,viewDir);
 		
 		float gamma = 2.2;

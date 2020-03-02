@@ -168,6 +168,7 @@
     <ClInclude Include="Src\Engine\Architecture\InstanceList.h" />
     <ClInclude Include="Src\Engine\Architecture\Monitor.h" />
     <ClInclude Include="Src\Engine\Architecture\RenderData.h" />
+    <ClInclude Include="Src\Engine\Architecture\RenderSettings.h" />
     <ClInclude Include="Src\Engine\Architecture\Scene.h" />
     <ClInclude Include="Src\Engine\Core\NanoCore.h" />
     <ClInclude Include="Src\Engine\Core\NanoInput.h" />
@@ -244,6 +245,8 @@
     <None Include="Assets\ksr29\ksr29_mat.mtl" />
     <None Include="Assets\Shaders\default.frag" />
     <None Include="Assets\Shaders\default.vert" />
+    <None Include="Assets\Shaders\defaultShadow.frag" />
+    <None Include="Assets\Shaders\defaultShadow.vert" />
     <None Include="Assets\Shaders\skybox.frag" />
     <None Include="Assets\Shaders\skybox.vert" />
     <None Include="ClassDiagram1.cd" />

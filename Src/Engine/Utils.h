@@ -84,6 +84,20 @@ typedef union {
 	};
 }Vec2;
 
+typedef union {
+	int arr[2];
+	struct {
+		int x, y;
+	};
+}iVec2;
+
+typedef union {
+	uint arr[2];
+	struct {
+		uint x, y;
+	};
+}uiVec2;
+
 #define SetVec2(VAR,X,Y)   VAR.x = X; \
 						   VAR.y = Y; 
 						  
@@ -115,4 +129,5 @@ UNIQUE float Y_Axis[3] = { 0,1,0 };
 UNIQUE float Z_Axis[3] = { 0,0,1 };
 
 UNIQUE mat4 identity = GLM_MAT4_IDENTITY_INIT;
+
 #endif

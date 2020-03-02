@@ -1,43 +1,71 @@
 #include "NanoRender.h"
 
-#define MAT_SIZE (2 * sizeof(mat4))
+#define MAT_SIZE (3 * sizeof(mat4))
 #define LIGHT_SIZE (sizeof(vec4) + 5*(sizeof(vec4)) + 256*128)
 #define MODEL_SIZE (1024*sizeof(mat4))
 
-void Renderer_Init() {
+inline void Renderer_Shadow_Init() {
+	glGenTextures(1, &render_env.depth_texture);
+	glBindTexture(GL_TEXTURE_2D, render_env.depth_texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, render_env.depth_texture_res.x, render_env.depth_texture_res.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float border[4] = { 1.0f,1.0f,1.0f,1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
 
-	glGenBuffers(1, &matrix_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, MAT_SIZE, 0, GL_DYNAMIC_DRAW);
-	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, matrix_buffer, 0, MAT_SIZE);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	glGenFramebuffers(1, &render_env.depth_fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, render_env.depth_fbo);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, render_env.depth_texture, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
 
-	glGenBuffers(1, &lights_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, lights_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, LIGHT_SIZE, NULL, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_LIGHT_LOC, lights_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		DEBUG_C(ANSI_RED, "Framebuffer is not ready");
+	}
 
-	
-	glGenBuffers(1, &model_buffer);
-	/*glGenBuffers(1, &models_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, models_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, MODEL_SIZE, NULL, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MODEL_LOC, models_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);*/
+	render_env.shadowShader = Shader_CreateShader("Assets/Shaders/defaultShadow.vert", "Assets/Shaders/defaultShadow.frag");
+	glm_ortho(-10, 10, -10, 10, render_env.directional_light_shadow_cast_near, render_env.directional_light_shadow_cast_far, render_env.directional_light_proj);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Renderer_SetupProjection() {
+void Renderer_Init() {
+
+	glGenBuffers(1, &render_env.matrix_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, render_env.matrix_buffer);
+	glBufferData(GL_UNIFORM_BUFFER, MAT_SIZE, 0, GL_DYNAMIC_DRAW);
+	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, render_env.matrix_buffer, 0, MAT_SIZE);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	glGenBuffers(1, &render_env.lights_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, render_env.lights_buffer);
+	glBufferData(GL_UNIFORM_BUFFER, LIGHT_SIZE, NULL, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, SHADER_UNIFORM_LIGHT_LOC, render_env.lights_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	glGenBuffers(1, &render_env.model_buffer); //init after
+
+	Renderer_Shadow_Init();
+	
+}
+
+void Renderer_SetupMatrices() {
 	if (current_camera != NULL) {
-		glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
+		glBindBuffer(GL_UNIFORM_BUFFER, render_env.matrix_buffer);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), current_camera->projection);
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4), sizeof(mat4), current_camera->view);
+		glBufferSubData(GL_UNIFORM_BUFFER, 2*sizeof(mat4), sizeof(mat4), render_env.light_matrix);
+		glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, render_env.matrix_buffer, 0, 3 * sizeof(mat4));
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 }
 
 void Renderer_SetupLighting() {
 	
-	glBindBuffer(GL_UNIFORM_BUFFER, lights_buffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, render_env.lights_buffer);
 	float counts[2] = {current_scene->point_lights.count,current_scene->spot_lights.count};
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(vec2), counts);                            
 	glBufferSubData(GL_UNIFORM_BUFFER, 16, sizeof(vec3), current_scene->sun.Ambient.arr);   
@@ -90,15 +118,14 @@ void Renderer_SetupLighting() {
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-
 void Renderer_SetScene(Scene* scn) {
 	current_scene = scn;
 	current_camera = scn->camera_scene;
-	Renderer_SetupProjection();
+	Renderer_SetupMatrices();
 }
 
 void SetModels(uint count, mat4* models) {
-	glBindBuffer(GL_ARRAY_BUFFER, model_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, render_env.model_buffer);
 	glBufferData(GL_ARRAY_BUFFER, count*sizeof(mat4), models, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(4);
 	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)0);
@@ -117,17 +144,56 @@ void SetModels(uint count, mat4* models) {
 }
 
 void Renderer_RenderShadows() {
+	
+	glViewport(0, 0, render_env.depth_texture_res.x, render_env.depth_texture_res.y);
+	glBindFramebuffer(GL_FRAMEBUFFER, render_env.depth_fbo);
+	glUseProgram(render_env.shadowShader);
+	glUniformMatrix4fv(10, 1, GL_FALSE, &render_env.light_matrix);
+	glClear(GL_DEPTH_BUFFER_BIT);
 
+	glm_lookat(current_scene->sun.Position.arr, current_scene->sun.Direction.arr, Y_Axis,render_env.directional_ligh_view);
+	glm_mat4_mul(render_env.directional_light_proj, render_env.directional_ligh_view, render_env.light_matrix);
+
+	Dic_Iterator rd_iter = Dic_Iterator_Get(&(current_scene->render_data));
+	Dic_Iterator dic_iter;
+	Vec_Iterator vec_iter;
+
+	while (Dic_Iterator_Next(&rd_iter)) {
+
+		RenderData* rd = rd_iter.data;
+		dic_iter = Dic_Iterator_Get(&(rd->renderer_lists));
+		while (Dic_Iterator_Next(&dic_iter)) {
+			
+			InstanceList* il = dic_iter.data;
+			vec_iter = Vec_Iterator_Get(&(il->instances));
+			glBindVertexArray(il->mesh_id);
+
+			while (Vec_Iterator_Next(&vec_iter)) {
+				RenderComponent* rc = vec_iter.data;
+				SetModels(1, rc->transform);
+				glDrawElementsInstanced(GL_TRIANGLES, il->index_count, GL_UNSIGNED_INT, 0, 1);
+			}
+		}
+
+		dic_iter = Dic_Iterator_Get(&(rd->multiple_renderer_lists));
+		while (Dic_Iterator_Next(&dic_iter)) {
+			MultipleInstanceList* mil = dic_iter.data;
+			vec_iter = Vec_Iterator_Get(&(mil->instances));
+
+			glBindVertexArray(mil->mesh_id);
+			SetModels(mil->instances.count, mil->instances.buffer);
+			glDrawElementsInstanced(GL_TRIANGLES, mil->index_count, GL_UNSIGNED_INT, 0, mil->instances.count);
+		}
+	}
+
+	glViewport(0, 0, nano->window_widht, nano->window_height);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_DEPTH_BUFFER_BIT);
 }
+
 void Renderer_RenderObjects() {
 	Camera_UpdateView(current_camera);
-
-	glBindBuffer(GL_UNIFORM_BUFFER, matrix_buffer);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4), current_camera->projection);
-	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4), sizeof(mat4), current_camera->view);
-	glBindBufferRange(GL_UNIFORM_BUFFER, SHADER_UNIFORM_MATRIX_LOC, matrix_buffer, 0, 2 * sizeof(mat4));
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
+	Renderer_SetupMatrices();
 	Skybox_Use(&current_scene->sky);
 
 	Dic_Iterator rd_iter = Dic_Iterator_Get(&(current_scene->render_data));
@@ -139,6 +205,10 @@ void Renderer_RenderObjects() {
 		RenderData* rd = rd_iter.data;
 
 		glUseProgram(rd_iter.key);
+		Shader_SetInt(rd_iter.key, "ShadowMap", 16);
+		Shader_SetTextureUnit(render_env.depth_texture, GL_TEXTURE16);
+	
+
 
 		dic_iter = Dic_Iterator_Get(&(rd->renderer_lists));
 		while (Dic_Iterator_Next(&dic_iter)) {

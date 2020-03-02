@@ -4,6 +4,7 @@ layout(std140, binding = 0) uniform Matrices
 {
 	mat4 projection;
 	mat4 view;
+	mat4 lightMatrix;
 };
 
 layout (location = 0) in vec3 aPos;
@@ -16,6 +17,7 @@ out vec4 ourColor;
 out vec2 TexCoord;
 out vec3 FragPos;
 out vec3 Normal;
+out vec4 FragLightPos;
 
 void main()
 {
@@ -24,4 +26,5 @@ void main()
 	ourColor = aColor;
 	FragPos = vec3(aInstancedModel*vec4(aPos, 1.0));
 	Normal = mat3(transpose(inverse(aInstancedModel))) * aNormal;
+	FragLightPos = lightMatrix*vec4(FragPos,1.0);
 }

@@ -14,9 +14,9 @@ Scene* Scene_Create(uint shader_count) {
 	Scene* scn = NEW(Scene);
 	VERIFY(scn, NULL);
 	
-	scn->camera_scene = NEW(Camera);
+	scn->camera_scene= NEW(Camera);
 	scn->render_data = Dictionary_Create(RenderData, shader_count, hash_f);
-	scn->point_lights = Vector_Create(PointLight, Default_Scene_PointLight_Prealoc_count);
+	scn->point_lights= Vector_Create(PointLight, Default_Scene_PointLight_Prealoc_count);
 	scn->spot_lights = Vector_Create(SpotLight, Default_Scene_SpotLight_Prealoc_count);
 	scn->light_count = 0;
 
@@ -40,6 +40,10 @@ Scene* Scene_Create(uint shader_count) {
 	scn->sun.Direction.y = -0.5f;
 	scn->sun.Direction.z = 1;
 
+	scn->sun.Position.x = 0;
+	scn->sun.Position.y = 20;
+	scn->sun.Position.z = 0;
+
 	Camera_CreateCamera(scn->camera_scene, (Vec3){ 0,0,0 });
 	Color_SetColor(0, 1, 1, 1, scn->BackGroundColor);
 	return scn;
@@ -56,7 +60,7 @@ void Scene_AddShader(Scene* scn, Shader shader,uint mesh_count) {
 
 Shader Scene_LoadShader(Scene* scn, string vert, string frag) {
 	Shader s = Shader_CreateShader("Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
-	Scene_AddShader(scn, s, 4);
+	Scene_AddShader(scn, s, 16);
 	return s;
 }
 
@@ -88,7 +92,7 @@ RenderComponent* Scene_AddRenderComponent(Scene* scene, Material* mat, uint mesh
 SharedRenderComponent Scene_AddSharedRenderComponent(Scene* scene, Material* mat, uint mesh_id, uint index_c, uint count) {
 	
 	RenderData* rd = Dictionary_Get(RenderData, &(scene->render_data), (void*)mat->shader_id);
-	SharedRenderComponent rc;
+	SharedRenderComponent rc = {0,0};
 
 	if (rd) {
 		MultipleInstanceList* mil = Dictionary_Get(MultipleInstanceList, &rd->multiple_renderer_lists, mesh_id);
@@ -118,8 +122,14 @@ void Scene_ShowRenderInfo(Scene* scn) {
 	
 	uint i = 0;
 	DEBUG_C(ANSI_LIGHT_BLUE, "RenderInfo:");
-	for (i = 0; i < scn->render_data.size; i++) {
-		RenderData* render_data = Dictionary_Get(RenderData, &scn->render_data, (void*)i);
+	
+		Dic_Iterator rd_iter = Dic_Iterator_Get(&scn->render_data);
+		while (Dic_Iterator_Next(&rd_iter))
+		{
+			RenderData* data = rd_iter.data;
+			DEBUG_C(ANSI_LIGHT_BLUE, "\tRenderData[%d]:", rd_iter.key);
+		}
+		/*RenderData* render_data = Dictionary_Get(RenderData, &scn->render_data, (void*)i);
 		if (render_data) {
 			DEBUG_C(ANSI_LIGHT_BLUE, "\tRenderData[%d]:",i);
 			if (render_data->renderer_lists.size!=0) {
@@ -144,9 +154,8 @@ void Scene_ShowRenderInfo(Scene* scn) {
 					}
 				}
 			}
-			DEBUG_C(ANSI_LIGHT_BLUE, "\t\tInstancePoolList[%d/%d]:",0,0);
+			DEBUG_C(ANSI_LIGHT_BLUE, "\t\tInstancePoolList[%d/%d]:",0,0);*/
 			
-		}
-	}
+		//}
 	
 }

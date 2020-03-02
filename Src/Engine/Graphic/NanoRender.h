@@ -11,6 +11,7 @@
 #include "CubeMap.h"
 #include "Lights/Light.h"
 #include "../Architecture/Scene.h"
+#include "../Architecture/RenderSettings.h"
 
 #define SHADER_POS_LOC 0
 #define SHADER_COLOR_LOC 1
@@ -26,11 +27,7 @@
 
 UNIQUE Scene* current_scene;
 UNIQUE Camera* current_camera;
-
-UNIQUE uint matrix_buffer = 0;
-UNIQUE uint lights_buffer = 0;
-UNIQUE uint models_buffer = 0;
-UNIQUE uint model_buffer  = 0;
+UNIQUE RenderEnv render_env = DEFAULT_RENDER_ENV;
 
 inline PointLight* Renderer_AddPointLight(Scene* scn,Vec3 pos) {
 	PointLight* pl = 0;
@@ -56,7 +53,7 @@ if (pl) {
 
 	pl->Constant = 1;
 	pl->Linear = 0.07f;
-	pl->Quadratic = 0.017;
+	pl->Quadratic = 0.017f;
 	}
 	return pl;
 }
@@ -79,15 +76,16 @@ inline SharedRenderComponent Renderer_AddSharedRenderComponent(Mesh* mesh, Mater
 	 return Scene_AddSharedRenderComponent(current_scene, mat, mesh->mesh_id, mesh->index_count, count);
 }
 
+inline void Renderer_SetDepthtextureResolution(uint widht, uint height) {
+	render_env.depth_texture_res.x = widht;
+	render_env.depth_texture_res.y = height;
+}
+
 void Renderer_Init();
 
 void Renderer_SetScene(Scene* scn);
 
 void Renderer_RenderScene();
-
-void Renderer_SetupProjection();
-
-void Renderer_SetupLighting();
 
 #endif // !NANO_RENDER
 

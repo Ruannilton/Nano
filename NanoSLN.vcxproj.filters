@@ -333,6 +333,9 @@
     <ClInclude Include="Src\Engine\Graphic\Skybox.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Engine\Architecture\RenderSettings.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Dependencies\include\CGLM\src\affine.c">
@@ -474,6 +477,8 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="Assets\Shaders\skybox.vert" />
     <None Include="Assets\Shaders\skybox.frag" />
+    <None Include="Assets\Shaders\defaultShadow.vert" />
+    <None Include="Assets\Shaders\defaultShadow.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\ksr29\ambient_ocl.jpg">
