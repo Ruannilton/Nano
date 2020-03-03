@@ -247,6 +247,8 @@
     <None Include="Assets\Shaders\default.vert" />
     <None Include="Assets\Shaders\defaultShadow.frag" />
     <None Include="Assets\Shaders\defaultShadow.vert" />
+    <None Include="Assets\Shaders\NanoEngine.frag.glh" />
+    <None Include="Assets\Shaders\NanoEngine.vert.glh" />
     <None Include="Assets\Shaders\skybox.frag" />
     <None Include="Assets\Shaders\skybox.vert" />
     <None Include="ClassDiagram1.cd" />
