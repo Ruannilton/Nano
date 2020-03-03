@@ -23,17 +23,17 @@ void Start() {
 
 	DirectionalLight* sun = Renderer_GetSun();
 	sun->Position = { 0,15,0 };
-	sun->Direction = { -4,-0.5,0 };
+	sun->Direction = { 8,-0.5,8 };
 	sun->Ambient = { 0.1f,0.1f,0.1f };
-	sun->Diffuse = {1,1,1};
+	sun->Diffuse = {0.8,0.8,0.8};
 	sun->Color = { 1,1,1 };
 	
 
-	//PointLight* pl = Renderer_AddPointLight(myScene, { 0,1,-10 });
-	//PointLight* pl2 = Renderer_AddPointLight(myScene, { 0,1, 10 });
-	//
-	//pl->Color = { 0.02f,0,1 };
-	//pl2->Color = { 1,0,0.02f };
+	PointLight* pl = Renderer_AddPointLight(myScene, { 0,1,-10 });
+	PointLight* pl2 = Renderer_AddPointLight(myScene, { 0,1, 10 });
+	
+	pl->Color = { 0.02f,0,1 };
+	pl2->Color = { 1,0,0.02f };
 
 	Shader Default = Scene_LoadShader(myScene, "Assets/Shaders/default.vert", "Assets/Shaders/default.frag");
 	Shader SkyboxShader = Shader_CreateShader("Assets/Shaders/skybox.vert", "Assets/Shaders/skybox.frag");
