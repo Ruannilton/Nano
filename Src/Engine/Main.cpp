@@ -43,8 +43,8 @@ void Start() {
 	
 	Texture* ksr_color = Texture_LoadTextureDefault("Assets/ksr29/color.jpg");
 	Texture* ksr_specular = Texture_LoadTextureDefault("Assets/ksr29/spec.jpg");
-	Texture* white = Texture_LoadTextureDefault("Assets/images/white.png");
-	Texture* black = Texture_LoadTextureDefault("Assets/images/black.png");
+	Texture* white = Texture_LoadTextureDefault("Assets/images/wood_floor.jpg");
+	
 	const char* sky_path[6] = CubeMap_GetPath(Assets/Images/skybox/,jpg);
 	CubeMap* sky_texture = CubeMap_LoadTextureDefault(sky_path);
 
@@ -55,9 +55,15 @@ void Start() {
 	Material* ksr_mat = CNEW(TexturedMaterial, Default, ksr_color, ksr_specular);
 	Material* floor_mat = CNEW(TexturedMaterial, Default, white, white);
 
-	RenderComponent* floor = Renderer_AddComponent(plane, floor_mat, { 0,-1,20 });
-	RenderComponent_Rotate(floor, { 90,180,0 });
-	RenderComponent_Scale(floor, { 1000000,100000,0 });
+	
+	int x, y;
+	for(x=-10;x<10;x++)
+		for (y = -10; y < 10; y++) {
+			RenderComponent* floor = Renderer_AddComponent(plane, floor_mat, { x*10.0f,-1,y*10.0f });
+			RenderComponent_Rotate(floor, { 90,180,0 });
+			RenderComponent_Scale(floor, { 10,10,0 });
+		}
+	
 
 	SharedRenderComponent ksrs = Renderer_AddSharedRenderComponent(ksr29, ksr_mat, 4);
 	Vec_Iterator vec_iter = Vec_Iterator_Get(ksrs.transforms);

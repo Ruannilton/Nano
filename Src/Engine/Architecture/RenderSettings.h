@@ -3,7 +3,7 @@
 
 #include "../Utils.h"
 
-#define DEFAULT_RENDER_ENV {0,0,0,0,0,0,0,1024,1024,0.1f,100.0f}
+#define DEFAULT_RENDER_ENV {0,0,0,0,0,0,0,2048,2048,0.1f,20.0f}
 
 typedef struct {
 	uint matrix_buffer;
